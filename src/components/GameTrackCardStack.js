@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, PanResponder, Animated, StyleSheet } from 'react-native';
+import { View, PanResponder, Animated, Easing, StyleSheet } from 'react-native';
 import { GameTrackCard } from './';
 
 const stackScaleValue = 0.95;
@@ -44,6 +44,7 @@ export default class GameTrackCardStack extends Component {
         toValue: 1,
         delay: 100,
         duration: 400,
+        easing: Easing.ease,
         useNativeDriver: true,
       }).start();
 

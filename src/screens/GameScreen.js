@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
-import { GameTrackCard, GameTrackCardStack, GameActions } from '../components';
+import { GameTrackCardStack, GameActions } from '../components';
 
 export default class GameScreen extends Component {
   textInput = null;
-
-  componentDidMount() {
-    setTimeout(() => {
-//      this.textInput.focus();
-    }, 500);
-  }
-
-  _renderCard = card => {
-    return (
-      <GameTrackCard />
-    );
-  }
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior={'padding'} style={styles.innerContainer}>
           <GameTrackCardStack
-            data={[ 0, 1, 2, 3 ]}
-            renderCard={this._renderCard}
+            tracks={[ 0, 1, 2, 3 ]}
           />
 
           <GameActions />
@@ -43,8 +30,5 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 32,
     paddingTop: 70, // offset for header
-  },
-  swiper: {
-    flex: 1,
   },
 });
