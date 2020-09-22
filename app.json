@@ -1,4 +1,12 @@
 {
   "name": "Feedback",
-  "displayName": "Feedback"
+  "displayName": "Feedback",
+  "expo": {
+    "name": "Feedback",
+    "slug": "Feedback",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }

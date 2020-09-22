@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, PanResponder, Animated, Easing, StyleSheet } from 'react-native';
-import { GameTrackCard } from './';
+import GameTrackCard from './GameTrackCard';
 import maestro from '../maestro';
 
 const stackScaleValue = 0.95;

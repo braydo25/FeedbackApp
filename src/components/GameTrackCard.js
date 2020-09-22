@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
-import { GameTrackCardFeedback } from './';
-import Slider from '@react-native-community/slider';
+import GameTrackCardFeedback from './GameTrackCardFeedback';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
@@ -72,13 +71,7 @@ export default class GameTrackCard extends Component {
         <View style={styles.playbackContainer}>
           <Text style={styles.playbackTimeText}>0:00</Text>
 
-          
-
-          <Slider
-            minimumValue={0}
-            maximumValue={track.length}
-            minimumTrackTintColor={'#EC3063'}
-            value={0}
+          <View
             style={styles.playbackSlider}
           />
 
