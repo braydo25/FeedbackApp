@@ -1,4 +1,4 @@
-package com.feedback;
+package com.feedback.app;
 
 import android.os.Bundle;
 

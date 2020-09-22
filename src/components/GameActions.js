@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     color: '#3E3E42',
     flex: 1,
-    fontFamily: 'SFProDisplay-Regular',
+    //fontFamily: 'SFProDisplay-Regular',
     fontSize: 17,
     marginHorizontal: 16,
     maxHeight: 100,

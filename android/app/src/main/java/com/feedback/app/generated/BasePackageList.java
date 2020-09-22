@@ -1,4 +1,4 @@
-package com.feedback.generated;
+package com.feedback.app.generated;
 
 import java.util.Arrays;
 import java.util.List;

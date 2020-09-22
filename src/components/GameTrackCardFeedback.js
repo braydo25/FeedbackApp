@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: '#3E3E42',
-    fontFamily: 'SFProDisplay-Bold',
+    //fontFamily: 'SFProDisplay-Bold',
     fontSize: 14,
     textAlign: 'center',
   },
   feedbackText: {
     color: '#3E3E42',
-    fontFamily: 'SFUIDisplay-Regular',
+    //fontFamily: 'SFUIDisplay-Regular',
     fontSize: 15,
     marginRight: 35,
   },
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     color: '#6D7D8F',
-    fontFamily: 'SFProDisplay-SemiBold',
+    //fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 14,
   },
 });

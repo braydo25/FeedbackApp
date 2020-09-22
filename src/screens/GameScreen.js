@@ -23,7 +23,7 @@ export default class GameScreen extends Component {
   _loadTracks = async () => {
     await gameManager.loadTracks();
 
-    //playbackManager.play();
+    playbackManager.play();
   }
 
   render() {

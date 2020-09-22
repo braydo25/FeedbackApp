@@ -6,36 +6,40 @@ export default class PlaybackManager extends Manager {
   }
 
   static initialStore = {
-
+    currentQueueIndex: 0,
+    queue: [],
   }
 
   constructor(maestro) {
     super(maestro);
+
+    /*Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      staysActiveInBackground: true,
+    });*/
   }
 
   get storeName() {
     return 'playback';
   }
 
-  async queueTracks(tracks) {
-    const promises = [];
-
-    tracks.forEach(track => {
-      promises.push(this.queueTrack(track));
-    });
-
-    return Promise.all(promises);
-  }
-
-  play() {
+  queueTracks(tracks) {
 
   }
 
-  pause() {
+  async queueTrack(track) {
+    const queue = [ ...this.store.queue ];
 
   }
 
-  next() {
+  async play() {
+  }
+
+  async pause() {
+
+  }
+
+  async next() {
 
   }
 
@@ -43,9 +47,23 @@ export default class PlaybackManager extends Manager {
    * Helpers
    */
 
-  _trackToPlaybackStructure = track => {
-    return {
-      
-    };
+  _trackToQueueObject = track => {
+    //const playback = new Audio.Sound();
+
+
+  }
+
+  _playbackStatusUpdated = playbackStatus => {
+    console.log(playbackStatus);
   }
 }
+
+
+/*
+
+{ uri: track.url },
+{ isLooping: true, shouldPlay: false },
+this._playbackStatusUpdated,
+false,
+
+*/

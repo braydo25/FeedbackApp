@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   artistText: {
     color: '#6D7D8F',
-    fontFamily: 'SFProDisplay-Regular',
+    //fontFamily: 'SFProDisplay-Regular',
     fontSize: 17,
   },
   container: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     color: '#3E3E42',
-    fontFamily: 'SFUIDisplay-Heavy',
+    //fontFamily: 'SFUIDisplay-Heavy',
     fontSize: 24,
   },
   playbackContainer: {
@@ -137,12 +137,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   playbackSlider: {
+    backgroundColor: '#000000',
     flex: 1,
     marginHorizontal: 16,
+    marginVertical: 16,
+    height: 2,
   },
   playbackTimeText: {
     color: '#3E3E42',
-    fontFamily: 'SFProDisplay-SemiBold',
+    //fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 15,
   },
 });

@@ -43,5 +43,7 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "name": "app",
+  "version": "1.0.0"
 }

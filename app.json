@@ -7,6 +7,17 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      },
+      "bundleIdentifier": "com.feedback.app"
+    },
+    "android": {
+      "package": "com.feedback.app"
+    }
   }
 }
