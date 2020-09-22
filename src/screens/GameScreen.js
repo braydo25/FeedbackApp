@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
 import { GameTrackCardStack, GameActions } from '../components';
+import maestro from '../maestro';
+
+const { gameManager, playbackManager } = maestro.managers;
 
 export default class GameScreen extends Component {
-  textInput = null;
+  state = {
+    tracks: null,
+  }
+
+  componentDidMount() {
+    maestro.link(this);
+
+    this._loadTracks();
+  }
+
+  receiveStoreUpdate({ game }) {
+    this.setState({ tracks: game.tracks });
+  }
+
+  _loadTracks = async () => {
+    await gameManager.loadTracks();
+
+    //playbackManager.play();
+  }
 
   render() {
+    const { tracks } = this.state;
+
     return (
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior={'padding'} style={styles.innerContainer}>
-          <GameTrackCardStack
-            tracks={[ 0, 1, 2, 3 ]}
-          />
-
+          <GameTrackCardStack tracks={tracks} />
           <GameActions />
         </KeyboardAvoidingView>
       </SafeAreaView>

@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { gameManager } = maestro.managers;
 
 export default class GameActions extends Component {
+  state = {
+    feebackText: '',
+  }
+
+  _submit = () => {
+    this._resetFeedback();
+
+    // gameManager.createTrackFeedback
+  }
+
+  _nextTrack = () => {
+    gameManager.nextTrackAnimated();
+  }
+
+  _resetFeedback = () => {
+    this.setState({ feedbackText: '' });
+  }
+
   render() {
+    const { feedbackText } = this.state;
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <TouchableOpacity onPress={this._nextTrack} style={styles.button}>
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/skip.png')}
@@ -16,11 +39,13 @@ export default class GameActions extends Component {
         <TextInput
           multiline
           placeholder={'Enter some feedback...'}
+          onChangeText={text => this.setState({ feedbackText: text })}
+          value={feedbackText}
           style={styles.input}
           ref={component => this.textInput = component}
         />
 
-        <TouchableOpacity onPress={() => {}} style={[ styles.button, styles.sendButton ]}>
+        <TouchableOpacity onPress={this._submit} style={[ styles.button, styles.sendButton ]}>
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/send.png')}

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@react-native-community/slider": "^3.0.3",
+    "moment": "^2.28.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-maestro": "^1.0.5",
     "react-native-swift": "^1.2.3",
     "react-native-track-player": "^1.2.3"
   },

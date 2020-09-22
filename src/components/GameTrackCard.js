@@ -2,20 +2,53 @@ import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import { GameTrackCardFeedback } from './';
 import Slider from '@react-native-community/slider';
+import maestro from '../maestro';
+
+const { gameManager } = maestro.managers;
+const { timeHelper } = maestro.helpers;
 
 export default class GameTrackCard extends Component {
+  state = {
+    feedback: [],
+  }
+
+  componentDidMount() {
+    maestro.link(this);
+  }
+
+  componentWillUnmount() {
+    maestro.unlink(this);
+  }
+
+  receiveStoreUpdate({ game }) {
+
+  }
+
+  reset = () => {
+    this.setState({
+      feedback: [],
+    });
+  }
+
   _renderItem = ({ item, index }) => {
     return (
-      <GameTrackCardFeedback style={(index > 0) ? styles.feedback : null} />
+      <GameTrackCardFeedback
+        feedback={item.feedback}
+        time={`0:${item.time.toString().padStart(2, '0')}`}
+        style={(index > 0) ? styles.feedback : null}
+      />
     );
   }
 
   render() {
+    const { track } = this.props;
+    const { feedback } = this.state;
+
     return (
       <View style={styles.container}>
         <FlatList
           inverted
-          data={[ 0, 1, 2, 3 ]}
+          data={feedback}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => `${index}`}
           keyboardShouldPersistTaps={'always'}
@@ -25,29 +58,31 @@ export default class GameTrackCard extends Component {
 
         <View style={styles.details}>
           <Image
-            source={require('../data/pics/profile2.png')}
+            source={{ uri: track.user.avatarAttachment.url }}
             resizeMode={'contain'}
             style={styles.artistImage}
           />
 
           <View>
-            <Text style={styles.nameText}>Cruise Control</Text>
-            <Text style={styles.artistText}>Instant Party!</Text>
+            <Text style={styles.nameText}>{track.name}</Text>
+            <Text style={styles.artistText}>{track.user.name}</Text>
           </View>
         </View>
 
         <View style={styles.playbackContainer}>
-          <Text style={styles.playbackTimeText}>0:50</Text>
+          <Text style={styles.playbackTimeText}>0:00</Text>
+
+          
 
           <Slider
             minimumValue={0}
-            maximumValue={180}
+            maximumValue={track.length}
             minimumTrackTintColor={'#EC3063'}
-            value={50}
+            value={0}
             style={styles.playbackSlider}
           />
 
-          <Text style={styles.playbackTimeText}>3:16</Text>
+          <Text style={styles.playbackTimeText}>{timeHelper.secondsToTime(track.length)}</Text>
         </View>
       </View>
     );

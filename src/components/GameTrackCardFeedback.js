@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default class GameTrackCardFeedback extends Component {
   render () {
-    const { style } = this.props;
+    const { feedback, time, style } = this.props;
 
     return (
       <View style={[ styles.container, style ]}>
@@ -14,8 +14,8 @@ export default class GameTrackCardFeedback extends Component {
         />
 
         <View style={styles.textContainer}>
-          <Text style={styles.timeText}>2:02</Text>
-          <Text style={styles.feedbackText}>Damn dude this goes hard the whole time! Definitely made it to the top 10 of my all time favorites!</Text>
+          <Text style={styles.timeText}>{time}</Text>
+          <Text style={styles.feedbackText}>{feedback}</Text>
         </View>
 
         <TouchableOpacity style={styles.deleteButton}>
