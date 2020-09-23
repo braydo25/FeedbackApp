@@ -31,7 +31,7 @@ export default class GameManager extends Manager {
             },
             length: 158,
             url: 'https://srv-file21.gofile.io/downloadStore/srv-store3/CxgRHx/y2mate.com%20-%20Instant%20Party!%20-%20Cruise%20Control%20(Original)_6z3tbypUlt8.mp3',
-            createdAt: (new Date()).toISOString(),
+            createdAt: new Date(),
           },
           {
             id: 2,
@@ -44,7 +44,7 @@ export default class GameManager extends Manager {
             },
             length: 222,
             url: 'https://srv-file21.gofile.io/downloadStore/srv-store3/HRwaEz/y2mate.com%20-%20Bite%20Me%20-%20Wingman_wuXzjF3qQt4.mp3',
-            createdAt: (new Date()).toISOString(),
+            createdAt: new Date(),
           },
           {
             id: 3,
@@ -57,7 +57,7 @@ export default class GameManager extends Manager {
             },
             length: 173,
             url: 'https://srv-file21.gofile.io/downloadStore/srv-store2/C6Go3M/y2mate.com%20-%20Zeds%20Dead%20x%20DROELOE%20-%20Stars%20Tonight_M6jZKtNIOG4.mp3',
-            createdAt: (new Date()).toISOString(),
+            createdAt: new Date(),
           },
         ];
 
