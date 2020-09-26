@@ -1,6 +1,6 @@
 import React from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
-import { View, Text, StyleSheet } from 'react-native';
 import maestro from '../maestro';
 
 const { timeHelper } = maestro.helpers;
@@ -38,6 +38,9 @@ const levels = [
   75,
   73,
   68,
+  100,
+  100,
+  100,
   63,
   29,
   27,
@@ -62,7 +65,13 @@ export default class GameTrackScrubber extends ProgressComponent {
 
     return (
       <View style={[ styles.container, style ]}>
-        <Text style={styles.timeText}>{timeHelper.secondsToTime(position)}</Text>
+        <TouchableOpacity style={styles.playPauseButton}>
+          <Image
+            source={require('../assets/images/pause.png')}
+            resizeMode={'contain'}
+            style={styles.playPauseIcon}
+          />
+        </TouchableOpacity>
 
         <View style={styles.scrubberContainer}>
           {levels.map((level, index) => (
@@ -71,13 +80,11 @@ export default class GameTrackScrubber extends ProgressComponent {
               style={[
                 styles.level,
                 { height: `${level}%` },
-                (index <= Math.floor(levels.length * progress)) ? styles.pastLevel : null,
+                (index <= Math.floor(levels.length * 0.4)) ? styles.pastLevel : null,
               ]}
             />
           ))}
         </View>
-
-        <Text style={styles.timeText}>{timeHelper.secondsToTime(duration)}</Text>
       </View>
     );
   }
@@ -89,22 +96,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   level: {
-    backgroundColor: '#BBBBBB',
-    width: 2,
+    backgroundColor: '#EAECF1',
+    borderRadius: 3,
+    width: 3,
   },
   pastLevel: {
-    backgroundColor: '#2363D2',
+    backgroundColor: '#7D4CCF',
+  },
+  playPauseButton: {
+    alignItems: 'center',
+    backgroundColor: '#7D4CCF',
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  playPauseIcon: {
+    width: '30%',
   },
   scrubberContainer: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    height: 35,
+    height: 30,
     justifyContent: 'space-between',
-    marginHorizontal: 16,
-  },
-  timeText: {
-    color: '#3E3E42',
-    fontSize: 15,
+    marginLeft: 18,
   },
 });

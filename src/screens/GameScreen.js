@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, Image, Dimensions, StyleSheet } from 'react-native';
 import { GameTrackCardStack, GameActions } from '../components';
 import maestro from '../maestro';
 
 const { gameManager, playbackManager } = maestro.managers;
 
+const windowHeight = Dimensions.get('window').height;
+
 export default class GameScreen extends Component {
   state = {
     tracks: null,
+    keyboardVerticalOffset: 0,
   }
 
   componentDidMount() {
@@ -23,15 +26,31 @@ export default class GameScreen extends Component {
   _loadTracks = async () => {
     await gameManager.loadTracks();
 
-    playbackManager.play();
+    //playbackManager.play();
+  }
+
+  _onLayout = ({ nativeEvent }) => {
+    this.setState({
+      keyboardVerticalOffset: windowHeight - nativeEvent.layout.height,
+    });
   }
 
   render() {
-    const { tracks } = this.state;
+    const { tracks, keyboardVerticalOffset } = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView behavior={'padding'} style={styles.innerContainer}>
+      <SafeAreaView onLayout={this._onLayout} style={styles.container}>
+        <Image
+          source={{ uri: 'https://i1.sndcdn.com/avatars-yP66anDdEEZwyyNX-XkxQvw-t500x500.jpg' }}
+          resizeMode={'cover'}
+          blurRadius={39}
+          style={styles.backgroundImage}
+        />
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          keyboardVerticalOffset={keyboardVerticalOffset}
+          style={styles.innerContainer}
+        >
           <GameTrackCardStack tracks={tracks} />
           <GameActions />
         </KeyboardAvoidingView>
@@ -41,14 +60,17 @@ export default class GameScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
+  },
   container: {
-    backgroundColor: '#F2F2F2',
     flex: 1,
   },
   innerContainer: {
     flex: 1,
-    paddingBottom: 20,
-    paddingHorizontal: 32,
-    paddingTop: 70, // offset for header
+    paddingBottom: 14,
+    paddingHorizontal: 16,
+    paddingTop: 70,
   },
 });

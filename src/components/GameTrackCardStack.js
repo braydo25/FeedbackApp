@@ -135,6 +135,7 @@ export default class GameTrackCardStack extends Component {
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
+    marginBottom: 16,
   },
   container: {
     flex: 1,

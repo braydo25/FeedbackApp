@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
 import TrackPlayerControls from './TrackPlayerControls';
+import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
@@ -33,8 +34,6 @@ export default class GameTrackCard extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <GameTrackCardFeedback
-        feedback={item.feedback}
-        time={`0:${item.time.toString().padStart(2, '0')}`}
         style={(index > 0) ? styles.feedback : null}
       />
     );
@@ -46,29 +45,19 @@ export default class GameTrackCard extends Component {
 
     return (
       <View style={styles.container}>
-        <FlatList
-          inverted
-          data={feedback}
-          renderItem={this._renderItem}
-          keyExtractor={(item, index) => `${index}`}
-          keyboardShouldPersistTaps={'always'}
-          contentContainerStyle={styles.feedbackContentContainer}
-          style={styles.feedbackList}
-        />
-
-        <View style={styles.details}>
-          <Image
-            source={{ uri: track.user.avatarAttachment.url }}
-            resizeMode={'contain'}
-            style={styles.artistImage}
+        <View style={styles.feedbackContainer}>
+          <FlatList
+            inverted
+            data={[]}
+            renderItem={this._renderItem}
+            keyExtractor={(item, index) => `${index}`}
+            keyboardShouldPersistTaps={'always'}
+            contentContainerStyle={styles.feedbackListContentContainer}
+            style={styles.feedbackList}
           />
-
-          <View>
-            <Text style={styles.nameText}>{track.name}</Text>
-            <Text style={styles.artistText}>{track.user.name}</Text>
-          </View>
         </View>
 
+        <TrackPlayerInfo style={styles.trackPlayerInfo} />
         <TrackPlayerControls style={styles.trackPlayerControls} />
       </View>
     );
@@ -76,20 +65,9 @@ export default class GameTrackCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  artistImage: {
-    borderRadius: 25,
-    height: 45,
-    marginRight: 8,
-    width: 45,
-  },
-  artistText: {
-    color: '#6D7D8F',
-    //fontFamily: 'SFProDisplay-Regular',
-    fontSize: 17,
-  },
   container: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    borderRadius: 20,
     elevation: 4,
     flex: 1,
     shadowColor: '#000000',
@@ -97,34 +75,33 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  details: {
-    alignItems: 'center',
-    borderTopColor: '#EBEBF2',
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    marginHorizontal: 16,
-    paddingTop: 16,
-  },
   feedback: {
-    borderBottomColor: '#EBEBF2',
-    borderBottomWidth: 1,
     marginBottom: 8,
-    paddingBottom: 8,
   },
-  feedbackContentContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-  },
-  feedbackList: {
+  feedbackContainer: {
+    backgroundColor: '#F1EAF1',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     flex: 1,
   },
-  nameText: {
-    color: '#3E3E42',
-    //fontFamily: 'SFUIDisplay-Heavy',
-    fontSize: 24,
+  feedbackList: {
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    flex: 1,
+  },
+  feedbackListContentContainer: {
+    flexGrow: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
   },
   trackPlayerControls: {
-    marginVertical: 4,
+    marginVertical: 16,
     paddingHorizontal: 16,
+  },
+  trackPlayerInfo: {
+    borderTopColor: '#E3E3E9',
+    borderTopWidth: 1,
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
 });

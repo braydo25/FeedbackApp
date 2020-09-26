@@ -16,7 +16,7 @@ export default class GameManager extends Manager {
 
   async loadTracks(queryParams) {
     const { playbackManager } = this.maestro.managers;
-return;
+
     return new Promise(resolve => {
       setTimeout(() => {
         const data = [
@@ -61,12 +61,12 @@ return;
           },
         ];
 
-        playbackManager.queueTracks(data);
+        //playbackManager.queueTracks(data);
 
         this.updateStore({ tracks: data });
 
         resolve();
-      }, 3000);
+      }, 1);
     });
   }
 

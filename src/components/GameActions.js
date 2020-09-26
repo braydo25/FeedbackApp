@@ -32,24 +32,25 @@ export default class GameActions extends Component {
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/skip.png')}
-            style={styles.actionImage}
+            style={styles.skipIcon}
           />
         </TouchableOpacity>
 
         <TextInput
           multiline
           placeholder={'Enter some feedback...'}
+          placeholderTextColor={'#ACACAC'}
           onChangeText={text => this.setState({ feedbackText: text })}
           value={feedbackText}
           style={styles.input}
           ref={component => this.textInput = component}
         />
 
-        <TouchableOpacity onPress={this._submit} style={[ styles.button, styles.sendButton ]}>
+        <TouchableOpacity onPress={this._submit} style={styles.button}>
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/send.png')}
-            style={styles.actionImage}
+            style={styles.sendIcon}
           />
         </TouchableOpacity>
       </View>
@@ -58,19 +59,12 @@ export default class GameActions extends Component {
 }
 
 const styles = StyleSheet.create({
-  actionImage: {
-    width: '50%',
-  },
   button: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 16,
     height: 40,
     justifyContent: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
     width: 40,
   },
   container: {
@@ -82,24 +76,23 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    color: '#3E3E42',
+    borderRadius: 16,
+    color: '#000000',
     flex: 1,
-    //fontFamily: 'SFProDisplay-Regular',
-    fontSize: 17,
+    fontFamily: 'SFProDisplay-Regular',
+    fontSize: 15,
     marginHorizontal: 16,
     maxHeight: 100,
     minHeight: 40,
-    paddingBottom: 8,
+    paddingBottom: 10,
     paddingLeft: 12,
     paddingRight: 12,
     paddingTop: 10,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
-  sendButton: {
-    backgroundColor: '#EC3063',
+  sendIcon: {
+    width: '40%',
+  },
+  skipIcon: {
+    width: '35%',
   },
 });

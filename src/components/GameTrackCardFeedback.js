@@ -10,16 +10,20 @@ export default class GameTrackCardFeedback extends Component {
         <Image
           source={require('../data/pics/profile.png')}
           resizeMode={'contain'}
-          style={styles.image}
+          style={styles.avatarImage}
         />
 
         <View style={styles.textContainer}>
-          <Text style={styles.timeText}>{time}</Text>
-          <Text style={styles.feedbackText}>{feedback}</Text>
+          <Text style={styles.feedbackText}>This is super sick! Love it! This is another test about things and stuff</Text>
+          <Text style={styles.timeText}>Track Time: 0:58</Text>
         </View>
 
         <TouchableOpacity style={styles.deleteButton}>
-          <Text style={styles.deleteText}>X</Text>
+          <Image
+            source={require('../assets/images/delete.png')}
+            resizeMode={'contain'}
+            style={styles.deleteIcon}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -27,47 +31,45 @@ export default class GameTrackCardFeedback extends Component {
 }
 
 const styles = StyleSheet.create({
+  avatarImage: {
+    borderRadius: 10,
+    height: 40,
+    marginRight: 10,
+    width: 40,
+  },
   container: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
     flexDirection: 'row',
+    padding: 6,
   },
   deleteButton: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 15,
-    height: 30,
+    backgroundColor: '#FFE2E2',
+    borderRadius: 16,
+    height: 40,
     justifyContent: 'center',
-    position: 'absolute',
-    right: 5,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.20,
-    shadowRadius: 2.20,
-    width: 30,
+    width: 40,
   },
-  deleteText: {
-    color: '#3E3E42',
-    //fontFamily: 'SFProDisplay-Bold',
-    fontSize: 14,
-    textAlign: 'center',
+  deleteIcon: {
+    opacity: 0.8,
+    width: '35%',
   },
   feedbackText: {
-    color: '#3E3E42',
-    //fontFamily: 'SFUIDisplay-Regular',
-    fontSize: 15,
+    color: '#000000',
+    fontFamily: 'SFProDisplay-Medium',
+    fontSize: 14,
+    lineHeight: 18,
     marginRight: 35,
-  },
-  image: {
-    borderRadius: 20,
-    height: 35,
-    marginRight: 12,
-    width: 35,
+    marginBottom: 2,
   },
   textContainer: {
     flex: 1,
+    justifyContent: 'center',
   },
   timeText: {
-    color: '#6D7D8F',
-    //fontFamily: 'SFProDisplay-SemiBold',
+    color: '#B8BFC9',
+    fontFamily: 'SFProDisplay-Regular',
     fontSize: 14,
   },
 });
