@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
+import TrackPlayerControls from './TrackPlayerControls';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
@@ -68,15 +69,7 @@ export default class GameTrackCard extends Component {
           </View>
         </View>
 
-        <View style={styles.playbackContainer}>
-          <Text style={styles.playbackTimeText}>0:00</Text>
-
-          <View
-            style={styles.playbackSlider}
-          />
-
-          <Text style={styles.playbackTimeText}>{timeHelper.secondsToTime(track.length)}</Text>
-        </View>
+        <TrackPlayerControls style={styles.trackPlayerControls} />
       </View>
     );
   }
@@ -130,22 +123,8 @@ const styles = StyleSheet.create({
     //fontFamily: 'SFUIDisplay-Heavy',
     fontSize: 24,
   },
-  playbackContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
+  trackPlayerControls: {
     marginVertical: 4,
     paddingHorizontal: 16,
-  },
-  playbackSlider: {
-    backgroundColor: '#000000',
-    flex: 1,
-    marginHorizontal: 16,
-    marginVertical: 16,
-    height: 2,
-  },
-  playbackTimeText: {
-    color: '#3E3E42',
-    //fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 15,
   },
 });

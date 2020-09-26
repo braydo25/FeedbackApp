@@ -12,7 +12,7 @@ export default class TimeHelper extends Helper {
     const calculatedSeconds = numberSeconds - (calculatedHours * 3600) - (calculatedMinutes * 60);
     const paddedHours = (calculatedHours < 10) ? `0${calculatedHours}` : calculatedHours;
     const paddedMinutes = (calculatedMinutes < 10) ? `0${calculatedMinutes}` : calculatedHours;
-    const paddedSeconds = (seconds < 10) ? `0${calculatedSeconds}` : calculatedSeconds;
+    const paddedSeconds = (calculatedSeconds < 10) ? `0${calculatedSeconds}` : calculatedSeconds;
 
     return (calculatedHours > 0) ? `${paddedHours}:${paddedMinutes}:${paddedSeconds}` : `${paddedMinutes}:${paddedSeconds}`;
   }

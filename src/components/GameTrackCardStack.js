@@ -5,7 +5,7 @@ import maestro from '../maestro';
 
 const stackScaleValue = 0.95;
 
-const { gameManager } = maestro.managers;
+const { gameManager, playbackManager } = maestro.managers;
 
 export default class GameTrackCardStack extends Component {
   state = {
@@ -71,6 +71,8 @@ export default class GameTrackCardStack extends Component {
       easing: Easing.ease,
       useNativeDriver: true,
     }).start();
+
+    playbackManager.next();
 
     this.resetTimeout = setTimeout(() => {
       gameManager.nextTrack();

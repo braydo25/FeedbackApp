@@ -3,6 +3,11 @@ import TrackPlayer from 'react-native-track-player';
 
 let resolveInitialReadyPromise = null;
 
+// DEBUG! otherwise track player won't reset on fast refreshes.
+TrackPlayer.stop(); // react native debugging.
+TrackPlayer.destroy();
+// END DEBUG
+
 export default class PlaybackManager extends Manager {
   static get instanceKey() {
     return 'playbackManager';
@@ -15,7 +20,7 @@ export default class PlaybackManager extends Manager {
   constructor(maestro) {
     super(maestro);
 
-    TrackPlayer.setupPlayer().then(resolveInitialReadyPromise);
+    TrackPlayer.setupPlayer({ playBuffer: 1.5 }).then(resolveInitialReadyPromise);
   }
 
   get storeName() {
