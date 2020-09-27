@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
 import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
@@ -34,6 +35,7 @@ export default class GameTrackCard extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <GameTrackCardFeedback
+        {...item}
         style={(index > 0) ? styles.feedback : null}
       />
     );
@@ -48,17 +50,24 @@ export default class GameTrackCard extends Component {
         <View style={styles.feedbackContainer}>
           <FlatList
             inverted
-            data={[]}
+            data={feedback}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => `${index}`}
             keyboardShouldPersistTaps={'always'}
             contentContainerStyle={styles.feedbackListContentContainer}
             style={styles.feedbackList}
           />
+
+          <LinearGradient
+            start={{ x: -0.4, y: -0.4 }}
+            end={{ x: 2, y: 2 }}
+            colors={[ '#FFFAFF', '#DED4DE' ]}
+            style={styles.feedbackBackgroundGradient}
+          />
         </View>
 
-        <TrackPlayerInfo style={styles.trackPlayerInfo} />
-        <TrackPlayerControls style={styles.trackPlayerControls} />
+        <TrackPlayerInfo track={track} style={styles.trackPlayerInfo} />
+        <TrackPlayerControls track={track} style={styles.trackPlayerControls} />
       </View>
     );
   }
@@ -78,15 +87,18 @@ const styles = StyleSheet.create({
   feedback: {
     marginBottom: 8,
   },
+  feedbackBackgroundGradient: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
+  },
   feedbackContainer: {
     backgroundColor: '#F1EAF1',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flex: 1,
+    overflow: 'hidden',
   },
   feedbackList: {
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
     flex: 1,
   },
   feedbackListContentContainer: {

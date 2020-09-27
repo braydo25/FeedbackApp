@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { timeHelper } = maestro.helpers;
 
 export default class GameTrackCardFeedback extends Component {
   render () {
-    const { feedback, time, style } = this.props;
+    const { text, time, style } = this.props;
 
     return (
       <View style={[ styles.container, style ]}>
@@ -14,8 +17,8 @@ export default class GameTrackCardFeedback extends Component {
         />
 
         <View style={styles.textContainer}>
-          <Text style={styles.feedbackText}>This is super sick! Love it! This is another test about things and stuff</Text>
-          <Text style={styles.timeText}>Track Time: 0:58</Text>
+          <Text style={styles.feedbackText}>{text}</Text>
+          <Text style={styles.timeText}>Track Time: {timeHelper.secondsToTime(time)}</Text>
         </View>
 
         <TouchableOpacity style={styles.deleteButton}>
@@ -42,6 +45,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     flexDirection: 'row',
     padding: 6,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 1.00,
   },
   deleteButton: {
     alignItems: 'center',
@@ -52,8 +59,9 @@ const styles = StyleSheet.create({
     width: 40,
   },
   deleteIcon: {
+    height: '45%',
     opacity: 0.8,
-    width: '35%',
+    width: '45%',
   },
   feedbackText: {
     color: '#000000',

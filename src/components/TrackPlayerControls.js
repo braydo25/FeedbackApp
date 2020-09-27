@@ -1,66 +1,37 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
-import maestro from '../maestro';
 
-const { timeHelper } = maestro.helpers;
+const waveWidth = 3;
+const waveSpace = 1;
 
-const levels = [
-  12,
-  25,
-  27,
-  40,
-  50,
-  70,
-  75,
-  73,
-  68,
-  63,
-  29,
-  27,
-  26,
-  81,
-  72,
-  82,
-  73,
-  75,
-  74,
-  72,
-  75,
-  25,
-  13,
-  12,
-  25,
-  27,
-  40,
-  50,
-  70,
-  75,
-  73,
-  68,
-  100,
-  100,
-  100,
-  63,
-  29,
-  27,
-  26,
-  81,
-  72,
-  82,
-  73,
-  75,
-  74,
-  72,
-  75,
-  25,
-  13,
-];
+export default class TrackPlayerControls extends ProgressComponent {
+  state = {
+    adjustedWaveform: [],
+  }
 
-export default class GameTrackScrubber extends ProgressComponent {
+  _onScrubberLayout = ({ nativeEvent }) => {
+    const { waveform } = this.props.track;
+    const displayedWaves = Math.floor(waveform.length / (waveWidth + waveSpace));
+    const aggregatePerDisplayedWave = Math.floor(waveform.length / displayedWaves);
+    const adjustedWaveform = [];
+
+    waveform.reduce((aggregate, wave, index) => {
+      if (index > 0 && (index % aggregatePerDisplayedWave === 0 || index === waveform.length - 1)) {
+        adjustedWaveform.push(Math.floor(aggregate / (aggregatePerDisplayedWave - 1)));
+
+        return 0;
+      }
+
+      return aggregate + wave;
+    });
+
+    this.setState({ adjustedWaveform });
+  }
+
   render() {
     const { style } = this.props;
-    const { position, duration } = this.state;
+    const { adjustedWaveform } = this.state;
     const progress = this.getProgress();
 
     return (
@@ -73,14 +44,14 @@ export default class GameTrackScrubber extends ProgressComponent {
           />
         </TouchableOpacity>
 
-        <View style={styles.scrubberContainer}>
-          {levels.map((level, index) => (
+        <View onLayout={this._onScrubberLayout} style={styles.scrubberContainer}>
+          {adjustedWaveform.map((wave, index) => (
             <View
               key={index}
               style={[
-                styles.level,
-                { height: `${level}%` },
-                (index <= Math.floor(levels.length * 0.4)) ? styles.pastLevel : null,
+                styles.wave,
+                { height: `${Math.abs(wave)}%` },
+                (index < Math.floor(adjustedWaveform.length * progress)) ? styles.pastWave : null,
               ]}
             />
           ))}
@@ -95,12 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  level: {
-    backgroundColor: '#EAECF1',
-    borderRadius: 3,
-    width: 3,
-  },
-  pastLevel: {
+  pastWave: {
     backgroundColor: '#7D4CCF',
   },
   playPauseButton: {
@@ -121,5 +87,10 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'space-between',
     marginLeft: 18,
+  },
+  wave: {
+    backgroundColor: '#EAECF1',
+    borderRadius: 3,
+    width: waveWidth,
   },
 });

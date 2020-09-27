@@ -26,7 +26,7 @@ export default class GameScreen extends Component {
   _loadTracks = async () => {
     await gameManager.loadTracks();
 
-    //playbackManager.play();
+  //  playbackManager.play();
   }
 
   _onLayout = ({ nativeEvent }) => {
@@ -37,15 +37,17 @@ export default class GameScreen extends Component {
 
   render() {
     const { tracks, keyboardVerticalOffset } = this.state;
+    const currentTrack = gameManager.getCurrentTrack();
 
     return (
       <SafeAreaView onLayout={this._onLayout} style={styles.container}>
         <Image
-          source={{ uri: 'https://i1.sndcdn.com/avatars-yP66anDdEEZwyyNX-XkxQvw-t500x500.jpg' }}
+          source={{ uri: currentTrack?.user?.avatarUrl }}
           resizeMode={'cover'}
           blurRadius={39}
           style={styles.backgroundImage}
         />
+
         <KeyboardAvoidingView
           behavior={'padding'}
           keyboardVerticalOffset={keyboardVerticalOffset}

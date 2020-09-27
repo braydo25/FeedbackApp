@@ -66,11 +66,11 @@ export default class PlaybackManager extends Manager {
   _trackToTrackObject = track => {
     return {
       id: `track_${track.id}`,
-      url: track.url,
+      url: track.mp3Url,
       title: track.name,
       artist: track.user.name,
       date: track.createdAt.toISOString(),
-      artwork: track.user.avatarAttachment.url,
+      artwork: track.user.avatarUrl,
     };
   }
 

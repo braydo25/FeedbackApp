@@ -90,9 +90,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   sendIcon: {
+    height: '40%',
     width: '40%',
   },
   skipIcon: {
+    height: '35%',
     width: '35%',
   },
 });

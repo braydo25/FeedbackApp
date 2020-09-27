@@ -1,30 +1,34 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
+import maestro from '../maestro';
+
+const { timeHelper } = maestro.helpers;
 
 export default class TrackPlayerInfo extends ProgressComponent {
   render() {
-    const { style } = this.props;
+    const { track, style } = this.props;
+    const { position, duration } = this.state;
 
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={{ uri: 'https://i1.sndcdn.com/avatars-yP66anDdEEZwyyNX-XkxQvw-t500x500.jpg' }}
+          source={{ uri: track.user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.artistImage}
         />
 
         <View style={styles.details}>
           <View>
-            <Text style={styles.nameText}>All I Need</Text>
-            <Text style={styles.artistText}>Slushii</Text>
+            <Text style={styles.nameText}>{track.name}</Text>
+            <Text style={styles.artistText}>{track.user.name}</Text>
           </View>
 
           <View style={styles.timeGenreContainer}>
-            <Text style={styles.timeText}>0:58 <Text style={styles.timeTotalText}>/ 4:02</Text></Text>
+            <Text style={styles.timeText}>{timeHelper.secondsToTime(position)} <Text style={styles.timeTotalText}>/ {timeHelper.secondsToTime(duration || track.duration)}</Text></Text>
 
             <View style={styles.genreTextBox}>
-              <Text style={styles.genreText}>EDM</Text>
+              <Text style={styles.genreText}>{track.genre.name}</Text>
             </View>
           </View>
         </View>
