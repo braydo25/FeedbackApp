@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View, StyleSheet } from 'react-native';
+import { Animated, View, Easing, StyleSheet } from 'react-native';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
@@ -51,12 +51,14 @@ export default class GameImageBackground extends Component {
         toValue: (lastVisibileImage === 'one') ? 1 : 0,
         delay: 100,
         duration: 400,
+        easing: Easing.ease,
         useNativeDriver: true,
       }),
       Animated.timing(this.state.imageTwoOpacityAnimatedValue, {
         toValue: (lastVisibileImage === 'two') ? 1 : 0,
         delay: 100,
         duration: 400,
+        easing: Easing.ease,
         useNativeDriver: true,
       }),
     ]).start();
