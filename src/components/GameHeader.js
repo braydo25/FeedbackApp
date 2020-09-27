@@ -40,14 +40,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 1.00,
   },
-  profileButton: {
-
-  },
-  profileImage: {
-    borderRadius: 10,
-    height: 40,
-    width: 40,
-  },
   levelBarFill: {
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
@@ -71,15 +63,22 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 56,
   },
+  levelExpText: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 12,
+  },
   levelText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 14,
   },
-  levelExpText: {
-    color: 'rgba(255, 255, 255, 0.7)',
-    fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 12,
+  profileButton: {
 
+  },
+  profileImage: {
+    borderRadius: 10,
+    height: 40,
+    width: 40,
   },
 });

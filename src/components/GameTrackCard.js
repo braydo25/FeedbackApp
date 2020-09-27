@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import GameTrackCardDescription from './GameTrackCardDescription';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
-import TrackPlayerControls from './TrackPlayerControls';
+ import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
 
@@ -32,7 +33,36 @@ export default class GameTrackCard extends Component {
     });
   }
 
+  _generateListData = () => {
+    const { track } = this.props;
+    const { feedback } = this.state;
+
+    return [
+      ...((!feedback.length && track.description) ? [
+        { description: true },
+      ] : []),
+      ...((!feedback.length && !track.description) ? [
+        { tip: true },
+      ] : []),
+      ...feedback,
+    ];
+  }
+
   _renderItem = ({ item, index }) => {
+    if (item.feedback) {
+      return this._renderFeedback(item, index);
+    }
+
+    if (item.description) {
+      return this._renderDescription(item, index);
+    }
+
+    if (item.tip) {
+      return this._renderTip(item, index);
+    }
+  }
+
+  _renderFeedback = (item, index) => {
     return (
       <GameTrackCardFeedback
         {...item}
@@ -41,16 +71,30 @@ export default class GameTrackCard extends Component {
     );
   }
 
+  _renderDescription = () => {
+    return (
+      <GameTrackCardDescription track={this.props.track} />
+    );
+  }
+
+  _renderTip = (item, index) => {
+    return (
+      <View>
+
+      </View>
+    )
+  }
+
   render() {
     const { track } = this.props;
-    const { feedback } = this.state;
+    const listData = this._generateListData();
 
     return (
       <View style={styles.container}>
         <View style={styles.feedbackContainer}>
           <FlatList
-            inverted
-            data={feedback}
+            inverted={listData[0].feedback || listData.length > 1}
+            data={listData}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => `${index}`}
             keyboardShouldPersistTaps={'always'}

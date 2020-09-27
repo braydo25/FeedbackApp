@@ -23,6 +23,7 @@ export default class GameManager extends Manager {
           {
             id: 1,
             name: 'All I need',
+            description: 'To celebrate the @fortnite x @rocketleague concert, I’m releasing “All I Need” with my friends at @monstercat this Friday !!!',
             user: {
               name: 'Slushii',
               avatarUrl: 'https://i1.sndcdn.com/avatars-yP66anDdEEZwyyNX-XkxQvw-t500x500.jpg',
@@ -49,6 +50,7 @@ export default class GameManager extends Manager {
           {
             id: 5,
             name: 'Stars Tonight',
+            description: 'check out our collab with @droeloemusic! "Stars Tonight" is out now on @deadbeatsrecords',
             user: {
               name: 'Zeds Dead',
               avatarUrl: 'https://yt3.ggpht.com/a/AATXAJxmKfmbVI5p84QuUhd_09ATSGMx7MacLKgFBzLpWQ=s176-c-k-c0xffffffff-no-nd-rj',
