@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     width: 40,
   },
   playPauseIcon: {
-    width: '30%',
+    height: '35%',
+    width: '35%',
   },
   scrubberContainer: {
     alignItems: 'center',

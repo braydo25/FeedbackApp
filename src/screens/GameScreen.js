@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, Image, Dimensions, StyleSheet } from 'react-native';
-import { GameTrackCardStack, GameActions } from '../components';
+import { KeyboardAvoidingView, SafeAreaView, Dimensions, StyleSheet } from 'react-native';
+import { GameImageBackground, GameTrackCardStack, GameActions } from '../components';
 import maestro from '../maestro';
 
 const { gameManager, playbackManager } = maestro.managers;
@@ -17,6 +17,10 @@ export default class GameScreen extends Component {
     maestro.link(this);
 
     this._loadTracks();
+  }
+
+  componentWillUnmount() {
+    maestro.unlink(this);
   }
 
   receiveStoreUpdate({ game }) {
@@ -37,16 +41,10 @@ export default class GameScreen extends Component {
 
   render() {
     const { tracks, keyboardVerticalOffset } = this.state;
-    const currentTrack = gameManager.getCurrentTrack();
 
     return (
       <SafeAreaView onLayout={this._onLayout} style={styles.container}>
-        <Image
-          source={{ uri: currentTrack?.user?.avatarUrl }}
-          resizeMode={'cover'}
-          blurRadius={39}
-          style={styles.backgroundImage}
-        />
+        <GameImageBackground />
 
         <KeyboardAvoidingView
           behavior={'padding'}
@@ -62,10 +60,6 @@ export default class GameScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: -1,
-  },
   container: {
     flex: 1,
   },

@@ -1,0 +1,102 @@
+import React, { Component } from 'react';
+import { Animated, View, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { gameManager } = maestro.managers;
+
+export default class GameImageBackground extends Component {
+  state = {
+    lastVisibileImage: 'one',
+    imageOneUrl: null,
+    imageOneOpacityAnimatedValue: new Animated.Value(0),
+    imageTwoUrl: null,
+    imageTwoOpacityAnimatedValue: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    maestro.link(this);
+  }
+
+  componentWillUnmount() {
+    maestro.unlink(this);
+  }
+
+  receiveStoreUpdate({ game }) {
+    if (!this.state.imageOneUrl && game.tracks) {
+      this.setState({ imageOneUrl: game.tracks[0].user.avatarUrl });
+      this._animate();
+    }
+  }
+
+  receiveEvent(name, value) {
+    if (name === 'GAME_ANIMATING_NEXT_TRACK') {
+      const nextImageUrl = gameManager.getNextTrack().user.avatarUrl;
+      const { lastVisibileImage, imageOneUrl, imageTwoUrl } = this.state;
+
+      this.setState({
+        lastVisibileImage: (lastVisibileImage === 'one') ? 'two' : 'one',
+        imageOneUrl: (lastVisibileImage === 'two') ? nextImageUrl : imageOneUrl,
+        imageTwoUrl: (lastVisibileImage === 'one') ? nextImageUrl : imageTwoUrl,
+      }, () => {
+        this._animate();
+      });
+    }
+  }
+
+  _animate = () => {
+    const { lastVisibileImage } = this.state;
+
+    Animated.parallel([
+      Animated.timing(this.state.imageOneOpacityAnimatedValue, {
+        toValue: (lastVisibileImage === 'one') ? 1 : 0,
+        delay: 100,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.state.imageTwoOpacityAnimatedValue, {
+        toValue: (lastVisibileImage === 'two') ? 1 : 0,
+        delay: 100,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }
+
+  render() {
+    const { imageOneUrl, imageOneOpacityAnimatedValue, imageTwoUrl, imageTwoOpacityAnimatedValue } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <Animated.Image
+          source={{ url: imageOneUrl }}
+          resizeMode={'cover'}
+          blurRadius={39}
+          style={[ styles.imageOne, { opacity: imageOneOpacityAnimatedValue } ]}
+        />
+
+        <Animated.Image
+          source={{ url: imageTwoUrl }}
+          resizeMode={'cover'}
+          blurRadius={39}
+          style={[ styles.imageTwo, { opacity: imageTwoOpacityAnimatedValue } ]}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#000000',
+    zIndex: -1,
+  },
+  imageOne: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1,
+  },
+  imageTwo: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 2,
+  },
+});
