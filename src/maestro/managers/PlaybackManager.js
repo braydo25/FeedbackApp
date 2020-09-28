@@ -63,6 +63,12 @@ export default class PlaybackManager extends Manager {
     TrackPlayer.skipToNext();
   }
 
+  async getCurrentTrackPosition() {
+    const position = await TrackPlayer.getPosition();
+
+    return Math.floor(position);
+  }
+
   /*
    * Helpers
    */

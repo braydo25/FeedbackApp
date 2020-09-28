@@ -12,7 +12,7 @@ export default class GameActions extends Component {
   _submit = () => {
     this._resetFeedback();
 
-    // gameManager.createTrackFeedback
+    gameManager.createTrackFeedback(this.state.feedbackText);
   }
 
   _nextTrack = () => {
@@ -46,7 +46,11 @@ export default class GameActions extends Component {
           ref={component => this.textInput = component}
         />
 
-        <TouchableOpacity onPress={this._submit} style={styles.button}>
+        <TouchableOpacity
+          disabled={!feedbackText}
+          onPress={this._submit}
+          style={styles.button}
+        >
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/send.png')}
@@ -61,7 +65,7 @@ export default class GameActions extends Component {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 16,
     height: 40,
     justifyContent: 'center',

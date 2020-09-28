@@ -86,8 +86,15 @@ export default class GameManager extends Manager {
     });
   }
 
-  async createTrackFeedback() {
-    // need to know time!
+  async createTrackFeedback(text) {
+    const { playbackManager } = this.maestro.managers;
+    const time = await playbackManager.getCurrentTrackPosition();
+
+    this.maestro.dispatchEvent('GAME_FEEDBACK_CREATED', {
+      id: Math.floor(Math.random() * 1000),
+      text,
+      time,
+    });
   }
 
   getCurrentTrack() {

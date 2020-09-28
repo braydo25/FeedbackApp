@@ -21,8 +21,15 @@ export default class GameTrackCard extends Component {
     maestro.unlink(this);
   }
 
-  receiveStoreUpdate({ game }) {
-
+  receiveEvent(name, value) {
+    if (name === 'GAME_FEEDBACK_CREATED') {
+      this.setState({
+        feedback: [
+          { feedback: true, ...value },
+          ...this.state.feedback,
+        ],
+      });
+    }
   }
 
   reset = () => {
