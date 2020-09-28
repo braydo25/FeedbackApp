@@ -5,6 +5,7 @@ import GameTrackCard from './GameTrackCard';
 import GameTrackCardDescription from './GameTrackCardDescription';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
 import GameTrackCardStack from './GameTrackCardStack';
+import GameTrackCardTip from './GameTrackCardTip';
 import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
 
@@ -16,6 +17,7 @@ export {
   GameTrackCardDescription,
   GameTrackCardFeedback,
   GameTrackCardStack,
+  GameTrackCardTip,
   TrackPlayerControls,
   TrackPlayerInfo,
 };

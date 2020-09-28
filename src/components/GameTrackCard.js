@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameTrackCardDescription from './GameTrackCardDescription';
 import GameTrackCardFeedback from './GameTrackCardFeedback';
- import TrackPlayerControls from './TrackPlayerControls';
+import GameTrackCardTip from './GameTrackCardTip';
+import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
-
-const { gameManager } = maestro.managers;
-const { timeHelper } = maestro.helpers;
 
 export default class GameTrackCard extends Component {
   state = {
@@ -79,10 +77,8 @@ export default class GameTrackCard extends Component {
 
   _renderTip = (item, index) => {
     return (
-      <View>
-
-      </View>
-    )
+      <GameTrackCardTip />
+    );
   }
 
   render() {

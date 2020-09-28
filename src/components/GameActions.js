@@ -38,7 +38,7 @@ export default class GameActions extends Component {
 
         <TextInput
           multiline
-          placeholder={'Enter some feedback...'}
+          placeholder={'What do you think?'}
           placeholderTextColor={'#ACACAC'}
           onChangeText={text => this.setState({ feedbackText: text })}
           value={feedbackText}

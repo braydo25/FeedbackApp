@@ -1,35 +1,33 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class GameTrackCardDescription extends Component {
+export default class GameTrackCardTip extends Component {
   render() {
-    const { track } = this.props;
-
     return (
       <View style={styles.container}>
-        <Text style={styles.artistText}>{track.user.name} Says...</Text>
-        <Text style={styles.descriptionText}>{track.description}</Text>
+        <Text style={styles.titleText}>Here's a tip...</Text>
+        <Text style={styles.tipText}>If your feedback is marked as useful by the artist, you'll get a major EXP boost!</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  artistText: {
-    color: '#7D4CCF',
-    fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
-  },
   container: {
     justifyContent: 'center',
     minHeight: '100%',
     paddingHorizontal: 8,
   },
-  descriptionText: {
+  tipText: {
     color: '#000000',
-    fontFamily: 'SFProDisplay-Regular',
+    fontFamily: 'SFProDisplay-Medium',
     fontSize: 14,
     lineHeight: 20,
     marginTop: 8,
+  },
+  titleText: {
+    color: '#7D4CCF',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 16,
   },
 });
