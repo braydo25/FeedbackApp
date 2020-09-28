@@ -1,61 +1,68 @@
-import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { ProgressComponent } from 'react-native-track-player';
+import React, { Component } from 'react';
+import { View, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import TrackPlayerScrubber from './TrackPlayerScrubber';
+import maestro from '../maestro';
 
-const waveWidth = 3;
-const waveSpace = 1;
+const { playbackManager } = maestro.managers;
 
-export default class TrackPlayerControls extends ProgressComponent {
+export default class TrackPlayerControls extends Component {
   state = {
-    adjustedWaveform: [],
+    playbackState: 'stopped',
   }
 
-  _onScrubberLayout = ({ nativeEvent }) => {
-    const { waveform } = this.props.track;
-    const displayedWaves = Math.floor(waveform.length / (waveWidth + waveSpace));
-    const aggregatePerDisplayedWave = Math.floor(waveform.length / displayedWaves);
-    const adjustedWaveform = [];
+  componentDidMount() {
+    maestro.link(this);
+  }
 
-    waveform.reduce((aggregate, wave, index) => {
-      if (index > 0 && (index % aggregatePerDisplayedWave === 0 || index === waveform.length - 1)) {
-        adjustedWaveform.push(Math.floor(aggregate / (aggregatePerDisplayedWave - 1)));
+  componentWillUnmount() {
+    maestro.unlink(this);
+  }
 
-        return 0;
-      }
+  receiveStoreUpdate({ playback }) {
+    this.setState({ playbackState: playback.state });
+  }
 
-      return aggregate + wave;
-    });
+  _playPause = () => {
+    const { playbackState } = this.state;
 
-    this.setState({ adjustedWaveform });
+    if ([ 'ready', 'paused', 'connecting', 'stopped' ].includes(playbackState)) {
+      playbackManager.play();
+    }
+
+    if ([ 'playing', 'buffering' ].includes(playbackState)) {
+      playbackManager.pause();
+    }
   }
 
   render() {
-    const { style } = this.props;
-    const { adjustedWaveform } = this.state;
-    const progress = this.getProgress();
+    const { track, style } = this.props;
+    const { playbackState } = this.state;
 
     return (
       <View style={[ styles.container, style ]}>
-        <TouchableOpacity style={styles.playPauseButton}>
-          <Image
-            source={require('../assets/images/pause.png')}
-            resizeMode={'contain'}
-            style={styles.playPauseIcon}
-          />
+        <TouchableOpacity onPress={this._playPause} style={styles.playPauseButton}>
+          {playbackState === 'playing' && (
+            <Image
+              source={require('../assets/images/pause.png')}
+              resizeMode={'contain'}
+              style={styles.pauseIcon}
+            />
+          )}
+
+          {[ 'ready', 'paused', 'stopped' ].includes(playbackState) && (
+            <Image
+              source={require('../assets/images/play.png')}
+              resizeMode={'contain'}
+              style={styles.playIcon}
+            />
+          )}
+
+          {[ 'loading', 'buffering', 'connecting', 'none' ].includes(playbackState) && (
+            <ActivityIndicator color={'#FFFFFF'} />
+          )}
         </TouchableOpacity>
 
-        <View onLayout={this._onScrubberLayout} style={styles.scrubberContainer}>
-          {adjustedWaveform.map((wave, index) => (
-            <View
-              key={index}
-              style={[
-                styles.wave,
-                { height: `${Math.abs(wave)}%` },
-                (index < Math.floor(adjustedWaveform.length * progress)) ? styles.pastWave : null,
-              ]}
-            />
-          ))}
-        </View>
+        <TrackPlayerScrubber waveform={track.waveform} />
       </View>
     );
   }
@@ -66,8 +73,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  pastWave: {
-    backgroundColor: '#7D4CCF',
+  pauseIcon: {
+    height: '35%',
+    width: '35%',
+  },
+  playIcon: {
+    height: '40%',
+    marginLeft: 2,
+    width: '35%',
   },
   playPauseButton: {
     alignItems: 'center',
@@ -76,22 +89,5 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     width: 40,
-  },
-  playPauseIcon: {
-    height: '35%',
-    width: '35%',
-  },
-  scrubberContainer: {
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    height: 30,
-    justifyContent: 'space-between',
-    marginLeft: 18,
-  },
-  wave: {
-    backgroundColor: '#EAECF1',
-    borderRadius: 3,
-    width: waveWidth,
   },
 });

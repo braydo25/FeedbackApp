@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
   genreTextBox: {
     alignItems: 'center',
     backgroundColor: '#7D4CCF',
-    borderRadius: 2,
+    borderRadius: 4,
     marginTop: 3,
-    paddingHorizontal: 3,
+    paddingHorizontal: 4,
     paddingVertical: 1,
   },
   nameText: {

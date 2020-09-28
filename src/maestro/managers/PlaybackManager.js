@@ -14,13 +14,17 @@ export default class PlaybackManager extends Manager {
   }
 
   static initialStore = {
+    state: 'none',
     ready: new Promise(resolve => resolveInitialReadyPromise = resolve),
   }
 
   constructor(maestro) {
     super(maestro);
 
-    TrackPlayer.setupPlayer({ playBuffer: 1.5 }).then(resolveInitialReadyPromise);
+    TrackPlayer.setupPlayer({ playBuffer: 1.5 }).then(() => {
+      TrackPlayer.addEventListener('playback-state', this._playbackStateChanged);
+      resolveInitialReadyPromise();
+    });
   }
 
   get storeName() {
@@ -74,7 +78,7 @@ export default class PlaybackManager extends Manager {
     };
   }
 
-  _playbackStatusUpdated = playbackStatus => {
-    console.log(playbackStatus);
+  _playbackStateChanged = ({ state }) => {
+    this.updateStore({ state });
   }
 }

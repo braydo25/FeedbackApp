@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   tipText: {
     color: '#000000',
-    fontFamily: 'SFProDisplay-Medium',
+    fontFamily: 'SFProDisplay-Regular',
     fontSize: 14,
     lineHeight: 20,
     marginTop: 8,

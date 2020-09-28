@@ -48,14 +48,14 @@ export default class GameImageBackground extends Component {
 
     Animated.parallel([
       Animated.timing(this.state.imageOneOpacityAnimatedValue, {
-        toValue: (lastVisibileImage === 'one') ? 1 : 0,
+        toValue: (lastVisibileImage === 'one') ? 0.95 : 0,
         delay: 100,
         duration: 400,
         easing: Easing.ease,
         useNativeDriver: true,
       }),
       Animated.timing(this.state.imageTwoOpacityAnimatedValue, {
-        toValue: (lastVisibileImage === 'two') ? 1 : 0,
+        toValue: (lastVisibileImage === 'two') ? 0.95 : 0,
         delay: 100,
         duration: 400,
         easing: Easing.ease,
