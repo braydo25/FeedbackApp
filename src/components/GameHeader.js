@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { navigationHelper } = maestro.helpers;
 
 export default class GameHeader extends Component {
+  _openDashboard = () => {
+    navigationHelper.navigate('DashboardNavigator');
+  }
+
   render() {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.profileButton}>
+          <TouchableOpacity onPress={this._openDashboard} style={styles.profileButton}>
             <Image
               source={require('../data/pics/profile.png')}
               resizeMode={'contain'}

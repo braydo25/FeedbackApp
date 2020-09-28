@@ -3,6 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GameHeader } from '../components';
 
 import GameScreen from '../screens/GameScreen';
+import LandingScreen from '../screens/LandingScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import SetupProfileScreen from '../screens/SetupProfileScreen';
 
 export default initialRouteName => {
   const MainStack = createStackNavigator();
@@ -18,6 +21,32 @@ export default initialRouteName => {
         options={{
           header: ({ scene }) => <GameHeader scene={scene} />,
           headerTransparent: true,
+        }}
+      />
+
+      <MainStack.Screen
+        name={'Landing'}
+        component={LandingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <MainStack.Screen
+        name={'Onboarding'}
+        component={OnboardingScreen}
+        options={{
+          gestureEnabled: false,
+          headerShown: false,
+        }}
+      />
+
+      <MainStack.Screen
+        name={'SetupProfile'}
+        component={SetupProfileScreen}
+        options={{
+          gestureEnabled: false,
+          headerShown: false,
         }}
       />
     </MainStack.Navigator>

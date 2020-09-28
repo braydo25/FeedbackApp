@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import DashboardNavigator from './DashboardNavigator';
 import MainNavigator from './MainNavigator';
 
 export default props => {
@@ -11,6 +12,11 @@ export default props => {
       mode={'modal'}
       headerMode={'none'}
     >
+      <RootStack.Screen
+        name={'DashboardNavigator'}
+        component={DashboardNavigator}
+      />
+
       <RootStack.Screen name={'MainNavigator'}>
         {() => MainNavigator(props.initialRouteName)}
       </RootStack.Screen>

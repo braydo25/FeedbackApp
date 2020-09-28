@@ -6,16 +6,25 @@ import maestro from './maestro';
 
 TouchableOpacity.defaultProps = { ...(TouchableOpacity.defaultProps || {}), delayPressIn: 0 };
 
+const { userManager } = maestro.managers;
+const { navigationHelper } = maestro.helpers;
+
 export default class App extends Component {
   state = {
-    initialRouteName: 'Game',
+    initialRouteName: 'Landing',
     containerOpacityAnimated: new Animated.Value(0),
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     maestro.link(this);
 
-    setTimeout(() => this._toggleVisibility(true), 750);
+    await userManager.store.ready;
+
+    this.setState({
+      initialRouteName: userManager.nextRouteNameForUserState(),
+    }, () => {
+      setTimeout(() => this._toggleVisibility(true), 750);
+    });
   }
 
   componentWillUnmount() {
@@ -51,6 +60,7 @@ export default class App extends Component {
       <Animated.View style={{ flex: 1, opacity: containerOpacityAnimated }}>
         <NavigationContainer
           theme={{ colors: { background: '#FFFFFF' } }}
+          ref={navigation => navigationHelper.setNavigation(navigation)}
           key={`navigation_base_${initialRouteName}`}
         >
           <StatusBar barStyle={'light-content'} />
