@@ -20,6 +20,10 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
+  - EXImagePicker (9.1.1):
+    - UMCore
+    - UMFileSystemInterface
+    - UMPermissionsInterface
   - EXKeepAwake (8.3.0):
     - UMCore
   - EXLinearGradient (8.3.1):
@@ -376,6 +380,7 @@ DEPENDENCIES:
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+  - EXImagePicker (from `../node_modules/expo-image-picker/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
@@ -480,6 +485,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-font/ios"
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
+  EXImagePicker:
+    :path: "../node_modules/expo-image-picker/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   EXLinearGradient:
@@ -596,6 +603,7 @@ SPEC CHECKSUMS:
   EXFileSystem: afe9b1fd937d30270bf5108ba44e2f4a1d1ad694
   EXFont: a6a4353271395f3bb4ee528b52a5035b4b0e412a
   EXImageLoader: 7153fb1307ac643299a9072b71da0d276f4c7789
+  EXImagePicker: f2fe9ee19a97b225658e80733896275a198c60f2
   EXKeepAwake: 76eed36786534f6a476748e600fa6faf07ac3d09
   EXLinearGradient: c7ca1c2933ac240ffbc805c014a72947e227ac75
   EXLocation: a3b92458ec5c4356c5d932fe0d2bbe552ef7f4cb

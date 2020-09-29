@@ -7,8 +7,8 @@ const { navigationHelper } = maestro.helpers;
 
 export default class LandingScreen extends Component {
   state = {
-    email: '',
-    password: '',
+    email: null,
+    password: null,
     error: null,
     login: false,
     register: false,
