@@ -1,4 +1,5 @@
 import { Helper } from 'react-native-maestro';
+import { Platform } from 'react-native';
 import mime from 'react-native-mime-types';
 
 export default class ApiHelper extends Helper {
@@ -32,7 +33,7 @@ export default class ApiHelper extends Helper {
     const formData = new FormData();
 
     options.files.forEach(file => {
-      formData.append('file', {
+      formData.append(file.key, {
         uri: file.uri,
         name: file.name,
         type: mime.lookup(file.uri),
@@ -40,7 +41,7 @@ export default class ApiHelper extends Helper {
     });
 
     if (options.data) {
-      Object.key(options.data).forEach(key => {
+      Object.keys(options.data).forEach(key => {
         if (options.data[key] !== undefined) {
           formData.append(key, options.data[key]);
         }

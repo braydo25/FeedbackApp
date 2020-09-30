@@ -4,7 +4,7 @@ import maestro from '../maestro';
 
 const { timeHelper } = maestro.helpers;
 
-export default class GameTrackCardFeedback extends Component {
+export default class TrackFeedback extends Component {
   render () {
     const { text, time, style } = this.props;
 
@@ -18,7 +18,7 @@ export default class GameTrackCardFeedback extends Component {
 
         <View style={styles.textContainer}>
           <Text style={styles.feedbackText}>{text}</Text>
-          <Text style={styles.timeText}>Track Time: {timeHelper.secondsToTime(time)}</Text>
+          <Text style={styles.timeText}>Braydon Batungbacal at {timeHelper.secondsToTime(time)}</Text>
         </View>
 
         <TouchableOpacity style={styles.deleteButton}>

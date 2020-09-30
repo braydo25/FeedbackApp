@@ -1,7 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { TransitionPresets } from '@react-navigation/stack';
 import DashboardNavigator from './DashboardNavigator';
 import MainNavigator from './MainNavigator';
+import UploadTrackNavigator from './UploadTrackNavigator';
 
 export default props => {
   const RootStack = createStackNavigator();
@@ -11,6 +13,12 @@ export default props => {
       initialRouteName={'MainNavigator'}
       mode={'modal'}
       headerMode={'none'}
+      screenOptions={{
+        ...TransitionPresets.ModalPresentationIOS,
+        cardStyle: {
+          backgroundColor: 'transparent',
+        },
+      }}
     >
       <RootStack.Screen
         name={'DashboardNavigator'}
@@ -20,6 +28,11 @@ export default props => {
       <RootStack.Screen name={'MainNavigator'}>
         {() => MainNavigator(props.initialRouteName)}
       </RootStack.Screen>
+
+      <RootStack.Screen
+        name={'UploadTrackNavigator'}
+        component={UploadTrackNavigator}
+      />
     </RootStack.Navigator>
   );
 };

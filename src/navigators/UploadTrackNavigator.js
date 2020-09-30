@@ -2,27 +2,27 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header } from '../components';
 
-import DashboardScreen from '../screens/DashboardScreen';
+import UploadTrackScreen from '../screens/UploadTrackScreen';
 
 export default () => {
-  const DashboardStack = createStackNavigator();
+  const UploadTrackStack = createStackNavigator();
 
   return (
-    <DashboardStack.Navigator
-      initialRouteName={'Dashboard'}
+    <UploadTrackStack.Navigator
+      initialRouteName={'UploadTrack'}
       headerMode={'screen'}
       screenOptions={{
         header: ({ scene }) => <Header scene={scene} />,
       }}
     >
-      <DashboardStack.Screen
-        name={'Dashboard'}
-        component={DashboardScreen}
+      <UploadTrackStack.Screen
+        name={'UploadTrack'}
+        component={UploadTrackScreen}
         options={{
           closeEnabled: true,
           headerTransparent: true,
         }}
       />
-    </DashboardStack.Navigator>
+    </UploadTrackStack.Navigator>
   );
 };

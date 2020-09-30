@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameTrackCardDescription from './GameTrackCardDescription';
-import GameTrackCardFeedback from './GameTrackCardFeedback';
+import TrackFeedback from './TrackFeedback';
 import GameTrackCardTip from './GameTrackCardTip';
 import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
@@ -69,7 +69,7 @@ export default class GameTrackCard extends Component {
 
   _renderFeedback = (item, index) => {
     return (
-      <GameTrackCardFeedback
+      <TrackFeedback
         {...item}
         style={(index > 0) ? styles.feedback : null}
       />

@@ -12,11 +12,13 @@ export default class TrackPlayerInfo extends ProgressComponent {
 
     return (
       <View style={[ styles.container, style ]}>
-        <Image
-          source={{ uri: track.user.avatarUrl }}
-          resizeMode={'contain'}
-          style={styles.artistImage}
-        />
+        {!!track.user.avatarUrl && (
+          <Image
+            source={{ uri: track.user.avatarUrl }}
+            resizeMode={'contain'}
+            style={styles.artistImage}
+          />
+        )}
 
         <View style={styles.details}>
           <View>

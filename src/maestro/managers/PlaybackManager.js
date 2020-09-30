@@ -48,7 +48,7 @@ export default class PlaybackManager extends Manager {
   async play() {
     await this.store.ready;
 
-    TrackPlayer.play();
+//    TrackPlayer.play();
   }
 
   async pause() {

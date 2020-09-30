@@ -9,10 +9,10 @@ export default class LandingScreen extends Component {
   state = {
     email: null,
     password: null,
-    error: null,
     login: false,
     register: false,
     loading: false,
+    error: null,
   }
 
   _submit = async () => {
@@ -30,7 +30,6 @@ export default class LandingScreen extends Component {
   }
 
   _testEmail = async () => {
-    console.log('test email!');
     const { email } = this.state;
 
     this.setState({ loading: true });
@@ -39,10 +38,10 @@ export default class LandingScreen extends Component {
       const testEmailResponse = await userManager.register(email);
 
       this.setState({
-        error: '',
         login: testEmailResponse.code === 403,
         register: testEmailResponse.code === 200,
         loading: false,
+        error: '',
       });
     } catch (error) {
       this.setState({
@@ -53,7 +52,6 @@ export default class LandingScreen extends Component {
   }
 
   _login = async () => {
-    console.log('login!');
     const { email, password } = this.state;
 
     this.setState({ loading: true });
@@ -71,7 +69,6 @@ export default class LandingScreen extends Component {
   }
 
   _register = async () => {
-    console.log('register!');
     const { password } = this.state;
 
     this.setState({ loading: true });

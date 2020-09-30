@@ -72,10 +72,22 @@ export default class UserManager extends Manager {
 
   async updateUser(fields) {
     const { apiHelper } = this.maestro.helpers;
+    const { avatarImageUri, ...data } = fields;
 
-    const response = await apiHelper.patch({
+    const response = (avatarImageUri) ? await apiHelper.uploadFiles({
+      method: 'PATCH',
       path: '/users/me',
-      data: fields,
+      files: [
+        {
+          key: 'avatar',
+          uri: avatarImageUri,
+          name: avatarImageUri.substring(avatarImageUri.lastIndexOf('/') + 1),
+        },
+      ],
+      data,
+    }) : await apiHelper.patch({
+      path: '/users/me',
+      data,
     });
 
     if (response.code !== 200) {
@@ -124,8 +136,7 @@ export default class UserManager extends Manager {
     const { asyncStorageHelper } = this.maestro.helpers;
 
     user = (this.store.user && user) ? { ...this.store.user, ...user } : user;
-console.log('setting user');
-console.log(user);
+
     this.updateStore({ user });
 
     asyncStorageHelper.setItem(LOGGED_IN_USER_KEY, user);
@@ -138,6 +149,12 @@ console.log(user);
       return;
     }
 
-    // TODO
+    await apiHelper.put({
+      path: '/devices',
+      data: {
+        uuid: await deviceHelper.getUUID(),
+        details: await deviceHelper.getDeviceDetails(),
+      },
+    });
   }
 }

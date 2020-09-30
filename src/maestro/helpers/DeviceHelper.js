@@ -1,8 +1,11 @@
 import { Platform } from 'react-native';
 import { Helper } from 'react-native-maestro';
-import Device from 'expo-device';
+import { v4 as uuidv4 } from 'uuid';
+import * as Device from 'expo-device';
 
-export default class DevicerHelper extends Helper {
+const DEVICE_UUID_KEY = 'DEVICE_UUID_KEY';
+
+export default class DeviceHelper extends Helper {
   static get instanceKey() {
     return 'deviceHelper';
   }
@@ -27,5 +30,20 @@ export default class DevicerHelper extends Helper {
       platformApiLevel: (Platform.OS === 'android') ? Device.platformApiLevel : null,
       deviceName: Device.deviceName,
     };
+  }
+
+  async getUUID() {
+    const { asyncStorageHelper } = this.maestro.helpers;
+    const existingUUID = await asyncStorageHelper.getItem(DEVICE_UUID_KEY);
+
+    if (!existingUUID) {
+      const uuid = uuidv4();
+
+      await asyncStorageHelper.setItem(DEVICE_UUID_KEY, uuid);
+
+      return uuid;
+    }
+
+    return existingUUID;
   }
 }

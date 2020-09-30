@@ -3,19 +3,37 @@ import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet } from 'r
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
+const { userManager } = maestro.managers;
 
 export default class GameHeader extends Component {
+  state = {
+    user: userManager.store.user,
+  }
+
+  componentDidMount() {
+    maestro.link(this);
+  }
+
+  componentWillUnmount() {
+    maestro.unlink(this);
+  }
+
+  receiveStoreUpdate({ activity, user }) {
+    this.setState({ user: user.user });
+  }
+
   _openDashboard = () => {
     navigationHelper.navigate('DashboardNavigator');
   }
 
   render() {
+    const { user } = this.state;
     return (
       <SafeAreaView>
         <View style={styles.container}>
           <TouchableOpacity onPress={this._openDashboard} style={styles.profileButton}>
             <Image
-              source={require('../data/pics/profile.png')}
+              source={{ url: user.avatarUrl }}
               resizeMode={'contain'}
               style={styles.profileImage}
             />
