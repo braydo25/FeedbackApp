@@ -1,5 +1,6 @@
 import { Helper } from 'react-native-maestro';
 import { Platform } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 import mime from 'react-native-mime-types';
 
 export default class ApiHelper extends Helper {
@@ -29,16 +30,46 @@ export default class ApiHelper extends Helper {
     return this._request({ ...options, method: 'DELETE' });
   }
 
-  uploadFiles(options) {
+  async uploadFiles(options) {
     const formData = new FormData();
 
-    options.files.forEach(file => {
-      formData.append(file.key, {
-        uri: file.uri,
-        name: file.name,
-        type: mime.lookup(file.uri),
-      });
-    });
+    for (let i = 0; i < options.files.length; i++) {
+      const file = options.files[i];
+
+      if (file.blob) {
+        if (Platform.OS === 'web') {
+          formData.append(file.key, file.blob);
+        } else {
+          const fileReader = new FileReader();
+
+          await new Promise(resolve => {
+            fileReader.onload = async () => {
+              const fileUri = `${FileSystem.cacheDirectory}/${file.blob.data.name}`;
+
+              await FileSystem.writeAsStringAsync(fileUri, fileReader.result.split(',')[1], {
+                encoding: FileSystem.EncodingType.Base64,
+              });
+
+              formData.append(file.key, {
+                uri: fileUri,
+                name: file.blob.data.name,
+                type: mime.lookup(fileUri),
+              });
+
+              resolve();
+            };
+
+            fileReader.readAsDataURL(file.blob);
+          });
+        }
+      } else {
+        formData.append(file.key, {
+          uri: file.uri,
+          name: file.name,
+          type: mime.lookup(file.uri),
+        });
+      }
+    }
 
     if (options.data) {
       Object.keys(options.data).forEach(key => {

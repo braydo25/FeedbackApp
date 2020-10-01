@@ -3,6 +3,7 @@ import AsyncStorageHelper from './AsyncStorageHelper';
 import DataHelper from './DataHelper';
 import DeviceHelper from './DeviceHelper';
 import NavigationHelper from './NavigationHelper';
+import ScraperHelper from './ScraperHelper';
 import TimeHelper from './TimeHelper';
 
 export default [
@@ -11,5 +12,6 @@ export default [
   DataHelper,
   DeviceHelper,
   NavigationHelper,
+  ScraperHelper,
   TimeHelper,
 ];

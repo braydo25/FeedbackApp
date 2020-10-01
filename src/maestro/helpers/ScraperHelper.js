@@ -5,9 +5,39 @@ export default class ScraperHelper extends Helper {
     return 'scraperHelper';
   }
 
-  async scrapeUrl(url) {
+  async scrapeUrlAudioData(url) {
+    const { apiHelper } = this.maestro.helpers;
     const result = await fetch(url);
+    const html = await result.text();
+    const response = await apiHelper.post({
+      path: '/scraper',
+      data: { url, html },
+    });
 
-    return result.text();
-  };
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    if (!response.body.audio) {
+      throw new Error('Could not find any audio for this URL.');
+    }
+
+    const audio = await fetch(response.body.audio, {
+      method: 'GET',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9',
+      },
+    });
+
+    const blob = await audio.blob();
+
+    if (blob.size < 1000) {
+      throw new Error('Audio retrieval failed. Try uploading your audio file instead.');
+    }
+
+    return {
+      ...response.body,
+      blob,
+    };
+  }
 }
