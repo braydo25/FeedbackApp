@@ -86,12 +86,14 @@ export default class GameTrackCard extends Component {
             style={styles.commentsList}
           />
 
-          <LinearGradient
-            start={{ x: -0.4, y: -0.4 }}
-            end={{ x: 2, y: 2 }}
-            colors={[ '#FFFAFF', '#DED4DE' ]}
-            style={styles.commentsBackgroundGradient}
-          />
+          <View styles={styles.commentsBackgroundGradient}>
+            <LinearGradient
+              start={{ x: -0.4, y: -0.4 }}
+              end={{ x: 2, y: 2 }}
+              colors={[ '#FFFAFF', '#DED4DE' ]}
+              style={styles.commentsBackgroundGradient}
+            />
+          </View>
         </View>
 
         <TrackPlayerInfo track={track} style={styles.trackPlayerInfo} />
@@ -114,7 +116,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flex: 1,
-    overflow: 'hidden',
   },
   commentsList: {
     flex: 1,

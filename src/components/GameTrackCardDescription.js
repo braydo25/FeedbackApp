@@ -7,8 +7,13 @@ export default class GameTrackCardDescription extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.artistText}>{track.user.name} Says...</Text>
-        <Text style={styles.descriptionText}>{track.description}</Text>
+        <View>
+          <Text style={styles.artistText}>{track.user.name} Says...</Text>
+        </View>
+
+        <View>
+          <Text style={styles.descriptionText}>{track.description}</Text>
+        </View>
       </View>
     );
   }
