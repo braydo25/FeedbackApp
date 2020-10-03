@@ -5,8 +5,13 @@ export default class GameTrackCardTip extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>Here's a tip...</Text>
-        <Text style={styles.tipText}>If your feedback is marked as useful by the artist, you'll get a major EXP boost!</Text>
+        <View>
+          <Text style={styles.titleText}>Here's a tip...</Text>
+        </View>
+
+        <View>
+          <Text style={styles.tipText}>If your feedback is marked as useful by the artist, you'll get a major EXP boost!</Text>
+        </View>
       </View>
     );
   }

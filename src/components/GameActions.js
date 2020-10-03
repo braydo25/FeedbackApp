@@ -37,6 +37,7 @@ export default class GameActions extends Component {
         </TouchableOpacity>
 
         <TextInput
+          autoFocus
           multiline
           placeholder={'What do you think?'}
           placeholderTextColor={'#ACACAC'}
