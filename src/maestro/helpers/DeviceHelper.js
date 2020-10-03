@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
 import { Helper } from 'react-native-maestro';
-import { v4 as uuidv4 } from 'uuid';
 import * as Device from 'expo-device';
 
 const DEVICE_UUID_KEY = 'DEVICE_UUID_KEY';
@@ -37,7 +36,10 @@ export default class DeviceHelper extends Helper {
     const existingUUID = await asyncStorageHelper.getItem(DEVICE_UUID_KEY);
 
     if (!existingUUID) {
-      const uuid = uuidv4();
+      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
 
       await asyncStorageHelper.setItem(DEVICE_UUID_KEY, uuid);
 

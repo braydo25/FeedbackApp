@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, StatusBar, TouchableOpacity } from 'react-native';
+import { Animated, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigators/RootNavigator';
 import maestro from './maestro';
@@ -57,7 +57,7 @@ export default class App extends Component {
     const { initialRouteName, containerOpacityAnimated } = this.state;
 
     return (
-      <Animated.View style={{ flex: 1, opacity: containerOpacityAnimated }}>
+      <Animated.View style={[ styles.container, { opacity: containerOpacityAnimated } ]}>
         <NavigationContainer
           theme={{ colors: { background: '#FFFFFF' } }}
           ref={navigation => navigationHelper.setNavigation(navigation)}
@@ -70,3 +70,10 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#000000',
+    flex: 1,
+  },
+});
