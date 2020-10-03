@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
+import maestro from '../maestro';
 
 const waveWidth = 3;
 const waveSpace = 1;
+
+const { playbackManager } = maestro.managers;
 
 export default class TrackPlayerScrubber extends ProgressComponent {
   state = {
@@ -11,7 +14,7 @@ export default class TrackPlayerScrubber extends ProgressComponent {
   }
 
   _onScrubberLayout = ({ nativeEvent }) => {
-    const { waveform } = this.props;
+    const { waveform } = this.props.track;
     const displayedWaves = Math.floor(waveform.length / (waveWidth + waveSpace));
     const aggregatePerDisplayedWave = Math.floor(waveform.length / displayedWaves);
     const adjustedWaveform = [];
@@ -30,8 +33,10 @@ export default class TrackPlayerScrubber extends ProgressComponent {
   }
 
   render() {
+    const { track } = this.props;
     const { adjustedWaveform } = this.state;
-    const progress = this.getProgress();
+    const { currentTrackId } = playbackManager.store;
+    const progress = (track.id === currentTrackId) ? this.getProgress() : 0;
 
     return (
       <View onLayout={this._onScrubberLayout} style={styles.container}>

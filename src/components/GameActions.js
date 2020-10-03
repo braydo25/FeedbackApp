@@ -6,25 +6,25 @@ const { gameManager } = maestro.managers;
 
 export default class GameActions extends Component {
   state = {
-    feebackText: '',
+    commentText: '',
   }
 
   _submit = () => {
-    this._resetFeedback();
+    gameManager.createTrackComment(this.state.commentText);
 
-    gameManager.createTrackFeedback(this.state.feedbackText);
+    this._resetComment();
   }
 
   _nextTrack = () => {
     gameManager.nextTrackAnimated();
   }
 
-  _resetFeedback = () => {
-    this.setState({ feedbackText: '' });
+  _resetComment = () => {
+    this.setState({ commentText: '' });
   }
 
   render() {
-    const { feedbackText } = this.state;
+    const { commentText } = this.state;
 
     return (
       <View style={styles.container}>
@@ -40,14 +40,14 @@ export default class GameActions extends Component {
           multiline
           placeholder={'What do you think?'}
           placeholderTextColor={'#ACACAC'}
-          onChangeText={text => this.setState({ feedbackText: text })}
-          value={feedbackText}
+          onChangeText={text => this.setState({ commentText: text })}
+          value={commentText}
           style={styles.input}
           ref={component => this.textInput = component}
         />
 
         <TouchableOpacity
-          disabled={!feedbackText}
+          disabled={!commentText}
           onPress={this._submit}
           style={styles.button}
         >

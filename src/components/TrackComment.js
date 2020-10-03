@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import maestro from '../maestro';
 
 const { timeHelper } = maestro.helpers;
 
-export default class TrackFeedback extends Component {
+export default class TrackComment extends Component {
   render () {
-    const { text, time, style } = this.props;
+    const { id, user, text, time, style } = this.props;
 
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={require('../data/pics/profile.png')}
+          source={{ url: user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.avatarImage}
         />
 
         <View style={styles.textContainer}>
-          <Text style={styles.feedbackText}>{text}</Text>
-          <Text style={styles.timeText}>Braydon Batungbacal at {timeHelper.secondsToTime(time)}</Text>
+          <Text style={styles.commentText}>{text}</Text>
+          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)}</Text>
         </View>
 
-        <TouchableOpacity style={styles.deleteButton}>
-          <Image
-            source={require('../assets/images/delete.png')}
-            resizeMode={'contain'}
-            style={styles.deleteIcon}
-          />
-        </TouchableOpacity>
+        {!!id && (
+          <TouchableOpacity style={styles.deleteButton}>
+            <Image
+              source={require('../assets/images/delete.png')}
+              resizeMode={'contain'}
+              style={styles.deleteIcon}
+            />
+          </TouchableOpacity>
+        )}
+
+        {!id && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator />
+          </View>
+        )}
       </View>
     );
   }
@@ -39,6 +47,14 @@ const styles = StyleSheet.create({
     height: 40,
     marginRight: 10,
     width: 40,
+  },
+  commentText: {
+    color: '#000000',
+    fontFamily: 'SFProDisplay-Medium',
+    fontSize: 14,
+    lineHeight: 18,
+    marginBottom: 2,
+    marginRight: 35,
   },
   container: {
     backgroundColor: '#FFFFFF',
@@ -63,13 +79,13 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     width: '45%',
   },
-  feedbackText: {
-    color: '#000000',
-    fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
-    lineHeight: 18,
-    marginRight: 35,
-    marginBottom: 2,
+  loadingContainer: {
+    alignItems: 'center',
+    backgroundColor: '#FAF4FA',
+    borderRadius: 16,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
   },
   textContainer: {
     flex: 1,

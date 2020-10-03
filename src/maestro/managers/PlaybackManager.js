@@ -16,6 +16,7 @@ export default class PlaybackManager extends Manager {
   static initialStore = {
     state: 'none',
     ready: new Promise(resolve => resolveInitialReadyPromise = resolve),
+    currentTrackId: null,
   }
 
   constructor(maestro) {
@@ -31,24 +32,19 @@ export default class PlaybackManager extends Manager {
     return 'playback';
   }
 
-  async queueTracks(tracks) {
-    const promises = [];
-
-    tracks.forEach(track => {
-      promises.push(this.queueTrack(track));
-    });
-
-    return Promise.all(promises);
-  }
-
-  async queueTrack(track) {
-    return TrackPlayer.add(this._trackToTrackObject(track));
-  }
-
-  async play() {
+  async play(track) {
     await this.store.ready;
 
-//    TrackPlayer.play();
+    const { currentTrackId } = this.store;
+
+    if (track.id !== currentTrackId) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(this._trackToTrackObject(track));
+
+      this.updateStore({ currentTrackId: track.id });
+    }
+
+    return TrackPlayer.play();
   }
 
   async pause() {
@@ -57,16 +53,14 @@ export default class PlaybackManager extends Manager {
     TrackPlayer.pause();
   }
 
-  async next() {
-    await this.store.ready;
-
-    TrackPlayer.skipToNext();
-  }
-
   async getCurrentTrackPosition() {
     const position = await TrackPlayer.getPosition();
 
     return Math.floor(position);
+  }
+
+  async getCurrentTrackId() {
+    return TrackPlayer.getCurrentTrack();
   }
 
   /*
@@ -75,7 +69,7 @@ export default class PlaybackManager extends Manager {
 
   _trackToTrackObject = track => {
     return {
-      id: `track_${track.id}`,
+      id: `${track.id}`,
       url: track.mp3Url,
       title: track.name,
       artist: track.user.name,

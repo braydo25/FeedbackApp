@@ -19,14 +19,20 @@ export default class TrackPlayerControls extends Component {
   }
 
   receiveStoreUpdate({ playback }) {
-    this.setState({ playbackState: playback.state });
+    const { track } = this.props;
+    const { currentTrackId } = playbackManager.store;
+
+    this.setState({
+      playbackState: (track.id === currentTrackId) ? playback.state : 'stopped',
+    });
   }
 
   _playPause = () => {
+    const { track } = this.props;
     const { playbackState } = this.state;
 
     if ([ 'ready', 'paused', 'connecting', 'stopped' ].includes(playbackState)) {
-      playbackManager.play();
+      playbackManager.play(track);
     }
 
     if ([ 'playing', 'buffering' ].includes(playbackState)) {
@@ -62,7 +68,7 @@ export default class TrackPlayerControls extends Component {
           )}
         </TouchableOpacity>
 
-        <TrackPlayerScrubber waveform={track.waveform} />
+        <TrackPlayerScrubber track={track} />
       </View>
     );
   }
@@ -88,6 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 40,
     justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 1.00,
     width: 40,
   },
 });

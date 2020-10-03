@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Card from './Card';
 import GameTrackCardDescription from './GameTrackCardDescription';
-import TrackFeedback from './TrackFeedback';
 import GameTrackCardTip from './GameTrackCardTip';
+import TrackComment from './TrackComment';
 import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
 
+const { gameManager } = maestro.managers;
+
 export default class GameTrackCard extends Component {
   state = {
-    feedback: [],
+    comments: [],
   }
 
   componentDidMount() {
@@ -21,12 +24,20 @@ export default class GameTrackCard extends Component {
     maestro.unlink(this);
   }
 
+  receiveStoreUpdate({ game }) {
+    const { track } = this.props;
+
+    if (track.id === gameManager.getCurrentTrack().id) {
+      this.setState({ comments: game.currentTrackComments });
+    }
+  }
+
   receiveEvent(name, value) {
-    if (name === 'GAME_FEEDBACK_CREATED') {
+    if (name === 'GAME_COMMENT_CREATED') {
       this.setState({
-        feedback: [
-          { feedback: true, ...value },
-          ...this.state.feedback,
+        comments: [
+          { comment: true, ...value },
+          ...this.state.comments,
         ],
       });
     }
@@ -34,124 +45,87 @@ export default class GameTrackCard extends Component {
 
   reset = () => {
     this.setState({
-      feedback: [],
+      comments: [],
     });
   }
 
-  _generateListData = () => {
-    const { track } = this.props;
-    const { feedback } = this.state;
-
-    return [
-      ...((!feedback.length && track.description) ? [
-        { description: true },
-      ] : []),
-      ...((!feedback.length && !track.description) ? [
-        { tip: true },
-      ] : []),
-      ...feedback,
-    ];
-  }
-
   _renderItem = ({ item, index }) => {
-    if (item.feedback) {
-      return this._renderFeedback(item, index);
-    }
-
-    if (item.description) {
-      return this._renderDescription(item, index);
-    }
-
-    if (item.tip) {
-      return this._renderTip(item, index);
-    }
-  }
-
-  _renderFeedback = (item, index) => {
     return (
-      <TrackFeedback
+      <TrackComment
         {...item}
-        style={(index > 0) ? styles.feedback : null}
+        style={(index > 0) ? styles.comment : null}
       />
     );
   }
 
-  _renderDescription = () => {
-    return (
-      <GameTrackCardDescription track={this.props.track} />
-    );
-  }
+  _renderEmptyComponent = () => {
+    const { track } = this.props;
 
-  _renderTip = (item, index) => {
-    return (
+    return (track.description) ? (
+      <GameTrackCardDescription track={this.props.track} />
+    ) : (
       <GameTrackCardTip />
     );
   }
 
   render() {
     const { track } = this.props;
-    const listData = this._generateListData();
+    const { comments } = this.state;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.feedbackContainer}>
+      <Card style={styles.container}>
+        <View style={styles.commentsContainer}>
           <FlatList
-            inverted={listData[0].feedback || listData.length > 1}
-            data={listData}
+            inverted={comments?.length > 0}
+            data={comments}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => `${index}`}
             keyboardShouldPersistTaps={'always'}
-            contentContainerStyle={styles.feedbackListContentContainer}
-            style={styles.feedbackList}
+            ListEmptyComponent={this._renderEmptyComponent}
+            contentContainerStyle={styles.commentsListContentContainer}
+            style={styles.commentsList}
           />
 
           <LinearGradient
             start={{ x: -0.4, y: -0.4 }}
             end={{ x: 2, y: 2 }}
             colors={[ '#FFFAFF', '#DED4DE' ]}
-            style={styles.feedbackBackgroundGradient}
+            style={styles.commentsBackgroundGradient}
           />
         </View>
 
         <TrackPlayerInfo track={track} style={styles.trackPlayerInfo} />
         <TrackPlayerControls track={track} style={styles.trackPlayerControls} />
-      </View>
+      </Card>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    elevation: 4,
-    flex: 1,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  feedback: {
+  comment: {
     marginBottom: 8,
   },
-  feedbackBackgroundGradient: {
+  commentsBackgroundGradient: {
     ...StyleSheet.absoluteFillObject,
     zIndex: -1,
   },
-  feedbackContainer: {
+  commentsContainer: {
     backgroundColor: '#F1EAF1',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flex: 1,
     overflow: 'hidden',
   },
-  feedbackList: {
+  commentsList: {
     flex: 1,
   },
-  feedbackListContentContainer: {
+  commentsListContentContainer: {
     flexGrow: 1,
     paddingHorizontal: 10,
     paddingVertical: 12,
+  },
+  container: {
+    flex: 1,
   },
   trackPlayerControls: {
     marginVertical: 16,

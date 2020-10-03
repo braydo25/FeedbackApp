@@ -70,7 +70,7 @@ export default class GameTrackCardStack extends Component {
 
     this.setState({ animating: true });
 
-    playbackManager.next();
+    playbackManager.play(gameManager.getNextTrack());
 
     Animated.decay(this.state.panAnimatedValue, {
       velocity: { x: velocityX, y: velocityY },
@@ -94,7 +94,11 @@ export default class GameTrackCardStack extends Component {
       }),
     ]).start(() => {
       gameManager.nextTrack();
-      this.topCard.reset();
+
+      if (this.topCard) {
+        this.topCard.reset();
+      }
+
       this.state.panAnimatedValue.stopAnimation();
       this.state.panAnimatedValue.setValue({ x: 0, y: 0 });
       this.state.stackScaleAnimatedValue.setValue(stackScaleValue);

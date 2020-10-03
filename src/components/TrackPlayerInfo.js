@@ -3,12 +3,14 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
 import maestro from '../maestro';
 
+const { playbackManager } = maestro.managers;
 const { timeHelper } = maestro.helpers;
 
 export default class TrackPlayerInfo extends ProgressComponent {
   render() {
-    const { track, style } = this.props;
-    const { position, duration } = this.state;
+    const { track, showMetadata, style } = this.props;
+    const { currentTrackId } = playbackManager.store;
+    const position = (track.id === currentTrackId) ? this.state.position : 0;
 
     return (
       <View style={[ styles.container, style ]}>
@@ -21,13 +23,35 @@ export default class TrackPlayerInfo extends ProgressComponent {
         )}
 
         <View style={styles.details}>
-          <View>
-            <Text style={styles.nameText}>{track.name}</Text>
-            <Text style={styles.artistText}>{track.user.name}</Text>
+          <View style={styles.detailsLeftContainer}>
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={styles.nameText}
+            >
+              {track.name}
+            </Text>
+
+            {!showMetadata && (
+              <Text style={styles.artistText}>{track.user.name}</Text>
+            )}
+
+            {showMetadata && (
+              <View style={styles.metadataContainer}>
+                <Image source={require('../assets/images/play-gray.png')} style={styles.metadataPlayIcon} />
+                <Text style={styles.metadataText}>0</Text>
+
+                <Image source={require('../assets/images/comment-gray.png')} style={styles.metadataCommentsIcon} />
+                <Text style={styles.metadataText}>0</Text>
+              </View>
+            )}
           </View>
 
-          <View style={styles.timeGenreContainer}>
-            <Text style={styles.timeText}>{timeHelper.secondsToTime(position)} <Text style={styles.timeTotalText}>/ {timeHelper.secondsToTime(duration || track.duration)}</Text></Text>
+          <View style={styles.detailsRightContainer}>
+            <Text style={styles.timeText}>
+              <Text style={styles.timeCurrentText}>{timeHelper.secondsToTime(position)} </Text>
+              / {timeHelper.secondsToTime(track.duration)}
+            </Text>
 
             <View style={styles.genreTextBox}>
               <Text style={styles.genreText}>{track.genre.name}</Text>
@@ -61,6 +85,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  detailsLeftContainer: {
+    flex: 1,
+  },
+  detailsRightContainer: {
+    alignItems: 'flex-end',
+  },
   genreText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
@@ -74,21 +104,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 1,
   },
+  metadataCommentsIcon: {
+    height: 10,
+    marginRight: 4,
+    width: 10,
+  },
+  metadataContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  metadataPlayIcon: {
+    height: 10,
+    marginRight: 4,
+    width: 8,
+  },
+  metadataText: {
+    color: '#B8BFC9',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 14,
+    marginRight: 12,
+  },
   nameText: {
     color: '#021224',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 16,
     marginBottom: 2,
+    marginRight: 5,
   },
-  timeGenreContainer: {
-    alignItems: 'flex-end',
+  timeCurrentText: {
+    color: '#7D4CCF',
   },
   timeText: {
-    color: '#7D4CCF',
+    color: '#B8BFC9',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 14,
-  },
-  timeTotalText: {
-    color: '#B8BFC9',
+    textAlign: 'right',
   },
 });

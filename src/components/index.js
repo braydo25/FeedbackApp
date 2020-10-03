@@ -1,3 +1,4 @@
+import Card from './Card';
 import GameActions from './GameActions';
 import GameHeader from './GameHeader';
 import GameImageBackground from './GameImageBackground';
@@ -8,11 +9,14 @@ import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
 import ProfileCard from './ProfileCard';
 import TrackCard from './TrackCard';
-import TrackFeedback from './TrackFeedback';
+import TrackComment from './TrackComment';
 import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
+import TracksList from './TracksList';
+import UploadTrackCard from './UploadTrackCard';
 
 export {
+  Card,
   GameActions,
   GameHeader,
   GameImageBackground,
@@ -23,7 +27,9 @@ export {
   Header,
   ProfileCard,
   TrackCard,
-  TrackFeedback,
+  TrackComment,
   TrackPlayerControls,
   TrackPlayerInfo,
+  TracksList,
+  UploadTrackCard,
 };

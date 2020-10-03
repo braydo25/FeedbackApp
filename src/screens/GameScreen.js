@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, Dimensions, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, View, ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import { GameImageBackground, GameTrackCardStack, GameActions } from '../components';
 import maestro from '../maestro';
 
@@ -11,6 +11,7 @@ export default class GameScreen extends Component {
   state = {
     tracks: null,
     keyboardVerticalOffset: 0,
+    loading: false,
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ export default class GameScreen extends Component {
   _loadTracks = async () => {
     await gameManager.loadTracks();
 
-    playbackManager.play();
+    playbackManager.play(gameManager.getCurrentTrack());
   }
 
   _onLayout = ({ nativeEvent }) => {
@@ -51,8 +52,18 @@ export default class GameScreen extends Component {
           keyboardVerticalOffset={keyboardVerticalOffset}
           style={styles.innerContainer}
         >
-          <GameTrackCardStack tracks={tracks} />
-          <GameActions />
+          {!!tracks && (
+            <>
+              <GameTrackCardStack tracks={tracks} />
+              <GameActions />
+            </>
+          )}
+
+          {!tracks && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size={'large'} color={'#FFFFFF'} />
+            </View>
+          )}
         </KeyboardAvoidingView>
       </SafeAreaView>
     );
@@ -68,5 +79,10 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     paddingHorizontal: 16,
     paddingTop: 70,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
 });

@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Card from './Card';
+import maestro from '../maestro';
+
+const { navigationHelper } = maestro.helpers;
 
 export default class ProfileCard extends Component {
+  _openEditProfile = () => {
+    navigationHelper.navigate('ProfileEdit');
+  }
+
   render() {
-    const { style } = this.props;
+    const { user, style } = this.props;
 
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={{ url: 'https://i1.sndcdn.com/avatars-s3HB5DUwmalQzzwL-n2iDNQ-t500x500.jpg' }}
+          source={{ url: user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.artistImage}
         />
 
-        <View style={styles.card}>
-          <Text style={styles.artistText}>EYERI MERINO</Text>
+        <Card style={styles.card}>
+          <TouchableOpacity onPress={this._openEditProfile} style={styles.settingsButton}>
+            <Image source={require('../assets/images/settings.png')} style={styles.settingsIcon} />
+          </TouchableOpacity>
+
+          <Text style={styles.artistText}>{user.name}</Text>
 
           <View style={styles.levelContainer}>
             <View style={styles.levelTextContainer}>
@@ -26,7 +38,7 @@ export default class ProfileCard extends Component {
               <View style={styles.levelBarFill} />
             </View>
           </View>
-        </View>
+        </Card>
       </View>
     );
   }
@@ -46,16 +58,9 @@ const styles = StyleSheet.create({
   },
   card: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
     marginTop: -40,
-    paddingBottom: 30,
+    paddingBottom: 32,
     paddingTop: 54,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    width: '100%',
   },
   container: {
     alignItems: 'center',
@@ -97,5 +102,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 16,
   },
-
+  settingsButton: {
+    alignItems: 'center',
+    backgroundColor: '#7C4BCE',
+    borderRadius: 14,
+    height: 40,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 32,
+    top: 16,
+    width: 40,
+  },
+  settingsIcon: {
+    height: 20,
+    width: 20,
+  },
 });

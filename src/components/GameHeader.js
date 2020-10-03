@@ -22,8 +22,8 @@ export default class GameHeader extends Component {
     this.setState({ user: user.user });
   }
 
-  _openDashboard = () => {
-    navigationHelper.navigate('DashboardNavigator');
+  _openProfile = () => {
+    navigationHelper.navigate('ProfileNavigator');
   }
 
   render() {
@@ -31,7 +31,7 @@ export default class GameHeader extends Component {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <TouchableOpacity onPress={this._openDashboard} style={styles.profileButton}>
+          <TouchableOpacity onPress={this._openProfile} style={styles.profileButton}>
             <Image
               source={{ url: user.avatarUrl }}
               resizeMode={'contain'}

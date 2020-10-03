@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TransitionPresets } from '@react-navigation/stack';
-import DashboardNavigator from './DashboardNavigator';
+import ProfileNavigator from './ProfileNavigator';
 import MainNavigator from './MainNavigator';
 import UploadTrackNavigator from './UploadTrackNavigator';
 
@@ -21,8 +21,8 @@ export default props => {
       }}
     >
       <RootStack.Screen
-        name={'DashboardNavigator'}
-        component={DashboardNavigator}
+        name={'ProfileNavigator'}
+        component={ProfileNavigator}
       />
 
       <RootStack.Screen name={'MainNavigator'}>

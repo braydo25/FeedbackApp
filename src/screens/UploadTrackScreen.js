@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import maestro from '../maestro';
 
 const { tracksManager } = maestro.managers;
-const { scraperHelper } = maestro.helpers;
+const { scraperHelper, navigationHelper } = maestro.helpers;
 
 export default class UploadTrackScreen extends Component {
   state = {
+    track: null,
     url: null,
     file: null,
     name: null,
     description: null,
     genreId: null,
+    loading: false,
     error: null,
   }
 
@@ -22,42 +24,126 @@ export default class UploadTrackScreen extends Component {
     this.setState({ file });
   }
 
-  _continue = async () => {
-    const audioData = await scraperHelper.scrapeUrlAudioData(this.state.url);
-    const track = await tracksManager.createTrack({ audioBlob: audioData.blob });
-    console.log(audioData);
-    console.log(track);
+  _upload = async () => {
+    const { url, file } = this.state;
+
+    this.setState({ loading: true });
+
+    let audioData = null;
+    let track = null;
+
+    try {
+      audioData = (url) ? await scraperHelper.scrapeUrlAudioData(this.state.url) : null;
+      track = (file)
+        ? await tracksManager.createTrack({ audioUri: file.uri })
+        : await tracksManager.createTrack({
+          audioBlob: audioData.blob,
+          name: audioData.title,
+          description: audioData.description,
+        });
+
+      this.setState({
+        track,
+        name: audioData?.title,
+        description: audioData?.description,
+        loading: false,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error.message,
+      });
+    }
+  }
+
+  _save = async () => {
+    const { track, name, description, genreId } = this.state;
+
+    this.setState({ loading: true });
+
+    try {
+      await tracksManager.updateTrack({
+        trackId: track.id,
+        fields: { name, description, genreId },
+      });
+
+      navigationHelper.pop();
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error.message,
+      });
+    }
   }
 
   render() {
-    const { url, file } = this.state;
+    const { track, url, file, name, description, genreId, loading, error } = this.state;
 
     return (
       <View style={styles.container}>
-        {!file && (
+        {!track && (
           <>
-            <TextInput
-              onChangeText={text => this.setState({ url: text })}
-              placeholder={'SoundCloud Track or YouTube URL'}
-            />
+            {!file && (
+              <>
+                <TextInput
+                  onChangeText={text => this.setState({ url: text })}
+                  placeholder={'SoundCloud Track or YouTube URL'}
+                />
 
-            <Text>Or</Text>
+                <Text>Or</Text>
 
-            <TouchableOpacity onPress={this._selectFile}>
-              <Text>Select A File</Text>
+                <TouchableOpacity disabled={loading} onPress={this._selectFile}>
+                  <Text>Select A File</Text>
+                </TouchableOpacity>
+              </>
+            )}
+
+            {file && (
+              <TouchableOpacity onPress={() => this.setState({ file: null })}>
+                <Text>{file.name} (Tap to remove)</Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity onPress={this._upload} disabled={!url && !file}>
+              {!loading && (
+                <Text>Continue</Text>
+              )}
+
+              {loading && (
+                <ActivityIndicator />
+              )}
             </TouchableOpacity>
           </>
         )}
 
-        {file && (
-          <TouchableOpacity onPress={() => this.setState({ file: null })}>
-            <Text>{file.name} (Tap to remove)</Text>
-          </TouchableOpacity>
+        {track && (
+          <>
+            <TextInput
+              placeholder={'Track Name'}
+              value={name}
+            />
+
+            <TextInput
+              placeholder={'genreId'}
+              onChangeText={text => this.setState({ genreId: text })}
+              value={genreId}
+            />
+
+            <TextInput
+              multiline
+              placeholder={'Track Description'}
+              value={description}
+            />
+
+            <TouchableOpacity onPress={this._save} disabled={!name}>
+              <Text>Submit</Text>
+            </TouchableOpacity>
+          </>
         )}
 
-        <TouchableOpacity onPress={this._continue} disabled={!url && !file}>
-          <Text>Continue</Text>
-        </TouchableOpacity>
+        {!!error && (
+          <Text>{error}</Text>
+        )}
       </View>
     );
   }

@@ -13,9 +13,23 @@ export default class TracksManager extends Manager {
     return 'tracks';
   };
 
-  async createTrack(fields) {
+  async loadTracks() {
     const { apiHelper } = this.maestro.helpers;
-    const { audioBlob, audioUri, ...data } = fields;
+    const response = await apiHelper.get({
+      path: '/tracks',
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    this.updateStore({ tracks: response.body });
+
+    return response.body;
+  }
+
+  async createTrack({ audioBlob, audioUri, name, description, genreId }) {
+    const { apiHelper } = this.maestro.helpers;
     const response = await apiHelper.uploadFiles({
       method: 'POST',
       path: '/tracks',
@@ -27,7 +41,7 @@ export default class TracksManager extends Manager {
           name: (audioUri) ? audioUri.substring(audioUri.lastIndexOf('/') + 1) : undefined,
         },
       ],
-      data,
+      data: { name, description, genreId },
     });
 
     if (response.code !== 200) {
@@ -35,5 +49,31 @@ export default class TracksManager extends Manager {
     }
 
     return response.body;
+  }
+
+  async createTrackComment({ trackId, text, time }) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.post({
+      path: `/tracks/${trackId}/comments`,
+      data: { text, time },
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
+  async updateTrack({ trackId, fields }) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.patch({
+      path: `/tracks/${trackId}`,
+      data: fields,
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
   }
 }

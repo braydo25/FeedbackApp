@@ -30,7 +30,8 @@ export default class GameImageBackground extends Component {
 
   receiveEvent(name, value) {
     if (name === 'GAME_ANIMATING_NEXT_TRACK') {
-      const nextImageUrl = gameManager.getNextTrack().user.avatarUrl;
+      const nextTrack = gameManager.getNextTrack();
+      const nextImageUrl = (nextTrack) ? nextTrack.user.avatarUrl : null;
       const { lastVisibileImage, imageOneUrl, imageTwoUrl } = this.state;
 
       this.setState({
