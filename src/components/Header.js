@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
@@ -15,7 +16,7 @@ export default class Header extends Component {
 
     return (
       <SafeAreaView>
-        <View style={styles.container}>
+        <BlurView intensity={50} tint={'light'} style={styles.container}>
           <View style={styles.headerLeft}>
             {(backEnabled || closeEnabled) && (
               <TouchableOpacity onPress={() => navigationHelper.pop()} style={styles.backButton}>
@@ -58,12 +59,12 @@ export default class Header extends Component {
                 )}
 
                 {showRightLoading && (
-                  <ActivityIndicator color={'#FFFFFF'} />
+                  <ActivityIndicator color={'#000000'} />
                 )}
               </TouchableOpacity>
             )}
           </View>
-        </View>
+        </BlurView>
       </SafeAreaView>
     );
   }
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
     minWidth: 40,
   },
   backIcon: {
-    height: 20,
-    width: 15,
+    height: 16,
+    width: 12,
   },
   closeIcon: {
     height: 18,
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 28,
+    fontSize: 22,
+    textAlign: 'center',
   },
 });

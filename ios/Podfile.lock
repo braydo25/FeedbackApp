@@ -3,6 +3,8 @@ PODS:
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
   - DoubleConversion (1.1.6)
+  - EXBlur (8.2.0):
+    - UMCore
   - EXConstants (9.2.0):
     - UMConstantsInterface
     - UMCore
@@ -377,6 +379,7 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXBlur (from `../node_modules/expo-blur/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXDevice (from `../node_modules/expo-device/ios`)
   - EXDocumentPicker (from `../node_modules/expo-document-picker/ios`)
@@ -477,6 +480,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXBlur:
+    :path: "../node_modules/expo-blur/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
   EXDevice:
@@ -603,6 +608,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
+  EXBlur: 5b173a287131ac8184b2f368307dfd23d6729caa
   EXConstants: 6ec1ea4a13ec734c7e2274bc9e5b7408d73007a1
   EXDevice: d23d339d9e6df3740dc3354de6296992f2051215
   EXDocumentPicker: 1b69d7d1734e2532804725225232215e1bdc3a0c

@@ -65,6 +65,18 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
+  async createTrackPlay({ trackId, duration }) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.post({
+      path: `/tracks/${trackId}/plays`,
+      data: { duration },
+    });
+
+    if (response.code !== 204) {
+      throw new Error(response.body);
+    }
+  }
+
   async updateTrack({ trackId, fields }) {
     const { apiHelper } = this.maestro.helpers;
     const response = await apiHelper.patch({
@@ -75,5 +87,18 @@ export default class TracksManager extends Manager {
     if (response.code !== 200) {
       throw new Error(response.body);
     }
+  }
+
+  async getGenres() {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.get({
+      path: '/genres',
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
   }
 }

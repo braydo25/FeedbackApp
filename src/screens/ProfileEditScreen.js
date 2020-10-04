@@ -1,20 +1,174 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { TextField, MultiSelectField } from '../components';
+import maestro from '../maestro';
+
+const { userManager, tracksManager } = maestro.managers;
+const { filesHelper } = maestro.helpers;
 
 export default class ProfileEditScreen extends Component {
+  state = {
+    avatarImageUri: null,
+    name: userManager.store.user.name,
+    preferredGenreIds: userManager.store.user.preferredGenreIds || [],
+    genres: [],
+  }
+
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      onRightButtonPress: this._save,
+    });
+
+    this._loadGenres();
+  }
+
+  _loadGenres = async () => {
+    const genres = await tracksManager.getGenres();
+
+    this.setState({ genres });
+  }
+
+  _openImagePicker = async () => {
+    const image = await filesHelper.selectImage({
+      allowsEditing: true,
+      aspect: [ 1, 1 ],
+      quality: 1,
+    });
+
+    if (!image.cancelled) {
+      this.setState({ avatarImageUri: image.uri });
+    }
+  }
+
+  _onSelectablePress = selectable => {
+    let preferredGenreIds = [ ...this.state.preferredGenreIds ];
+
+    if (preferredGenreIds.includes(selectable.value)) {
+      preferredGenreIds = preferredGenreIds.filter(genreId => genreId !== selectable.value);
+    } else {
+      preferredGenreIds.push(selectable.value);
+    }
+
+    this.setState({ preferredGenreIds });
+  }
+
+  _save = async () => {
+    const { navigation } = this.props;
+    const { avatarImageUri, name, preferredGenreIds } = this.state;
+
+    navigation.setOptions({ showRightLoading: true });
+
+    try {
+      await userManager.updateUser({ avatarImageUri, name, preferredGenreIds });
+
+      navigation.pop();
+    } catch (error) {
+      navigation.setOptions({ showRightLoading: false });
+    }
+  }
+
   render() {
+    const { user } = userManager.store;
+    const { avatarImageUri, name, preferredGenreIds, genres } = this.state;
+
     return (
-      <View style={styles.container}>
-        <Text>This is a profile edit screen</Text>
-      </View>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.contentContainer}
+        style={styles.container}
+      >
+        <View style={styles.artistContainer}>
+          <TouchableOpacity onPress={this._openImagePicker}>
+            <Image
+              source={{ url: avatarImageUri || user.avatarUrl }}
+              resizeMode={'contain'}
+              style={styles.avatarImage}
+            />
+          </TouchableOpacity>
+
+          <Text style={styles.artistNameText}>{name}</Text>
+
+          <Image
+            source={{ url: avatarImageUri || user.avatarUrl }}
+            resizeMode={'cover'}
+            blurRadius={39}
+            style={styles.artistContainerBackgroundImage}
+          />
+        </View>
+
+        <View style={styles.formContainer}>
+          <TextField
+            autoCorrect={false}
+            onChangeText={text => this.setState({ name: text })}
+            label={'Artist Name'}
+            placeholder={'What do people call you?'}
+            value={name}
+            containerStyle={styles.formField}
+          />
+
+          <MultiSelectField
+            onSelectablePress={this._onSelectablePress}
+            label={'Preferred Genres'}
+            info={'Pick the genres you want to listen to, and give feedback to.'}
+            selectables={genres.map(genre => ({ text: genre.name, value: genre.id }))}
+            selected={preferredGenreIds}
+            style={styles.formField}
+          />
+
+          <TouchableOpacity style={styles.logoutButton}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  artistContainer: {
     alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
+    paddingBottom: 30,
+    paddingTop: 100,
+  },
+  artistContainerBackgroundImage: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.5,
+    top: -250,
+    zIndex: -1,
+  },
+  artistNameText: {
+    color: '#000000',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 18,
+    marginTop: 16,
+    minHeight: 22,
+    textAlign: 'center',
+  },
+  avatarImage: {
+    alignSelf: 'center',
+    borderRadius: 25,
+    height: 100,
+    width: 100,
+  },
+  container: {
+    flex: 1,
+  },
+  formContainer: {
+    paddingBottom: 48,
+    paddingHorizontal: 16,
+    paddingTop: 32,
+  },
+  formField: {
+    marginBottom: 24,
+  },
+  logoutButton: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  logoutText: {
+    color: '#7C4BCE',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 16,
   },
 });

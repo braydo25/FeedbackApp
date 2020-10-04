@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 import Card from './Card';
-import maestro from '../maestro';
-
-const { navigationHelper } = maestro.helpers;
 
 export default class ProfileCard extends Component {
-  _openEditProfile = () => {
-    navigationHelper.navigate('ProfileEdit');
-  }
-
   render() {
     const { user, style } = this.props;
 
@@ -22,9 +15,6 @@ export default class ProfileCard extends Component {
         />
 
         <Card style={styles.card}>
-          <TouchableOpacity onPress={this._openEditProfile} style={styles.settingsButton}>
-            <Image source={require('../assets/images/settings.png')} style={styles.settingsIcon} />
-          </TouchableOpacity>
 
           <Text style={styles.artistText}>{user.name}</Text>
 
@@ -46,7 +36,9 @@ export default class ProfileCard extends Component {
 
 const styles = StyleSheet.create({
   artistImage: {
+    borderColor: '#FFFFFF',
     borderRadius: 20,
+    borderWidth: 2,
     height: 80,
     width: 80,
     zIndex: 2,
@@ -101,20 +93,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
-  },
-  settingsButton: {
-    alignItems: 'center',
-    backgroundColor: '#7C4BCE',
-    borderRadius: 14,
-    height: 40,
-    justifyContent: 'center',
-    position: 'absolute',
-    right: 32,
-    top: 16,
-    width: 40,
-  },
-  settingsIcon: {
-    height: 20,
-    width: 20,
   },
 });

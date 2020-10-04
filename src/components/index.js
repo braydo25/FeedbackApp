@@ -1,3 +1,4 @@
+import Button from './Button';
 import Card from './Card';
 import GameActions from './GameActions';
 import GameHeader from './GameHeader';
@@ -7,7 +8,9 @@ import GameTrackCardDescription from './GameTrackCardDescription';
 import GameTrackCardStack from './GameTrackCardStack';
 import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
+import MultiSelectField from './MultiSelectField';
 import ProfileCard from './ProfileCard';
+import TextField from './TextField';
 import TrackCard from './TrackCard';
 import TrackComment from './TrackComment';
 import TrackPlayerControls from './TrackPlayerControls';
@@ -16,6 +19,7 @@ import TracksList from './TracksList';
 import UploadTrackCard from './UploadTrackCard';
 
 export {
+  Button,
   Card,
   GameActions,
   GameHeader,
@@ -25,7 +29,9 @@ export {
   GameTrackCardStack,
   GameTrackCardTip,
   Header,
+  MultiSelectField,
   ProfileCard,
+  TextField,
   TrackCard,
   TrackComment,
   TrackPlayerControls,

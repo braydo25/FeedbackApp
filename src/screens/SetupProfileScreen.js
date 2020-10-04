@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet, Platform } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import maestro from '../maestro';
 
 const { userManager } = maestro.managers;
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, filesHelper } = maestro.helpers;
 
 export default class SetupScreen extends Component {
   state = {
@@ -15,16 +14,7 @@ export default class SetupScreen extends Component {
   }
 
   _openImagePicker = async () => {
-    if (Platform.OS !== 'web') {
-      const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-
-      if (status !== 'granted') {
-        // Show a alert to allow user to go to settings to enable the permission.
-      }
-    }
-
-    const image = await ImagePicker.launchImageLibraryAsync({
-      mediaType: ImagePicker.MediaTypeOptions.Images,
+    const image = await filesHelper.selectImage({
       allowsEditing: true,
       aspect: [ 1, 1 ],
       quality: 1,

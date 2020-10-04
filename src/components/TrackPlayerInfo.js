@@ -3,24 +3,23 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
 import maestro from '../maestro';
 
-const { playbackManager } = maestro.managers;
+const { playbackManager, userManager } = maestro.managers;
 const { timeHelper } = maestro.helpers;
 
 export default class TrackPlayerInfo extends ProgressComponent {
   render() {
     const { track, showMetadata, style } = this.props;
     const { currentTrackId } = playbackManager.store;
+    const { user } = userManager.store;
     const position = (track.id === currentTrackId) ? this.state.position : 0;
 
     return (
       <View style={[ styles.container, style ]}>
-        {!!track.user.avatarUrl && (
-          <Image
-            source={{ uri: track.user.avatarUrl }}
-            resizeMode={'contain'}
-            style={styles.artistImage}
-          />
-        )}
+        <Image
+          source={{ uri: (track.userId !== user.id) ? track.user.avatarUrl : user.avatarUrl }}
+          resizeMode={'contain'}
+          style={styles.artistImage}
+        />
 
         <View style={styles.details}>
           <View style={styles.detailsLeftContainer}>

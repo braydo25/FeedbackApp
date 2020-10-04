@@ -22,6 +22,10 @@ export default class GameHeader extends Component {
     this.setState({ user: user.user });
   }
 
+  _openActivity = () => {
+    navigationHelper.navigate('ActivityNavigator');
+  }
+
   _openProfile = () => {
     navigationHelper.navigate('ProfileNavigator');
   }
@@ -31,7 +35,7 @@ export default class GameHeader extends Component {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <TouchableOpacity onPress={this._openProfile} style={styles.profileButton}>
+          <TouchableOpacity onPress={this._openProfile}>
             <Image
               source={{ url: user.avatarUrl }}
               resizeMode={'contain'}
@@ -48,6 +52,16 @@ export default class GameHeader extends Component {
 
             <Text style={styles.levelExpText}>150/500 EXP</Text>
           </View>
+
+          <TouchableOpacity onPress={this._openActivity} style={styles.activityButton}>
+            <Image
+              source={require('../assets/images/bell.png')}
+              resizeMode={'contain'}
+              style={styles.activityIcon}
+            />
+
+            <View style={styles.activityBubble} />
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -55,6 +69,27 @@ export default class GameHeader extends Component {
 }
 
 const styles = StyleSheet.create({
+  activityBubble: {
+    backgroundColor: '#FF0000',
+    borderRadius: 4,
+    height: 8,
+    position: 'absolute',
+    right: 9,
+    top: 6,
+    width: 10,
+  },
+  activityButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 10,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  activityIcon: {
+    height: 20,
+    width: 20,
+  },
   container: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -85,8 +120,7 @@ const styles = StyleSheet.create({
   levelContainer: {
     alignItems: 'center',
     flex: 1,
-    marginLeft: 16,
-    marginRight: 56,
+    marginHorizontal: 16,
   },
   levelExpText: {
     color: 'rgba(255, 255, 255, 0.7)',
@@ -97,9 +131,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 14,
-  },
-  profileButton: {
-
   },
   profileImage: {
     borderRadius: 10,

@@ -14,6 +14,7 @@ export default () => {
       headerMode={'screen'}
       screenOptions={{
         header: ({ scene }) => <Header scene={scene} />,
+        headerTransparent: true,
       }}
     >
       <ProfileStack.Screen
@@ -21,6 +22,8 @@ export default () => {
         component={ProfileEditScreen}
         options={{
           backEnabled: true,
+          title: 'Edit Profile',
+          rightButtonTitle: 'Save',
         }}
       />
 
@@ -29,7 +32,6 @@ export default () => {
         component={ProfileScreen}
         options={{
           closeEnabled: true,
-          headerTransparent: true,
         }}
       />
     </ProfileStack.Navigator>

@@ -17,6 +17,7 @@ export default class PlaybackManager extends Manager {
     state: 'none',
     ready: new Promise(resolve => resolveInitialReadyPromise = resolve),
     currentTrackId: null,
+    currentTrackStartedAt: null,
   }
 
   constructor(maestro) {
@@ -33,15 +34,26 @@ export default class PlaybackManager extends Manager {
   }
 
   async play(track) {
+    const { currentTrackId, currentTrackStartedAt } = this.store;
+    const { tracksManager } = this.maestro.managers;
+
     await this.store.ready;
 
-    const { currentTrackId } = this.store;
-
     if (track.id !== currentTrackId) {
+      if (currentTrackId) {
+        tracksManager.createTrackPlay({
+          trackId: currentTrackId,
+          duration: Math.floor((Date.now() - currentTrackStartedAt) / 1000),
+        });
+      }
+
       await TrackPlayer.reset();
       await TrackPlayer.add(this._trackToTrackObject(track));
 
-      this.updateStore({ currentTrackId: track.id });
+      this.updateStore({
+        currentTrackId: track.id,
+        currentTrackStartedAt: Date.now(),
+      });
     }
 
     return TrackPlayer.play();

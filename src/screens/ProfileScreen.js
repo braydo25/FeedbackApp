@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
-import { ProfileCard, TracksList, UploadTrackCard } from '../components';
+import { Button, Card, ProfileCard, TracksList, UploadTrackCard } from '../components';
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
@@ -18,7 +18,7 @@ export default class ProfileScreen extends Component {
     this.setState({ user: userManager.store.user });
 
     this.props.navigation.setOptions({
-      rightButtonComponent: this._renderUploadTrackButton(),
+      rightButtonComponent: this._renderEditProfileButton(),
     });
 
     this._loadTracks();
@@ -39,21 +39,31 @@ export default class ProfileScreen extends Component {
     return tracksManager.loadTracks();
   }
 
-  _renderUploadTrackButton = () => {
+  _renderEditProfileButton = () => {
     return (
-      <TouchableOpacity onPress={() => navigationHelper.navigate('UploadTrackNavigator')} style={styles.uploadTrackButton}>
+      <TouchableOpacity onPress={() => navigationHelper.navigate('ProfileEdit')} style={styles.editProfileButton}>
         <Image
-          source={require('../assets/images/plus.png')}
+          source={require('../assets/images/settings.png')}
           resizeMode={'contain'}
-          style={styles.plusIcon}
+          style={styles.editProfileIcon}
         />
       </TouchableOpacity>
     );
   }
 
   _renderHeader = () => {
+    const { tracks } = this.state;
+
     return (
-      <ProfileCard user={this.state.user} style={styles.profileCard} />
+      <>
+        <ProfileCard user={this.state.user} style={styles.profileCard} />
+
+        {!!tracks?.length && (
+          <Card style={styles.uploadTrackCard}>
+            <Button small onPress={() => navigationHelper.navigate('UploadTrackNavigator')}>Add New Track</Button>
+          </Card>
+        )}
+      </>
     );
   }
 
@@ -117,31 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flex: 1,
   },
-  footer: {
-    marginTop: 16,
-  },
-  list: {
-    flex: 1,
-  },
-  listContentContainer: {
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    paddingTop: 64,
-  },
-  loadingContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  plusIcon: {
-    height: 15,
-    width: 15,
-  },
-  profileCard: {
-    marginBottom: 16,
-    zIndex: 2,
-  },
-  uploadTrackButton: {
+  editProfileButton: {
     alignItems: 'center',
     backgroundColor: '#7C4BCE',
     borderRadius: 14,
@@ -152,5 +138,33 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 1.00,
     width: 40,
+  },
+  editProfileIcon: {
+    height: 22,
+    width: 22,
+  },
+  footer: {
+    marginTop: 16,
+  },
+  list: {
+    flex: 1,
+  },
+  listContentContainer: {
+    paddingBottom: 24,
+    paddingHorizontal: 16,
+    paddingTop: 96,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  profileCard: {
+    marginBottom: 16,
+    zIndex: 2,
+  },
+  uploadTrackCard: {
+    marginBottom: 16,
+    padding: 16,
   },
 });

@@ -21,6 +21,7 @@ export default () => {
         options={{
           closeEnabled: true,
           headerTransparent: true,
+          title: 'Add New Track'
         }}
       />
     </UploadTrackStack.Navigator>
