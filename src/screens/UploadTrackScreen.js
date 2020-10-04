@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import * as DocumentPicker from 'expo-document-picker';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import { AudioFileField, TextField, Button } from '../components';
 import maestro from '../maestro';
 
 const { tracksManager } = maestro.managers;
@@ -16,12 +18,6 @@ export default class UploadTrackScreen extends Component {
     genreId: null,
     loading: false,
     error: null,
-  }
-
-  _selectFile = async () => {
-    const file = await DocumentPicker.getDocumentAsync({ type: 'audio/*' });
-
-    this.setState({ file });
   }
 
   _upload = async () => {
@@ -49,6 +45,7 @@ export default class UploadTrackScreen extends Component {
         loading: false,
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error.message,
@@ -80,79 +77,80 @@ export default class UploadTrackScreen extends Component {
     const { track, url, file, name, description, genreId, loading, error } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.contentContainer}
+        style={styles.container}
+      >
         {!track && (
           <>
             {!file && (
               <>
-                <TextInput
+                <TextField
                   onChangeText={text => this.setState({ url: text })}
-                  placeholder={'SoundCloud Track or YouTube URL'}
+                  label={'Paste Link'}
+                  labelPrefix={<Image source={require('../assets/images/link.png')} style={styles.linkIcon} />}
+                  info={"Import a SoundCloud track or a YouTube video's audio."}
+                  returnKeyType={'done'}
+                  placeholder={'soundcloud.com/yourname/trackname'}
                 />
 
-                <Text>Or</Text>
-
-                <TouchableOpacity disabled={loading} onPress={this._selectFile}>
-                  <Text>Select A File</Text>
-                </TouchableOpacity>
+                <Text style={styles.orText}>- or -</Text>
               </>
             )}
 
-            {file && (
-              <TouchableOpacity onPress={() => this.setState({ file: null })}>
-                <Text>{file.name} (Tap to remove)</Text>
-              </TouchableOpacity>
-            )}
+            <AudioFileField
+              onFileChanged={file => this.setState({ file })}
+              label={'Select Audio File'}
+              labelPrefix={<Image source={require('../assets/images/file.png')} style={styles.fileIcon} />}
+              disabled={loading}
+              style={styles.audioFileField}
+            />
 
-            <TouchableOpacity onPress={this._upload} disabled={!url && !file}>
-              {!loading && (
-                <Text>Continue</Text>
-              )}
-
-              {loading && (
-                <ActivityIndicator />
-              )}
-            </TouchableOpacity>
+            <Button
+              onPress={this._upload}
+              loading={loading}
+              style={styles.continueButton}
+            >
+              Continue
+            </Button>
           </>
         )}
-
-        {track && (
-          <>
-            <TextInput
-              placeholder={'Track Name'}
-              value={name}
-            />
-
-            <TextInput
-              placeholder={'genreId'}
-              onChangeText={text => this.setState({ genreId: text })}
-              value={genreId}
-            />
-
-            <TextInput
-              multiline
-              placeholder={'Track Description'}
-              value={description}
-            />
-
-            <TouchableOpacity onPress={this._save} disabled={!name}>
-              <Text>Submit</Text>
-            </TouchableOpacity>
-          </>
-        )}
-
-        {!!error && (
-          <Text>{error}</Text>
-        )}
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
+  audioFileField: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 96,
+  },
+  continueButton: {
+    marginBottom: 60,
+  },
+  fileIcon: {
+    height: 20,
+    marginLeft: 4,
+    marginRight: 8,
+    width: 16,
+  },
+  linkIcon: {
+    height: 20,
+    marginRight: 8,
+    width: 20,
+  },
+  orText: {
+    alignSelf: 'center',
+    color: '#4C4C4C',
+    fontFamily: 'SFProDisplay-Medium',
+    fontSize: 16,
+    marginVertical: 16,
   },
 });

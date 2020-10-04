@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 
 export default class Button extends Component {
   render() {
-    const { children, small, style, ...props } = this.props;
+    const { children, small, disabled, loading, style, ...props } = this.props;
 
     return (
       <TouchableOpacity
+        disabled={disabled || loading}
         style={[
           styles.container,
           (small) ? styles.small : null,
@@ -14,7 +15,13 @@ export default class Button extends Component {
         ]}
         {...props}
       >
-        <Text style={styles.text}>{children}</Text>
+        {!loading && (
+          <Text style={styles.text}>{children}</Text>
+        )}
+
+        {loading && (
+          <ActivityIndicator color={'#FFFFFF'} />
+        )}
       </TouchableOpacity>
     );
   }

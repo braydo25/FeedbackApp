@@ -1,3 +1,4 @@
+import AudioFileField from './AudioFileField';
 import Button from './Button';
 import Card from './Card';
 import GameActions from './GameActions';
@@ -19,6 +20,7 @@ import TracksList from './TracksList';
 import UploadTrackCard from './UploadTrackCard';
 
 export {
+  AudioFileField,
   Button,
   Card,
   GameActions,

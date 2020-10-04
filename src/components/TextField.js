@@ -35,6 +35,7 @@ export default class TextField extends Component {
       <View style={[ styles.container, containerStyle ]}>
         {label && (
           <FieldLabel
+            info={info}
             prefix={labelPrefix}
             postfix={labelPostfix}
             containerStyle={styles.fieldLabelContainer}
@@ -70,10 +71,6 @@ export default class TextField extends Component {
         {!!error && (
           <Text style={[ styles.subtext, styles.errorText ]}>{error}</Text>
         )}
-
-        {!!info && !error && (
-          <Text style={[ styles.subtext, styles.infoText ]}>{info}</Text>
-        )}
       </View>
     );
   }
@@ -88,9 +85,6 @@ const styles = StyleSheet.create({
   },
   fieldLabelContainer: {
     marginBottom: 16,
-  },
-  infoText: {
-    color: '#9B9B9B',
   },
   textInput: {
     color: '#000000',
