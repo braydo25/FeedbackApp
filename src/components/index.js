@@ -11,6 +11,7 @@ import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
 import MultiSelectField from './MultiSelectField';
 import ProfileCard from './ProfileCard';
+import SelectField from './SelectField';
 import TextField from './TextField';
 import TrackCard from './TrackCard';
 import TrackComment from './TrackComment';
@@ -33,6 +34,7 @@ export {
   Header,
   MultiSelectField,
   ProfileCard,
+  SelectField,
   TextField,
   TrackCard,
   TrackComment,

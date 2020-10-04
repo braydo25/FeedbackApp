@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { AudioFileField, TextField, Button } from '../components';
+import { AudioFileField, SelectField, TextField, Button } from '../components';
 import maestro from '../maestro';
 
 const { tracksManager } = maestro.managers;
@@ -16,8 +16,20 @@ export default class UploadTrackScreen extends Component {
     name: null,
     description: null,
     genreId: null,
+    genres: [],
+    uploading: false,
     loading: false,
     error: null,
+  }
+
+  componentDidMount() {
+    this._loadGenres();
+  }
+
+  _loadGenres = async () => {
+    const genres = await tracksManager.getGenres();
+
+    this.setState({ genres });
   }
 
   _upload = async () => {
@@ -30,6 +42,12 @@ export default class UploadTrackScreen extends Component {
 
     try {
       audioData = (url) ? await scraperHelper.scrapeUrlAudioData(this.state.url) : null;
+
+      this.setState({
+        uploading: false,
+        loading: false,
+      });
+
       track = (file)
         ? await tracksManager.createTrack({ audioUri: file.uri })
         : await tracksManager.createTrack({
@@ -74,14 +92,14 @@ export default class UploadTrackScreen extends Component {
   }
 
   render() {
-    const { track, url, file, name, description, genreId, loading, error } = this.state;
+    const { track, url, file, name, description, genreId, genres, uploading, loading, error } = this.state;
 
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
-        {!track && (
+        {false && (
           <>
             {!file && (
               <>
@@ -109,10 +127,44 @@ export default class UploadTrackScreen extends Component {
             <Button
               onPress={this._upload}
               loading={loading}
-              style={styles.continueButton}
+              style={styles.button}
             >
               Continue
             </Button>
+
+            <Text style={styles.disclaimerText}>By continuing, you confirm that your sounds comply with our terms of service and don't infringe on other's rights.</Text>
+          </>
+        )}
+
+        {(track || uploading || true) && (
+          <>
+            <TextField
+              onChangeText={text => this.setState({ name: text })}
+              label={'Track Name'}
+              placeholder={'(Optional) Test test Test Test Hello Test'}
+              containerStyle={styles.formField}
+              value={name}
+            />
+
+            <SelectField
+              onOptionPress={option => this.setState({ genreId: option.value })}
+              label={'Genre'}
+              options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
+              selectedOption={genreId}
+              style={styles.formField}
+            />
+
+            <TextField
+              multiline
+              label={'Description'}
+              placeholder={'(Optional) What do you want people to know about this track? Or, what do you want feedback on?'}
+              style={styles.descriptionField}
+            />
+
+            <View style={styles.bottomContainer}>
+              <Button style={styles.button}>Submit</Button>
+              <Text style={styles.disclaimerText}>Please wait, we're uploading & processing your track...{'\n'}This may take a moment...</Text>
+            </View>
           </>
         )}
       </KeyboardAwareScrollView>
@@ -124,22 +176,41 @@ const styles = StyleSheet.create({
   audioFileField: {
     flex: 1,
   },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginTop: 24,
+  },
+  button: {
+    marginBottom: 8,
+  },
   container: {
     flex: 1,
   },
   contentContainer: {
-    flex: 1,
+    minHeight: '100%',
     paddingHorizontal: 16,
     paddingTop: 96,
   },
-  continueButton: {
+  descriptionField: {
+    minHeight: 150,
+  },
+  disclaimerText: {
+    color: '#4C4C4C',
+    fontFamily: 'SFProDisplay-Regular',
+    fontSize: 14,
     marginBottom: 60,
+    textAlign: 'center',
+    width: '100%',
   },
   fileIcon: {
     height: 20,
     marginLeft: 4,
     marginRight: 8,
     width: 16,
+  },
+  formField: {
+    marginBottom: 24,
   },
   linkIcon: {
     height: 20,
@@ -152,5 +223,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Medium',
     fontSize: 16,
     marginVertical: 16,
+  },
+  saveButton: {
+    marginBottom: 60,
   },
 });

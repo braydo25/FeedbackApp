@@ -53,7 +53,7 @@ export default class TrackPlayerInfo extends ProgressComponent {
             </Text>
 
             <View style={styles.genreTextBox}>
-              <Text style={styles.genreText}>{track.genre.name}</Text>
+              <Text style={styles.genreText}>{(track.genre) ? track.genre.name : 'No Genre'}</Text>
             </View>
           </View>
         </View>

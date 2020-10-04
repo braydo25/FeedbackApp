@@ -6,7 +6,8 @@ export default class ScraperHelper extends Helper {
   }
 
   async scrapeUrlAudioData(url) {
-    console.log(url);
+    url = (url.includes('https://')) ? url : `https://${url}`;
+
     const { apiHelper } = this.maestro.helpers;
     const result = await fetch(url);
     const html = await result.text();

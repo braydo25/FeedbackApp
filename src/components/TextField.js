@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Medium',
     fontSize: 16,
     padding: 22,
+    paddingBottom: 22, // multiline fix
+    paddingTop: 22, // multiline fix
     width: '100%',
   },
   textInputContainer: {
@@ -108,6 +110,8 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     borderWidth: 2,
     padding: 16,
+    paddingBottom: 16, // multiline fix
+    paddingTop: 16, // multiline fix
   },
   textInputPlaceholder: {
     fontFamily: 'SFProDisplay-Regular',

@@ -41,13 +41,13 @@ export default class ProfileEditScreen extends Component {
     }
   }
 
-  _onSelectablePress = selectable => {
+  _onOptionPress = option => {
     let preferredGenreIds = [ ...this.state.preferredGenreIds ];
 
-    if (preferredGenreIds.includes(selectable.value)) {
-      preferredGenreIds = preferredGenreIds.filter(genreId => genreId !== selectable.value);
+    if (preferredGenreIds.includes(option.value)) {
+      preferredGenreIds = preferredGenreIds.filter(genreId => genreId !== option.value);
     } else {
-      preferredGenreIds.push(selectable.value);
+      preferredGenreIds.push(option.value);
     }
 
     this.setState({ preferredGenreIds });
@@ -107,11 +107,11 @@ export default class ProfileEditScreen extends Component {
           />
 
           <MultiSelectField
-            onSelectablePress={this._onSelectablePress}
+            onOptionPress={this._onOptionPress}
             label={'Preferred Genres'}
             info={'Pick the genres you want to listen to, and give feedback to.'}
-            selectables={genres.map(genre => ({ text: genre.name, value: genre.id }))}
-            selected={preferredGenreIds}
+            options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
+            selectedOptions={preferredGenreIds}
             style={styles.formField}
           />
 

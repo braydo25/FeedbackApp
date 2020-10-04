@@ -4,7 +4,7 @@ import FieldLabel from './FieldLabel';
 
 export default class MultiSelectField extends Component {
   render() {
-    const { onSelectablePress, selectables, selected, label, labelPrefix, labelPostfix, info, style } = this.props;
+    const { onOptionPress, options, selectedOptions, label, labelPrefix, labelPostfix, info, style } = this.props;
 
     return (
       <View style={[ styles.container, style ]}>
@@ -20,22 +20,22 @@ export default class MultiSelectField extends Component {
         )}
 
         <View style={styles.multiSelectContainer}>
-          {!!selectables && selectables.map((item, index) => (
+          {!!options && options.map((option, index) => (
             <TouchableOpacity
-              onPress={() => onSelectablePress(item)}
+              onPress={() => onOptionPress(option)}
               style={[
                 styles.selectable,
-                (selected && selected.includes(item.value)) ? styles.selectedSelectable : null,
+                (selectedOptions && selectedOptions.includes(option.value)) ? styles.selectedOption : null,
               ]}
               key={index}
             >
               <Text
                 style={[
                   styles.selectableText,
-                  (selected && selected.includes(item.value)) ? styles.selectedSelectableText : null,
+                  (selectedOptions && selectedOptions.includes(option.value)) ? styles.selectedOptionText : null,
                 ]}
               >
-                {item.text}
+                {option.text}
               </Text>
             </TouchableOpacity>
           ))}
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Medium',
     fontSize: 16,
   },
-  selectedSelectable: {
+  selectedOption: {
     backgroundColor: '#FFFFFF',
     borderColor: '#7C4BCE',
     borderWidth: 2,
     paddingHorizontal: 6,
     paddingVertical: 8,
   },
-  selectedSelectableText: {
+  selectedOptionText: {
     color: '#7C4BCE',
     fontFamily: 'SFProDisplay-Medium',
   },
