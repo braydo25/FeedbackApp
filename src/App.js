@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { OverlaysContainer } from './components';
 import RootNavigator from './navigators/RootNavigator';
 import maestro from './maestro';
 
@@ -65,6 +66,7 @@ export default class App extends Component {
         >
           <StatusBar barStyle={'light-content'} />
           <RootNavigator initialRouteName={initialRouteName} />
+          <OverlaysContainer />
         </NavigationContainer>
       </Animated.View>
     );

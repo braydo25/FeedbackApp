@@ -6,7 +6,7 @@ import { AudioFileField, SelectField, TextField, Button } from '../components';
 import maestro from '../maestro';
 
 const { tracksManager } = maestro.managers;
-const { scraperHelper, navigationHelper } = maestro.helpers;
+const { scraperHelper, navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class UploadTrackScreen extends Component {
   state = {
@@ -17,7 +17,6 @@ export default class UploadTrackScreen extends Component {
     description: null,
     genreId: null,
     genres: [],
-    uploading: false,
     loading: false,
     error: null,
   }
@@ -37,24 +36,9 @@ export default class UploadTrackScreen extends Component {
 
     this.setState({ loading: true });
 
-    let audioData = null;
-    let track = null;
-
     try {
-      audioData = (url) ? await scraperHelper.scrapeUrlAudioData(this.state.url) : null;
-
-      this.setState({
-        uploading: false,
-        loading: false,
-      });
-
-      track = (file)
-        ? await tracksManager.createTrack({ audioUri: file.uri })
-        : await tracksManager.createTrack({
-          audioBlob: audioData.blob,
-          name: audioData.title,
-          description: audioData.description,
-        });
+      const track = await tracksManager.createTrack();
+      const audioData = (url) ? await scraperHelper.scrapeUrlAudioData(this.state.url) : null;
 
       this.setState({
         track,
@@ -62,21 +46,34 @@ export default class UploadTrackScreen extends Component {
         description: audioData?.description,
         loading: false,
       });
-    } catch (error) {
-      console.log(error);
-      this.setState({
-        loading: false,
-        error: error.message,
+
+      await tracksManager.updateTrack({
+        trackId: track.id,
+        fields: {
+          audioUri: file?.uri,
+          audioBlob: audioData?.blob,
+        },
       });
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message, delay: 500 });
+      navigationHelper.pop();
     }
   }
 
   _save = async () => {
-    const { track, name, description, genreId } = this.state;
-
     this.setState({ loading: true });
 
     try {
+      const { track, name, description, genreId } = this.state;
+
+      if (!name) {
+        throw new Error('Please enter a name for this track.');
+      }
+
+      if (!genreId) {
+        throw new Error('Please select a genre for this track.');
+      }
+
       await tracksManager.updateTrack({
         trackId: track.id,
         fields: { name, description, genreId },
@@ -84,22 +81,20 @@ export default class UploadTrackScreen extends Component {
 
       navigationHelper.pop();
     } catch (error) {
-      this.setState({
-        loading: false,
-        error: error.message,
-      });
+      interfaceHelper.showError({ message: error.message, delay: 500 });
+      this.setState({ loading: false });
     }
   }
 
   render() {
-    const { track, url, file, name, description, genreId, genres, uploading, loading, error } = this.state;
+    const { track, url, file, name, description, genreId, genres, loading } = this.state;
 
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
-        {false && (
+        {!track && (
           <>
             {!file && (
               <>
@@ -110,6 +105,7 @@ export default class UploadTrackScreen extends Component {
                   info={"Import a SoundCloud track or a YouTube video's audio."}
                   returnKeyType={'done'}
                   placeholder={'soundcloud.com/yourname/trackname'}
+                  value={url}
                 />
 
                 <Text style={styles.orText}>- or -</Text>
@@ -124,26 +120,26 @@ export default class UploadTrackScreen extends Component {
               style={styles.audioFileField}
             />
 
-            <Button
-              onPress={this._upload}
-              loading={loading}
-              style={styles.button}
-            >
-              Continue
-            </Button>
+            <Button onPress={this._upload} loading={loading} style={styles.button}>Continue</Button>
 
-            <Text style={styles.disclaimerText}>By continuing, you confirm that your sounds comply with our terms of service and don't infringe on other's rights.</Text>
+            <Text style={styles.infoText}>
+              {
+                url && !file && loading
+                  ? 'Your track is being processed...\nThis can take up to a minute.'
+                  : "By continuing, you confirm that your sounds comply with our terms of service and don't infringe on other's rights."
+              }
+            </Text>
           </>
         )}
 
-        {(track || uploading || true) && (
+        {!!track && (
           <>
             <TextField
               onChangeText={text => this.setState({ name: text })}
               label={'Track Name'}
-              placeholder={'(Optional) Test test Test Test Hello Test'}
-              containerStyle={styles.formField}
+              placeholder={'Enter a name for this track...'}
               value={name}
+              containerStyle={styles.formField}
             />
 
             <SelectField
@@ -155,15 +151,24 @@ export default class UploadTrackScreen extends Component {
             />
 
             <TextField
+              onChangeText={text => this.setState({ description: text })}
               multiline
               label={'Description'}
-              placeholder={'(Optional) What do you want people to know about this track? Or, what do you want feedback on?'}
+              placeholder={'(Optional) What do you want people to know about this track?'}
+              value={description}
               style={styles.descriptionField}
             />
 
             <View style={styles.bottomContainer}>
-              <Button style={styles.button}>Submit</Button>
-              <Text style={styles.disclaimerText}>Please wait, we're uploading & processing your track...{'\n'}This may take a moment...</Text>
+              <Button onPress={this._save} loading={loading} style={styles.button}>Submit</Button>
+
+              <Text style={styles.infoText}>
+                {
+                  !loading
+                    ? 'Submit your track to start getting feedback.\nSomething something'
+                    : "Please wait, we're uploading your track...\nThis may take a moment..."
+                }
+              </Text>
             </View>
           </>
         )}
@@ -195,14 +200,6 @@ const styles = StyleSheet.create({
   descriptionField: {
     minHeight: 150,
   },
-  disclaimerText: {
-    color: '#4C4C4C',
-    fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
-    marginBottom: 60,
-    textAlign: 'center',
-    width: '100%',
-  },
   fileIcon: {
     height: 20,
     marginLeft: 4,
@@ -211,6 +208,14 @@ const styles = StyleSheet.create({
   },
   formField: {
     marginBottom: 24,
+  },
+  infoText: {
+    color: '#4C4C4C',
+    fontFamily: 'SFProDisplay-Regular',
+    fontSize: 14,
+    marginBottom: 60,
+    textAlign: 'center',
+    width: '100%',
   },
   linkIcon: {
     height: 20,

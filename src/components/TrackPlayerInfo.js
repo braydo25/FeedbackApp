@@ -49,12 +49,14 @@ export default class TrackPlayerInfo extends ProgressComponent {
           <View style={styles.detailsRightContainer}>
             <Text style={styles.timeText}>
               <Text style={styles.timeCurrentText}>{timeHelper.secondsToTime(position)} </Text>
-              / {timeHelper.secondsToTime(track.duration)}
+              / {track.duration ? timeHelper.secondsToTime(track.duration) : '0:00'}
             </Text>
 
-            <View style={styles.genreTextBox}>
-              <Text style={styles.genreText}>{(track.genre) ? track.genre.name : 'No Genre'}</Text>
-            </View>
+            {!!track.genre && (
+              <View style={styles.genreTextBox}>
+                <Text style={styles.genreText}>{(track.genre) ? track.genre.name : 'No Genre'}</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>

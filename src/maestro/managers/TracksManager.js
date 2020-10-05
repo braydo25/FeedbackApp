@@ -28,20 +28,10 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
-  async createTrack({ audioBlob, audioUri, name, description, genreId }) {
+  async createTrack() {
     const { apiHelper } = this.maestro.helpers;
-    const response = await apiHelper.uploadFiles({
-      method: 'POST',
+    const response = await apiHelper.post({
       path: '/tracks',
-      files: [
-        {
-          key: 'audio',
-          blob: audioBlob,
-          uri: audioUri,
-          name: (audioUri) ? audioUri.substring(audioUri.lastIndexOf('/') + 1) : undefined,
-        },
-      ],
-      data: { name, description, genreId },
     });
 
     if (response.code !== 200) {
@@ -78,15 +68,32 @@ export default class TracksManager extends Manager {
   }
 
   async updateTrack({ trackId, fields }) {
+    const { audioBlob, audioUri, ...data } = fields;
     const { apiHelper } = this.maestro.helpers;
-    const response = await apiHelper.patch({
+    const response = (!audioBlob && !audioUri) ? await apiHelper.patch({
       path: `/tracks/${trackId}`,
-      data: fields,
+      data,
+    }) : await apiHelper.uploadFiles({
+      method: 'PATCH',
+      path: `/tracks/${trackId}`,
+      files: [
+        {
+          key: 'audio',
+          blob: audioBlob,
+          uri: audioUri,
+          name: (audioUri) ? audioUri.substring(audioUri.lastIndexOf('/') + 1) : undefined,
+        },
+      ],
+      data,
     });
 
     if (response.code !== 200) {
       throw new Error(response.body);
     }
+
+    this._addUpdateTrack(response.body);
+
+    return response.body;
   }
 
   async getGenres() {
@@ -100,5 +107,23 @@ export default class TracksManager extends Manager {
     }
 
     return response.body;
+  }
+
+  /*
+   * Helpers
+   */
+
+  _addUpdateTrack = track => {
+    const tracks = [ ...this.store.tracks ];
+    const trackId = track.id;
+    const existingIndex = tracks.findIndex(track => track.id === trackId);
+
+    if (existingIndex !== -1) {
+      tracks[existingIndex] = { ...tracks[existingIndex], ...track };
+    } else {
+      tracks.unshift(track);
+    }
+
+    this.updateStore({ tracks });
   }
 }

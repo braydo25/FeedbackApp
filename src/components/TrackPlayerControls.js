@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import TrackPlayerScrubber from './TrackPlayerScrubber';
 import maestro from '../maestro';
 
@@ -32,6 +32,7 @@ export default class TrackPlayerControls extends Component {
     const { playbackState } = this.state;
 
     if ([ 'ready', 'paused', 'connecting', 'stopped' ].includes(playbackState)) {
+      console.log(track);
       playbackManager.play(track);
     }
 
@@ -43,11 +44,12 @@ export default class TrackPlayerControls extends Component {
   render() {
     const { track, style } = this.props;
     const { playbackState } = this.state;
+    const hasTrack = !!track.mp3Url;
 
     return (
       <View style={[ styles.container, style ]}>
-        <TouchableOpacity onPress={this._playPause} style={styles.playPauseButton}>
-          {playbackState === 'playing' && (
+        <TouchableOpacity disabled={!track.mp3Url} onPress={this._playPause} style={styles.playPauseButton}>
+          {(hasTrack && playbackState === 'playing') && (
             <Image
               source={require('../assets/images/pause.png')}
               resizeMode={'contain'}
@@ -55,7 +57,7 @@ export default class TrackPlayerControls extends Component {
             />
           )}
 
-          {[ 'ready', 'paused', 'stopped' ].includes(playbackState) && (
+          {(hasTrack && [ 'ready', 'paused', 'stopped' ].includes(playbackState)) && (
             <Image
               source={require('../assets/images/play.png')}
               resizeMode={'contain'}
@@ -63,12 +65,18 @@ export default class TrackPlayerControls extends Component {
             />
           )}
 
-          {[ 'loading', 'buffering', 'connecting', 'none' ].includes(playbackState) && (
+          {(!hasTrack || [ 'loading', 'buffering', 'connecting', 'none' ].includes(playbackState)) && (
             <ActivityIndicator color={'#FFFFFF'} />
           )}
         </TouchableOpacity>
 
-        <TrackPlayerScrubber track={track} />
+        {!!hasTrack && (
+          <TrackPlayerScrubber track={track} />
+        )}
+
+        {!hasTrack && (
+          <Text style={styles.uploadingText}>Uploading Track...</Text>
+        )}
       </View>
     );
   }
@@ -99,5 +107,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 1.00,
     width: 40,
+  },
+  uploadingText: {
+    color: '#7D4CCF',
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: 16,
+    marginLeft: 16,
   },
 });
