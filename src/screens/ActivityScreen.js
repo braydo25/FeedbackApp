@@ -1,20 +1,51 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Image, FlatList, StyleSheet } from 'react-native';
+import { Notification } from '../components';
+import maestro from '../maestro';
+
+const { userManager } = maestro.managers;
 
 export default class ActivityScreen extends Component {
+  _renderItem = ({ item, index }) => {
+    return (
+      <Notification />
+    );
+  }
+
   render() {
+    const { user } = userManager.store;
+
     return (
       <View style={styles.container}>
-        <Text>This is the activity screen</Text>
+        <FlatList
+          data={[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]}
+          renderItem={this._renderItem}
+          contentContainerStyle={styles.contentContainer}
+          style={styles.container}
+        />
+
+        <Image
+          source={{ url: user.avatarUrl }}
+          resizeMode={'cover'}
+          blurRadius={39}
+          style={styles.backgroundImage}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.5,
+    zIndex: -1,
+  },
   container: {
-    alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
+  },
+  contentContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 80,
   },
 });

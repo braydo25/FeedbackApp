@@ -10,6 +10,7 @@ import GameTrackCardStack from './GameTrackCardStack';
 import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
 import MultiSelectField from './MultiSelectField';
+import Notification from './Notification';
 import OverlaysContainer from './OverlaysContainer';
 import ProfileCard from './ProfileCard';
 import SelectField from './SelectField';
@@ -34,6 +35,7 @@ export {
   GameTrackCardTip,
   Header,
   MultiSelectField,
+  Notification,
   OverlaysContainer,
   ProfileCard,
   SelectField,
