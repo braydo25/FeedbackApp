@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
+import Image from './Image';
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;

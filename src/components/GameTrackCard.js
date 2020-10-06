@@ -52,7 +52,7 @@ export default class GameTrackCard extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <TrackComment
-        {...item}
+        trackComment={item}
         style={(index > 0) ? styles.comment : null}
       />
     );

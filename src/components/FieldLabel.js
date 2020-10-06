@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const FieldLabel = props => (
+export default props => (
   <View style={[ styles.container, props.containerStyle ]}>
     <View style={styles.labelContainer}>
       {props.prefix}
@@ -14,8 +14,6 @@ const FieldLabel = props => (
     )}
   </View>
 );
-
-export default FieldLabel;
 
 const styles = StyleSheet.create({
   container: {

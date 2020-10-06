@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-import { AudioFileField, SelectField, TextField, Button } from '../components';
+import { AudioFileField, Image, SelectField, TextField, Button } from '../components';
 import maestro from '../maestro';
 
 const { tracksManager } = maestro.managers;

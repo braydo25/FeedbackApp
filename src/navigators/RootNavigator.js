@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import ActivityNavigator from './ActivityNavigator';
+import NotificationsNavigator from './NotificationsNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import MainNavigator from './MainNavigator';
 import UploadTrackNavigator from './UploadTrackNavigator';
@@ -21,8 +21,8 @@ export default props => {
       }}
     >
       <RootStack.Screen
-        name={'ActivityNavigator'}
-        component={ActivityNavigator}
+        name={'NotificationsNavigator'}
+        component={NotificationsNavigator}
       />
 
       <RootStack.Screen

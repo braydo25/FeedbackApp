@@ -5,8 +5,17 @@ import Card from './Card';
 import TrackComment from './TrackComment';
 import TrackPlayerInfo from './TrackPlayerInfo';
 import TrackPlayerControls from './TrackPlayerControls';
+import maestro from '../maestro';
+
+const { navigationHelper } = maestro.helpers;
 
 export default class TrackCard extends Component {
+  _onViewFeedbackPress = () => {
+    navigationHelper.navigate('Track', {
+      trackId: this.props.track.id,
+    });
+  }
+
   render() {
     const { track, style } = this.props;
     const { trackComments } = track;
@@ -21,21 +30,19 @@ export default class TrackCard extends Component {
             <Text style={styles.recentCommentsText}>Recent Feedback</Text>
 
             <TrackComment
-              text={'This is sick!!'}
-              time={100}
-              user={{ name: 'Alex', avatarUrl: 'https://scontent-sea1-1.xx.fbcdn.net/v/t1.0-1/p200x200/21557468_1467383330044397_4924280562104961001_n.jpg?_nc_cat=104&_nc_sid=dbb9e7&_nc_ohc=P7XOpbHNEbsAX-uYfzj&_nc_ht=scontent-sea1-1.xx&tp=6&oh=2f2142c60bdd2601021d82860e30bbee&oe=5F9B1EA6' }}
+              trackComment={trackComments[0]}
               style={styles.trackComment}
             />
 
-            <TrackComment
-              text={'This is sick!!'}
-              time={100}
-              user={{ name: 'Alex', avatarUrl: 'https://scontent-sea1-1.xx.fbcdn.net/v/t1.0-1/p200x200/21557468_1467383330044397_4924280562104961001_n.jpg?_nc_cat=104&_nc_sid=dbb9e7&_nc_ohc=P7XOpbHNEbsAX-uYfzj&_nc_ht=scontent-sea1-1.xx&tp=6&oh=2f2142c60bdd2601021d82860e30bbee&oe=5F9B1EA6' }}
-              style={styles.trackComment}
-            />
+            {!!trackComments[1] && (
+              <TrackComment
+                trackComment={trackComments[1]}
+                style={styles.trackComment}
+              />
+            )}
 
-            <TouchableOpacity style={styles.viewMoreButton}>
-              <Text style={styles.viewMoreText}>View All Feedback (42)</Text>
+            <TouchableOpacity onPress={this._onViewFeedbackPress} style={styles.viewMoreButton}>
+              <Text style={styles.viewMoreText}>View All Feedback ({trackComments.length})</Text>
             </TouchableOpacity>
 
             <LinearGradient

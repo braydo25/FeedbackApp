@@ -71,14 +71,14 @@ export default class GameImageBackground extends Component {
     return (
       <View style={styles.container}>
         <Animated.Image
-          source={{ url: imageOneUrl }}
+          source={{ uri: imageOneUrl }}
           resizeMode={'cover'}
           blurRadius={39}
           style={[ styles.imageOne, { opacity: imageOneOpacityAnimatedValue } ]}
         />
 
         <Animated.Image
-          source={{ url: imageTwoUrl }}
+          source={{ uri: imageTwoUrl }}
           resizeMode={'cover'}
           blurRadius={39}
           style={[ styles.imageTwo, { opacity: imageTwoOpacityAnimatedValue } ]}

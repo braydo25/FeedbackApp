@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import Image from './Image';
 import TrackPlayerScrubber from './TrackPlayerScrubber';
 import maestro from '../maestro';
 

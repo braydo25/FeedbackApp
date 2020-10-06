@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import Image from './Image';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;

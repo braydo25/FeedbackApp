@@ -13,6 +13,32 @@ export default class TracksManager extends Manager {
     return 'tracks';
   };
 
+  async getTrack(trackId) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.get({
+      path: `/tracks/${trackId}`,
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
+  async getTrackComments(trackId) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.get({
+      path: `/tracks/${trackId}/comments`,
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
   async loadTracks() {
     const { apiHelper } = this.maestro.helpers;
     const response = await apiHelper.get({

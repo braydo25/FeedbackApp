@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Card from './Card';
+import Image from './Image';
 
 export default class ProfileCard extends Component {
   render() {
@@ -9,7 +10,7 @@ export default class ProfileCard extends Component {
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={{ url: user.avatarUrl }}
+          source={{ uri: user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.artistImage}
         />

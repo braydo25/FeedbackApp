@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import FieldLabel from './FieldLabel';
+import Image from './Image';
 
 export default class AudioFileField extends Component {
   state = {

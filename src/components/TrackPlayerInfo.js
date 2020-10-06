@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
+import Image from './Image';
 import maestro from '../maestro';
 
 const { playbackManager, userManager } = maestro.managers;

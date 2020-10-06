@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { Image } from '../components';
 import maestro from '../maestro';
 
 const { userManager } = maestro.managers;
@@ -53,7 +54,7 @@ export default class SetupScreen extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this._openImagePicker}>
           <Image
-            source={{ url: avatarImageUri }}
+            source={{ uri: avatarImageUri }}
             resizeMode={'contain'}
             style={styles.image}
           />

@@ -2,41 +2,31 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header } from '../components';
 
-import ProfileEditScreen from '../screens/ProfileEditScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 import TrackScreen from '../screens/TrackScreen';
 
 export default () => {
-  const ProfileStack = createStackNavigator();
+  const NotificationsStack = createStackNavigator();
 
   return (
-    <ProfileStack.Navigator
-      initialRouteName={'Profile'}
+    <NotificationsStack.Navigator
+      initialRouteName={'Notifications'}
       headerMode={'screen'}
       screenOptions={{
         header: ({ scene }) => <Header scene={scene} />,
         headerTransparent: true,
       }}
     >
-      <ProfileStack.Screen
-        name={'ProfileEdit'}
-        component={ProfileEditScreen}
-        options={{
-          backEnabled: true,
-          title: 'Edit Profile',
-          rightButtonTitle: 'Save',
-        }}
-      />
-
-      <ProfileStack.Screen
-        name={'Profile'}
-        component={ProfileScreen}
+      <NotificationsStack.Screen
+        name={'Notifications'}
+        component={NotificationsScreen}
         options={{
           closeEnabled: true,
+          title: 'Notifications',
         }}
       />
 
-      <ProfileStack.Screen
+      <NotificationsStack.Screen
         name={'Track'}
         component={TrackScreen}
         options={{
@@ -44,6 +34,6 @@ export default () => {
           backEnabled: true,
         }}
       />
-    </ProfileStack.Navigator>
+    </NotificationsStack.Navigator>
   );
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import FieldLabel from './FieldLabel';
+import Image from './Image';
 
 export default class SelectField extends Component {
   state = {

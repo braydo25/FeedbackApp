@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import Image from './Image';
 import maestro from '../maestro';
 
 const { timeHelper } = maestro.helpers;
+const { userManager } = maestro.managers;
 
 export default class TrackComment extends Component {
   render () {
-    const { id, user, text, time, style } = this.props;
+    const { trackComment, style } = this.props;
+    const { id, user, text, time, createdAt } = trackComment;
 
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={{ url: user.avatarUrl }}
+          source={{ uri: user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.avatarImage}
         />
 
         <View style={styles.textContainer}>
           <Text style={styles.commentText}>{text}</Text>
-          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)}</Text>
+          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)} | {timeHelper.fromNow(createdAt)} ago</Text>
         </View>
 
-        {!!id && (
+        {!!id && user.id === userManager.store.user.id && (
           <TouchableOpacity style={styles.deleteButton}>
             <Image
               source={require('../assets/images/delete.png')}
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeText: {
-    color: '#B8BFC9',
+    color: '#B2B2B2',
     fontFamily: 'SFProDisplay-Regular',
     fontSize: 14,
   },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
-import { Button, Card, ProfileCard, TracksList, UploadTrackCard } from '../components';
+import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { Button, Card, Image, ProfileCard, TracksList, UploadTrackCard } from '../components';
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
@@ -8,14 +8,12 @@ const { userManager, tracksManager } = maestro.managers;
 
 export default class ProfileScreen extends Component {
   state = {
-    user: null,
-    tracks: null,
+    user: userManager.store.user,
+    tracks: tracksManager.store.tracks,
   }
 
   componentDidMount() {
     maestro.link(this);
-
-    this.setState({ user: userManager.store.user });
 
     this.props.navigation.setOptions({
       rightButtonComponent: this._renderEditProfileButton(),
@@ -75,24 +73,12 @@ export default class ProfileScreen extends Component {
 
   _renderFooter = () => {
     return (
-      <ActivityIndicator size={'large'} />
-    );
-  }
-
-  _renderLoading = () => {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size={'large'} />
-      </View>
+      <ActivityIndicator color={'#000000'} size={'large'} />
     );
   }
 
   render() {
     const { user, tracks } = this.state;
-
-    if (!user) {
-      return this._renderLoading();
-    }
 
     return (
       <View style={styles.container}>
@@ -107,7 +93,7 @@ export default class ProfileScreen extends Component {
         />
 
         <Image
-          source={{ url: user.avatarUrl }}
+          source={{ uri: user.avatarUrl }}
           resizeMode={'cover'}
           blurRadius={39}
           style={styles.backgroundImage}
@@ -153,11 +139,6 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingHorizontal: 16,
     paddingTop: 96,
-  },
-  loadingContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
   },
   profileCard: {
     marginBottom: 16,

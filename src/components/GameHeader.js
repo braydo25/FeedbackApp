@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Image from './Image';
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
@@ -18,12 +19,12 @@ export default class GameHeader extends Component {
     maestro.unlink(this);
   }
 
-  receiveStoreUpdate({ activity, user }) {
+  receiveStoreUpdate({ user }) {
     this.setState({ user: user.user });
   }
 
-  _openActivity = () => {
-    navigationHelper.navigate('ActivityNavigator');
+  _openNotifications = () => {
+    navigationHelper.navigate('NotificationsNavigator');
   }
 
   _openProfile = () => {
@@ -32,12 +33,13 @@ export default class GameHeader extends Component {
 
   render() {
     const { user } = this.state;
+
     return (
       <SafeAreaView>
         <View style={styles.container}>
           <TouchableOpacity onPress={this._openProfile}>
             <Image
-              source={{ url: user.avatarUrl }}
+              source={{ uri: user?.avatarUrl }}
               resizeMode={'contain'}
               style={styles.profileImage}
             />
@@ -53,14 +55,14 @@ export default class GameHeader extends Component {
             <Text style={styles.levelExpText}>150/500 EXP</Text>
           </View>
 
-          <TouchableOpacity onPress={this._openActivity} style={styles.activityButton}>
+          <TouchableOpacity onPress={this._openNotifications} style={styles.notificationsButton}>
             <Image
               source={require('../assets/images/bell.png')}
               resizeMode={'contain'}
-              style={styles.activityIcon}
+              style={styles.notificationsIcon}
             />
 
-            <View style={styles.activityBubble} />
+            <View style={styles.notificationsBubble} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -69,27 +71,6 @@ export default class GameHeader extends Component {
 }
 
 const styles = StyleSheet.create({
-  activityBubble: {
-    backgroundColor: '#FF0000',
-    borderRadius: 4,
-    height: 8,
-    position: 'absolute',
-    right: 9,
-    top: 6,
-    width: 10,
-  },
-  activityButton: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 10,
-    height: 40,
-    justifyContent: 'center',
-    width: 40,
-  },
-  activityIcon: {
-    height: 20,
-    width: 20,
-  },
   container: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -131,6 +112,27 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 14,
+  },
+  notificationsBubble: {
+    backgroundColor: '#FF0000',
+    borderRadius: 4,
+    height: 8,
+    position: 'absolute',
+    right: 9,
+    top: 6,
+    width: 10,
+  },
+  notificationsButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 10,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  notificationsIcon: {
+    height: 20,
+    width: 20,
   },
   profileImage: {
     borderRadius: 10,

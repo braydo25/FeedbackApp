@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TextField, MultiSelectField } from '../components';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Image, TextField, MultiSelectField } from '../components';
 import maestro from '../maestro';
 
 const { userManager, tracksManager } = maestro.managers;
@@ -80,7 +80,7 @@ export default class ProfileEditScreen extends Component {
         <View style={styles.artistContainer}>
           <TouchableOpacity onPress={this._openImagePicker}>
             <Image
-              source={{ url: avatarImageUri || user.avatarUrl }}
+              source={{ uri: avatarImageUri || user.avatarUrl }}
               resizeMode={'contain'}
               style={styles.avatarImage}
             />
@@ -89,7 +89,7 @@ export default class ProfileEditScreen extends Component {
           <Text style={styles.artistNameText}>{name}</Text>
 
           <Image
-            source={{ url: avatarImageUri || user.avatarUrl }}
+            source={{ uri: avatarImageUri || user.avatarUrl }}
             resizeMode={'cover'}
             blurRadius={39}
             style={styles.artistContainerBackgroundImage}

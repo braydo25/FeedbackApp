@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, Image, Animated, StyleSheet } from 'react-native';
+import { Text, Animated, StyleSheet } from 'react-native';
+import Image from './Image';
 import maestro from '../maestro';
 
 export default class BabbleOverlayError extends Component {
@@ -50,7 +51,7 @@ export default class BabbleOverlayError extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(245, 68, 68, 0.95)',
+    backgroundColor: 'rgba(248, 44, 71, 0.95)',
     borderRadius: 16,
     flexDirection: 'row',
     left: 0,
