@@ -74,11 +74,10 @@ export default class ProfileEditScreen extends Component {
 
     return (
       <KeyboardAwareScrollView
-        contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
         <View style={styles.artistContainer}>
-          <TouchableOpacity onPress={this._openImagePicker}>
+          <TouchableOpacity onPress={this._openImagePicker} style={styles.avatarButton}>
             <Image
               source={{ uri: avatarImageUri || user.avatarUrl }}
               resizeMode={'contain'}
@@ -100,7 +99,7 @@ export default class ProfileEditScreen extends Component {
           <TextField
             autoCorrect={false}
             onChangeText={text => this.setState({ name: text })}
-            label={'Artist Name'}
+            label={'Name'}
             placeholder={'What do people call you?'}
             value={name}
             containerStyle={styles.formField}
@@ -144,6 +143,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
     minHeight: 22,
     textAlign: 'center',
+  },
+  avatarButton: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 1.00,
   },
   avatarImage: {
     alignSelf: 'center',
