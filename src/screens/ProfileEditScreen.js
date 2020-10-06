@@ -115,7 +115,7 @@ export default class ProfileEditScreen extends Component {
             style={styles.formField}
           />
 
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity onPress={() => userManager.logout()} style={styles.logoutButton}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
         </View>

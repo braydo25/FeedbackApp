@@ -50,22 +50,33 @@ export default class TextField extends Component {
             (focused) ? styles.textInputContainerFocused : null,
           ]}
         >
-          {inputPrefix}
-
-          <TextInput
-            onFocus={this._onFocus}
-            onBlur={this._onBlur}
-            placeholderTextColor={'#4D4D4D'}
+          <View
             style={[
-              styles.textInput,
-              (focused) ? styles.textInputFocused : null,
-              (!value) ? styles.textInputPlaceholder : null,
-              style,
+              styles.textInputInnerContainer,
+              (focused) ? styles.textInputInnerContainerFocused : null,
             ]}
-            value={value}
-            ref={component => this.textInputComponent = component}
-            {...props}
-          />
+          >
+            {!!inputPrefix && (
+              <View style={(focused) ? styles.inputPrefixFocused : null}>
+                {inputPrefix}
+              </View>
+            )}
+
+            <TextInput
+              onFocus={this._onFocus}
+              onBlur={this._onBlur}
+              placeholderTextColor={'#4D4D4D'}
+              style={[
+                styles.textInput,
+                (focused) ? styles.textInputFocused : null,
+                (!value) ? styles.textInputPlaceholder : null,
+                style,
+              ]}
+              value={value}
+              ref={component => this.textInputComponent = component}
+              {...props}
+            />
+          </View>
         </View>
 
         {!!error && (
@@ -85,6 +96,9 @@ const styles = StyleSheet.create({
   },
   fieldLabelContainer: {
     marginBottom: 16,
+  },
+  inputPrefixFocused: {
+    marginLeft: -6,
   },
   textInput: {
     color: '#000000',
@@ -106,12 +120,19 @@ const styles = StyleSheet.create({
     borderWidth: 4,
   },
   textInputFocused: {
+    paddingBottom: 16, // multiline fix
+    paddingRight: 16,
+    paddingTop: 16, // multiline fix
+  },
+  textInputInnerContainer: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+  },
+  textInputInnerContainerFocused: {
     borderColor: '#7C4BCE',
     borderRadius: 13,
     borderWidth: 2,
-    padding: 16,
-    paddingBottom: 16, // multiline fix
-    paddingTop: 16, // multiline fix
   },
   textInputPlaceholder: {
     fontFamily: 'SFProDisplay-Regular',

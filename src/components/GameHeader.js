@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   notificationsButton: {
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 10,
+    borderRadius: 16,
     height: 40,
     justifyContent: 'center',
     width: 40,
