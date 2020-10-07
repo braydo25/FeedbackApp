@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, PanResponder, Animated, Easing, StyleSheet } from 'react-native';
+import GameNoTracksCard from './GameNoTracksCard';
 import GameTrackCard from './GameTrackCard';
 import maestro from '../maestro';
 
@@ -26,7 +27,16 @@ export default class GameTrackCardStack extends Component {
 
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => false,
-      onMoveShouldSetPanResponder: (event, gestureState) => Math.abs(gestureState.dx) > 10,
+      onMoveShouldSetPanResponder: (event, gestureState) => {
+        const { tracks } = this.props;
+        const { currentTrackIndex } = this.state;
+
+        if (currentTrackIndex === tracks.length) {
+          return false;
+        }
+
+        return Math.abs(gestureState.dx) > 10;
+      },
       onPanResponderMove: Animated.event([
         null,
         {
@@ -134,7 +144,7 @@ export default class GameTrackCardStack extends Component {
 
     return (
       <View style={styles.container}>
-        {!!tracks?.length && currentTrackIndex < tracks?.length && (
+        {!!tracks.length && currentTrackIndex < tracks.length && (
           <Animated.View
             {...this.panResponder.panHandlers}
             style={[ styles.cardContainer, panStyle ]}
@@ -146,14 +156,27 @@ export default class GameTrackCardStack extends Component {
           </Animated.View>
         )}
 
-        {currentTrackIndex + 1 < tracks?.length && (
+        {currentTrackIndex + 1 <= tracks.length && (
           <Animated.View style={[
             styles.stackCardContainer,
             { transform: [ { scale: stackScaleAnimatedValue }, { translateY: stackTranslateYAnimatedValue } ] },
           ]}>
-            <GameTrackCard
-              track={tracks[currentTrackIndex + 1]}
-            />
+            {currentTrackIndex + 1 < tracks.length && (
+              <GameTrackCard track={tracks[currentTrackIndex + 1]} />
+            )}
+
+            {currentTrackIndex + 1 === tracks.length && (
+              <GameNoTracksCard />
+            )}
+          </Animated.View>
+        )}
+
+        {(!tracks.length || currentTrackIndex === tracks.length) && (
+          <Animated.View
+            {...this.panResponder.panHandlers}
+            style={[ styles.cardContainer, panStyle ]}
+          >
+            <GameNoTracksCard />
           </Animated.View>
         )}
       </View>

@@ -15,6 +15,8 @@ export default class LandingScreen extends Component {
     error: null,
   }
 
+  passwordTextField = null;
+
   _submit = async () => {
     const { email, password } = this.state;
 
@@ -62,6 +64,8 @@ export default class LandingScreen extends Component {
         <View style={styles.bottomContainer}>
           <TextField
             onChangeText={text => this.setState({ email: text })}
+            onSubmitEditing={() => this.passwordTextField.focus()}
+            blurOnSubmit={false}
             returnKeyType={'next'}
             autoCompleteType={'email'}
             keyboardType={'email-address'}
@@ -79,6 +83,7 @@ export default class LandingScreen extends Component {
             inputPrefix={<Image source={require('../assets/images/key.png')} style={styles.keyIcon} />}
             containerStyle={styles.passwordField}
             value={password}
+            ref={component => this.passwordTextField = component}
           />
 
           <Button onPress={this._submit}>{register ? 'Sign Up' : 'Login'}</Button>

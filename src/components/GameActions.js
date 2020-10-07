@@ -25,11 +25,19 @@ export default class GameActions extends Component {
   }
 
   render() {
+    const { disabled } = this.props;
     const { commentText } = this.state;
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this._nextTrack} style={styles.button}>
+      <View style={[
+        disabled ? styles.containerDisabled : null,
+        styles.container,
+      ]}>
+        <TouchableOpacity
+          disabled={disabled}
+          onPress={this._nextTrack}
+          style={styles.button}
+        >
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/skip.png')}
@@ -49,7 +57,7 @@ export default class GameActions extends Component {
         />
 
         <TouchableOpacity
-          disabled={!commentText}
+          disabled={!commentText || disabled}
           onPress={this._submit}
           style={styles.button}
         >
@@ -79,6 +87,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingBottom: 20,
     width: '100%',
+  },
+  containerDisabled: {
+    opacity: 0.5,
   },
   input: {
     backgroundColor: '#FFFFFF',

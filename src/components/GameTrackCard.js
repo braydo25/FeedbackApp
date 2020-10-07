@@ -26,8 +26,9 @@ export default class GameTrackCard extends Component {
 
   receiveStoreUpdate({ game }) {
     const { track } = this.props;
+    const currentTrack = gameManager.getCurrentTrack();
 
-    if (track.id === gameManager.getCurrentTrack().id) {
+    if (currentTrack && track.id === currentTrack.id) {
       this.setState({ comments: game.currentTrackComments });
     }
   }

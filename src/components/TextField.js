@@ -7,6 +7,16 @@ export default class TextField extends Component {
     focused: false,
   }
 
+  textInputComponent = null;
+
+  focus() {
+    this.textInputComponent.focus();
+  }
+
+  blur() {
+    this.textInputComponent.blur();
+  }
+
   _onFocus = () => {
     const { onFocus } = this.props;
 

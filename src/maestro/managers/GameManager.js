@@ -18,7 +18,7 @@ export default class GameManager extends Manager {
   async loadTracks() {
     const { apiHelper } = this.maestro.helpers;
     const { store } = this;
-    const tracks = (store.tracks) ? { ...store.tracks } : [];
+    const tracks = (store.tracks) ? [ ...store.tracks ] : [];
     const response = await apiHelper.get({
       path: '/game',
     });
@@ -28,6 +28,8 @@ export default class GameManager extends Manager {
     }
 
     this.updateStore({ tracks: [ ...tracks, ...response.body ] });
+
+    return response.body;
   }
 
   async createTrackComment(text) {

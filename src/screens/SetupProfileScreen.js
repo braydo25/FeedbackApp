@@ -110,6 +110,7 @@ export default class SetupProfileScreen extends Component {
           <TextField
             autoCorrect={false}
             onChangeText={text => this.setState({ name: text })}
+            returnKeyType={'done'}
             label={'Name'}
             placeholder={'What do people call you?'}
             value={name}

@@ -62,7 +62,9 @@ export default class GameHeader extends Component {
               style={styles.notificationsIcon}
             />
 
-            <View style={styles.notificationsBubble} />
+            {false && (
+              <View style={styles.notificationsBubble} />
+            )}
           </TouchableOpacity>
         </View>
       </SafeAreaView>

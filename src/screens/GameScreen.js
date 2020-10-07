@@ -42,6 +42,7 @@ export default class GameScreen extends Component {
 
   render() {
     const { tracks, keyboardVerticalOffset } = this.state;
+    const { currentTrackIndex } = gameManager.store;
 
     return (
       <SafeAreaView onLayout={this._onLayout} style={styles.container}>
@@ -55,7 +56,7 @@ export default class GameScreen extends Component {
           {!!tracks && (
             <>
               <GameTrackCardStack tracks={tracks} />
-              <GameActions />
+              <GameActions disabled={tracks.length === currentTrackIndex} />
             </>
           )}
 
