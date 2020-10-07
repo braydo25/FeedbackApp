@@ -33,6 +33,7 @@ export default class GameManager extends Manager {
   }
 
   async createTrackComment(text) {
+    const { levelsHelper } = this.maestro.helpers;
     const { playbackManager, tracksManager, userManager } = this.maestro.managers;
     const currentTrack = this.getCurrentTrack();
     const trackId = currentTrack.id;
@@ -49,6 +50,8 @@ export default class GameManager extends Manager {
       if (this.getCurrentTrack().id === trackId) { // prevent adding to next track if user changed cards while loading
         this._addCurrentTrackComment({ ...trackComment, user, nonce });
       }
+
+      userManager.updateLocalUser({ exp: user.exp + levelsHelper.commentExp });
     } catch (error) {
       this._removeCurrentTrackComment(nonce);
 

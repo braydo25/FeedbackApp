@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
 
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 const { userManager } = maestro.managers;
 
 export default class GameHeader extends Component {
@@ -20,6 +20,17 @@ export default class GameHeader extends Component {
   }
 
   receiveStoreUpdate({ user }) {
+    const oldExp = this.state.user.exp;
+    const newExp = user.user.exp;
+
+    if (newExp !== oldExp) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+
+      if (levelsHelper.expToLevel(newExp) !== levelsHelper.expToLevel(oldExp)) {
+        interfaceHelper.showOverlay({ name: 'LevelUp', data: { delay: 1000 } });
+      }
+    }
+
     this.setState({ user: user.user });
   }
 
@@ -33,6 +44,8 @@ export default class GameHeader extends Component {
 
   render() {
     const { user } = this.state;
+    const relativeLevelExp = levelsHelper.relativeLevelExp(user.exp);
+    const relativeNextLevelExp = levelsHelper.relativeExpForNextLevel(user.exp);
 
     return (
       <SafeAreaView>
@@ -46,13 +59,18 @@ export default class GameHeader extends Component {
           </TouchableOpacity>
 
           <View style={styles.levelContainer}>
-            <Text style={styles.levelText}>Level 24</Text>
+            <Text style={styles.levelText}>Level {levelsHelper.expToLevel(user.exp)}</Text>
 
             <View style={styles.levelBarOutline}>
-              <View style={styles.levelBarFill} />
+              <View
+                style={[
+                  styles.levelBarFill,
+                  { width: `${Math.floor((relativeLevelExp / relativeNextLevelExp) * 100)}%` },
+                ]}
+              />
             </View>
 
-            <Text style={styles.levelExpText}>150/500 EXP</Text>
+            <Text style={styles.levelExpText}>{relativeLevelExp}/{relativeNextLevelExp} EXP</Text>
           </View>
 
           <TouchableOpacity onPress={this._openNotifications} style={styles.notificationsButton}>
@@ -87,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     height: '100%',
-    width: '25%',
+    width: '0%',
   },
   levelBarOutline: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)',

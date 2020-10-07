@@ -78,9 +78,13 @@ export default class GameTrackCardStack extends Component {
       return;
     }
 
+    const nextTrack = gameManager.getNextTrack();
+
     this.setState({ animating: true });
 
-    playbackManager.play(gameManager.getNextTrack());
+    if (nextTrack) {
+      playbackManager.play(nextTrack);
+    }
 
     Animated.decay(this.state.panAnimatedValue, {
       velocity: { x: velocityX, y: velocityY },

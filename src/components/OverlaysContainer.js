@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import OverlayError from './OverlayError';
+import OverlayLevelUp from './OverlayLevelUp';
 import maestro from '../maestro';
 
 export default class BabbleOverlayContainer extends Component {
@@ -38,6 +39,10 @@ export default class BabbleOverlayContainer extends Component {
 
       if (overlayName === 'Error') {
         overlayComponents.push(<OverlayError data={data} key={overlayName} />);
+      }
+
+      if (overlayName === 'LevelUp') {
+        overlayComponents.push(<OverlayLevelUp data={data} key={overlayName} />);
       }
     });
 
