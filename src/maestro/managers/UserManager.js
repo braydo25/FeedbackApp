@@ -150,6 +150,7 @@ export default class UserManager extends Manager {
 
   async _updateUserDevice() {
     const { apiHelper, deviceHelper } = this.maestro.helpers;
+    const { apnsToken, fcmRegistrationId } = this.maestro.managers.notificationsManager.store;
 
     if (!this.store.user) {
       return;
@@ -158,6 +159,8 @@ export default class UserManager extends Manager {
     await apiHelper.put({
       path: '/devices',
       data: {
+        apnsToken,
+        fcmRegistrationId,
         uuid: await deviceHelper.getUUID(),
         details: await deviceHelper.getDeviceDetails(),
       },
