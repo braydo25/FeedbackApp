@@ -87,7 +87,7 @@ export default class SetupProfileScreen extends Component {
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
-        <View style={styles.artistContainer}>
+        <View style={styles.topContainer}>
           <TouchableOpacity onPress={this._openImagePicker} style={styles.avatarButton}>
             <Image
               source={(avatarImageUri) ? { uri: avatarImageUri } : defaultAvatarImage}
@@ -102,7 +102,7 @@ export default class SetupProfileScreen extends Component {
             source={(avatarImageUri) ? { uri: avatarImageUri } : defaultBackgroundImage}
             resizeMode={'cover'}
             blurRadius={39}
-            style={styles.artistContainerBackgroundImage}
+            style={styles.topContainerBackgroundImage}
           />
         </View>
 
@@ -134,18 +134,6 @@ export default class SetupProfileScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  artistContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 30,
-    paddingTop: 100,
-  },
-  artistContainerBackgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.5,
-    top: -210,
-    zIndex: -1,
-  },
   artistNameText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-SemiBold',
@@ -176,5 +164,17 @@ const styles = StyleSheet.create({
   },
   formField: {
     marginBottom: 24,
+  },
+  topContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 30,
+    paddingTop: 100,
+  },
+  topContainerBackgroundImage: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.5,
+    top: -210,
+    zIndex: -1,
   },
 });

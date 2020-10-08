@@ -5,6 +5,7 @@ import { GameHeader } from '../components';
 import GameScreen from '../screens/GameScreen';
 import LandingScreen from '../screens/LandingScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import SetupNotificationsScreen from '../screens/SetupNotificationsScreen';
 import SetupProfileScreen from '../screens/SetupProfileScreen';
 
 export default initialRouteName => {
@@ -35,6 +36,15 @@ export default initialRouteName => {
       <MainStack.Screen
         name={'Onboarding'}
         component={OnboardingScreen}
+        options={{
+          gestureEnabled: false,
+          headerShown: false,
+        }}
+      />
+
+      <MainStack.Screen
+        name={'SetupNotifications'}
+        component={SetupNotificationsScreen}
         options={{
           gestureEnabled: false,
           headerShown: false,

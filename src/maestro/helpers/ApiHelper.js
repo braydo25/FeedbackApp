@@ -8,7 +8,7 @@ export default class ApiHelper extends Helper {
     return 'apiHelper';
   }
 
-  _host = (__DEV__) ? 'http://localhost:8000' : '';
+  _host = (__DEV__) ? 'https://bd119d4af01f.ngrok.io' : '';
 
   get(options) {
     return this._request({ ...options, method: 'GET' });

@@ -99,6 +99,10 @@ export default class TextField extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 1.00,
     width: '100%',
   },
   errorText: {

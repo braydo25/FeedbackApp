@@ -98,6 +98,7 @@ export default class UserManager extends Manager {
   }
 
   nextRouteNameForUserState() {
+    const { notificationsManager } = this.maestro.managers;
     const { user } = this.store;
 
     if (!user) {
@@ -106,6 +107,10 @@ export default class UserManager extends Manager {
 
     if (!user.name) {
       return 'SetupProfile';
+    }
+
+    if (Platform.OS === 'ios' && !notificationsManager.permissionGranted() && !notificationsManager.permissionDeferred()) {
+      return 'SetupNotifications';
     }
 
     if (Platform.OS === 'ios') {

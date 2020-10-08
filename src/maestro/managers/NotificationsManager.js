@@ -50,6 +50,8 @@ export default class NotificationsManager extends Manager {
     asyncStorageHelper.getItem(NOTIFICATIONS_PERMISSION_STATUS_KEY).then(permissionStatus => {
       this.updateStore({ permissionStatus }); // TODO: check permission can delay, so we need to cache to prevent weird races
     });
+
+    this.checkAndSyncPermission();
   }
 
   get storeName() {
@@ -78,10 +80,40 @@ export default class NotificationsManager extends Manager {
     asyncStorageHelper.setItem(NOTIFICATIONS_PERMISSION_REQUESTED_KEY, true);
     this._syncPermissionStatus(status);
 
-    const token = (await Notifications.getDevicePushTokenAsync()).data;
-    this._registerForNotifications(token);
+    if (status === 'granted') {
+      const token = (await Notifications.getDevicePushTokenAsync()).data;
+      this._registerForNotifications(token);
+    }
 
     this.updateStore({ permissionRequested: true });
+
+    this.maestro.dispatchEvent('NOTIFICATIONS:PROMPT_COMPLETE');
+  }
+
+  async checkAndSyncPermission() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
+    this._syncPermissionStatus(status);
+
+    return status;
+  }
+
+  deferPermission() {
+    this.updateStore({ permissionDeferred: true });
+  }
+
+  permissionDeferred() {
+    return !!this.store.permissionDeferred;
+  }
+
+  permissionGranted() {
+    const { store } = this;
+
+    return store.permissionStatus === 'granted' && (store.apnsToken || store.fcmRegistrationId);
+  }
+
+  permissionRequested() {
+    return !!this.store.permissionRequested;
   }
 
   /*
