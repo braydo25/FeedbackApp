@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Card from './Card';
 import Image from './Image';
+import maestro from '../maestro';
+
+const { levelsHelper } = maestro.helpers;
 
 export default class ProfileCard extends Component {
   render() {
     const { user, style } = this.props;
+    const relativeLevelExp = levelsHelper.relativeLevelExp(user.exp);
+    const relativeNextLevelExp = levelsHelper.relativeExpForNextLevel(user.exp);
 
     return (
       <View style={[ styles.container, style ]}>
@@ -21,12 +26,17 @@ export default class ProfileCard extends Component {
 
           <View style={styles.levelContainer}>
             <View style={styles.levelTextContainer}>
-              <Text style={styles.levelText}>Level 24</Text>
-              <Text style={styles.expText}>Exp 12,540</Text>
+              <Text style={styles.levelText}>Level {levelsHelper.expToLevel(user.exp)}</Text>
+              <Text style={styles.expText}>Total Exp: {user.exp.toLocaleString()}</Text>
             </View>
 
             <View style={styles.levelBarOutline}>
-              <View style={styles.levelBarFill} />
+              <View
+                style={[
+                  styles.levelBarFill,
+                  { width: `${Math.floor((relativeLevelExp / relativeNextLevelExp) * 100)}%` },
+                ]}
+              />
             </View>
           </View>
         </Card>
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7C4BCE',
     borderRadius: 5,
     height: '100%',
-    width: '25%',
+    width: '0%',
   },
   levelBarOutline: {
     backgroundColor: 'rgba(124, 75, 206, 0.2)',

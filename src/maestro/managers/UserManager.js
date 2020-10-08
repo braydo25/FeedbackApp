@@ -138,8 +138,14 @@ export default class UserManager extends Manager {
    */
 
   _setLoggedInUser(user) {
+    const { tracksManager } = this.maestro.managers;
+
     this.updateLocalUser(user);
     this._updateUserDevice();
+
+    if (user) {
+      tracksManager.loadTracks();
+    }
   }
 
   async _updateUserDevice() {

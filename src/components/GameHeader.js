@@ -9,6 +9,7 @@ const { userManager } = maestro.managers;
 export default class GameHeader extends Component {
   state = {
     user: userManager.store.user,
+    hasTrack: false,
   }
 
   componentDidMount() {
@@ -19,7 +20,7 @@ export default class GameHeader extends Component {
     maestro.unlink(this);
   }
 
-  receiveStoreUpdate({ user }) {
+  receiveStoreUpdate({ user, tracks }) {
     const oldExp = this.state.user.exp;
     const newExp = user.user.exp;
 
@@ -27,8 +28,12 @@ export default class GameHeader extends Component {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
       if (levelsHelper.expToLevel(newExp) !== levelsHelper.expToLevel(oldExp)) {
-        interfaceHelper.showOverlay({ name: 'LevelUp', data: { delay: 1000 } });
+        interfaceHelper.showOverlay({ name: 'LevelUp', data: { delay: 500 } });
       }
+    }
+
+    if (tracks.tracks?.length) {
+      this.setState({ hasTrack: true });
     }
 
     this.setState({ user: user.user });
@@ -43,7 +48,7 @@ export default class GameHeader extends Component {
   }
 
   render() {
-    const { user } = this.state;
+    const { user, hasTrack } = this.state;
     const relativeLevelExp = levelsHelper.relativeLevelExp(user.exp);
     const relativeNextLevelExp = levelsHelper.relativeExpForNextLevel(user.exp);
 
@@ -56,6 +61,10 @@ export default class GameHeader extends Component {
               resizeMode={'contain'}
               style={styles.profileImage}
             />
+
+            {!hasTrack && (
+              <View style={styles.notificationsBubble} />
+            )}
           </TouchableOpacity>
 
           <View style={styles.levelContainer}>
@@ -80,7 +89,7 @@ export default class GameHeader extends Component {
               style={styles.notificationsIcon}
             />
 
-            {false && (
+            {true && (
               <View style={styles.notificationsBubble} />
             )}
           </TouchableOpacity>
@@ -135,17 +144,19 @@ const styles = StyleSheet.create({
   },
   notificationsBubble: {
     backgroundColor: '#FF0000',
-    borderRadius: 4,
-    height: 8,
+    borderColor: '#FFFFFF',
+    borderRadius: 12,
+    borderWidth: 2,
+    height: 12,
     position: 'absolute',
-    right: 9,
-    top: 6,
-    width: 10,
+    right: -4,
+    top: -4,
+    width: 12,
   },
   notificationsButton: {
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 16,
+    borderRadius: 10,
     height: 40,
     justifyContent: 'center',
     width: 40,
