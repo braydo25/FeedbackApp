@@ -1,4 +1,4 @@
-package com.feedback.app.generated;
+package com.soundhouse.app.generated;
 
 import java.util.Arrays;
 import java.util.List;

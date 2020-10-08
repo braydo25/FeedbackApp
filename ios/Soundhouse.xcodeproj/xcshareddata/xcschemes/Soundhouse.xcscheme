@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "app.app"
-               BlueprintName = "Feedback"
-               ReferencedContainer = "container:Feedback.xcodeproj">
+               BlueprintName = "Soundhouse"
+               ReferencedContainer = "container:Soundhouse.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "FeedbackTests.xctest"
-               BlueprintName = "FeedbackTests"
-               ReferencedContainer = "container:Feedback.xcodeproj">
+               BuildableName = "SoundhouseTests.xctest"
+               BlueprintName = "SoundhouseTests"
+               ReferencedContainer = "container:Soundhouse.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -56,8 +56,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "app.app"
-            BlueprintName = "Feedback"
-            ReferencedContainer = "container:Feedback.xcodeproj">
+            BlueprintName = "Soundhouse"
+            ReferencedContainer = "container:Soundhouse.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -73,8 +73,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "app.app"
-            BlueprintName = "Feedback"
-            ReferencedContainer = "container:Feedback.xcodeproj">
+            BlueprintName = "Soundhouse"
+            ReferencedContainer = "container:Soundhouse.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

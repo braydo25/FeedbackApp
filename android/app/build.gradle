@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.feedback.app'
+        applicationId 'com.soundhouse.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

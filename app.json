@@ -1,9 +1,9 @@
 {
-  "name": "Feedback",
-  "displayName": "Feedback",
+  "name": "Soundhouse",
+  "displayName": "Soundhouse",
   "expo": {
-    "name": "Feedback",
-    "slug": "Feedback",
+    "name": "Soundhouse",
+    "slug": "Soundhouse",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
@@ -14,10 +14,10 @@
           "audio"
         ]
       },
-      "bundleIdentifier": "com.feedback.app"
+      "bundleIdentifier": "com.soundhouse.app"
     },
     "android": {
-      "package": "com.feedback.app",
+      "package": "com.soundhouse.app",
       "useNextNotificationsApi": true
     }
   }

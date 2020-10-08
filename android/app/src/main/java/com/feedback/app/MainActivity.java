@@ -1,4 +1,4 @@
-package com.feedback.app;
+package com.soundhouse.app;
 
 import android.os.Bundle;
 
