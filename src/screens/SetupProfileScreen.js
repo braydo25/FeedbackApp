@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button, Image, TextField, MultiSelectField } from '../components';
+import { Button, Card, Image, TextField, MultiSelectField } from '../components';
 import maestro from '../maestro';
 
 const { userManager, tracksManager } = maestro.managers;
@@ -83,63 +83,73 @@ export default class SetupProfileScreen extends Component {
     const defaultBackgroundImage = require('../assets/images/landing-background.png');
 
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.contentContainer}
-        style={styles.container}
-      >
-        <View style={styles.topContainer}>
-          <TouchableOpacity onPress={this._openImagePicker} style={styles.avatarButton}>
-            <Image
-              source={(avatarImageUri) ? { uri: avatarImageUri } : defaultAvatarImage}
-              resizeMode={'contain'}
-              style={styles.avatarImage}
-            />
-          </TouchableOpacity>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.contentContainer}
+          style={styles.container}
+        >
+          <View style={styles.topContainer}>
+            <TouchableOpacity onPress={this._openImagePicker} style={styles.avatarButton}>
+              <Image
+                source={(avatarImageUri) ? { uri: avatarImageUri } : defaultAvatarImage}
+                resizeMode={'contain'}
+                style={styles.avatarImage}
+              />
+            </TouchableOpacity>
 
-          <Text style={styles.artistNameText}>{name}</Text>
+            <Text style={styles.artistNameText}>{name || 'Setup Profile'}</Text>
+          </View>
 
-          <Image
-            source={(avatarImageUri) ? { uri: avatarImageUri } : defaultBackgroundImage}
-            resizeMode={'cover'}
-            blurRadius={39}
-            style={styles.topContainerBackgroundImage}
-          />
-        </View>
+          <View style={styles.formContainer}>
+            <Card style={styles.formCard}>
+              <TextField
+                autoCorrect={false}
+                onChangeText={text => this.setState({ name: text })}
+                returnKeyType={'done'}
+                label={'Name'}
+                placeholder={'What do people call you?'}
+                value={name}
+              />
+            </Card>
 
-        <View style={styles.formContainer}>
-          <TextField
-            autoCorrect={false}
-            onChangeText={text => this.setState({ name: text })}
-            returnKeyType={'done'}
-            label={'Name'}
-            placeholder={'What do people call you?'}
-            value={name}
-            containerStyle={styles.formField}
-          />
+            <Card style={styles.formCard}>
+              <MultiSelectField
+                onOptionPress={this._onOptionPress}
+                label={'Preferred Genres'}
+                info={'Pick the genres you want to listen to, and give feedback to.'}
+                options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
+                selectedOptions={preferredGenreIds}
+              />
+            </Card>
 
-          <MultiSelectField
-            onOptionPress={this._onOptionPress}
-            label={'Preferred Genres'}
-            info={'Pick the genres you want to listen to, and give feedback to.'}
-            options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
-            selectedOptions={preferredGenreIds}
-            style={styles.formField}
-          />
+            <Card style={styles.formCard}>
+              <Button loading={loading} onPress={this._save}>Continue</Button>
+            </Card>
+          </View>
+        </KeyboardAwareScrollView>
 
-          <Button loading={loading} onPress={this._save}>Continue</Button>
-        </View>
-      </KeyboardAwareScrollView>
+        <Image
+          source={(avatarImageUri) ? { uri: avatarImageUri } : defaultBackgroundImage}
+          resizeMode={'cover'}
+          blurRadius={39}
+          style={styles.topContainerBackgroundImage}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   artistNameText: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 18,
     marginTop: 16,
     minHeight: 22,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 1.00,
     textAlign: 'center',
   },
   avatarButton: {
@@ -157,24 +167,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  contentContainer: {
+    paddingTop: 100,
+  },
+  formCard: {
+    alignItems: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+  },
   formContainer: {
     paddingBottom: 48,
     paddingHorizontal: 16,
     paddingTop: 32,
   },
-  formField: {
-    marginBottom: 24,
-  },
   topContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 30,
-    paddingTop: 100,
   },
   topContainerBackgroundImage: {
     ...StyleSheet.absoluteFillObject,
-    opacity: 0.5,
-    top: -210,
+    height: '100%',
+    opacity: 0.75,
     zIndex: -1,
   },
 });

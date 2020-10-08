@@ -72,14 +72,14 @@ export default class LandingScreen extends Component {
         style={styles.container}
       >
         <View style={styles.topContainer}>
-          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <View style={styles.topContainerItem}>
             <Image
               source={require('../assets/images/logo.png')}
               style={styles.logoImage}
             />
           </View>
 
-          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <View style={styles.topContainerItem}>
             <ScrollView
               horizontal
               pagingEnabled
@@ -135,7 +135,7 @@ export default class LandingScreen extends Component {
               ref={component => this.passwordTextField = component}
             />
 
-            <Button onPress={this._submit}>{register ? 'Sign Up' : 'Login'}</Button>
+            <Button onPress={this._submit} loading={loading}>{register ? 'Sign Up' : 'Login'}</Button>
 
             <View>
               <Text style={styles.bottomText}>{register ? 'Already' : 'Not'} signed up?</Text>
@@ -264,6 +264,10 @@ const styles = StyleSheet.create({
     height: '100%',
     opacity: 0.75,
     zIndex: -1,
+  },
+  topContainerItem: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   userIcon: {
     height: 16,
