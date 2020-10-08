@@ -17,7 +17,8 @@
       "bundleIdentifier": "com.feedback.app"
     },
     "android": {
-      "package": "com.feedback.app"
+      "package": "com.feedback.app",
+      "useNextNotificationsApi": true
     }
   }
 }
