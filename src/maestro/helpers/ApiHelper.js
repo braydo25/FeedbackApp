@@ -74,7 +74,9 @@ export default class ApiHelper extends Helper {
     if (options.data) {
       Object.keys(options.data).forEach(key => {
         if (options.data[key] !== undefined) {
-          formData.append(key, options.data[key]);
+          const value = options.data[key];
+
+          formData.append(key, (typeof value === 'object') ? JSON.stringify(value) : value);
         }
       });
     }
