@@ -28,12 +28,13 @@ export default class NotificationsManager extends Manager {
     permissionRequested: false,
     permissionDeferred: false,
     permissionStatus: null,
+    hasNewNotifications: false,
   }
 
   constructor(maestro) {
     super(maestro);
 
-    const { asyncStorageHelper } = this.maestro.helpers;
+    const { asyncStorageHelper, navigationHelper } = maestro.helpers;
 
     asyncStorageHelper.getItem(APNS_TOKEN_KEY).then(apnsToken => {
       this.updateStore({ apnsToken });
@@ -52,6 +53,26 @@ export default class NotificationsManager extends Manager {
     });
 
     this.checkAndSyncPermission();
+
+    Notifications.addNotificationReceivedListener(() => this.setHasNewNotifications(true));
+    Notifications.addNotificationResponseReceivedListener(() => {
+      const { userManager } = maestro.managers;
+
+      if (userManager.store.user) {
+        navigationHelper.push('NotificationsNavigator');
+      }
+    });
+
+    setInterval(() => {
+      // temporary until we have websocket or mqtt..
+      const { userManager } = maestro.managers;
+
+      if (userManager.store.user) {
+        try {
+          this.loadNotifications();
+        } catch (error) { /* Noop */ }
+      }
+    }, 10000);
   }
 
   get storeName() {
@@ -60,6 +81,7 @@ export default class NotificationsManager extends Manager {
 
   async loadNotifications() {
     const { apiHelper } = this.maestro.helpers;
+    const { userManager } = this.maestro.managers;
     const response = await apiHelper.get({
       path: '/notifications',
     });
@@ -68,7 +90,13 @@ export default class NotificationsManager extends Manager {
       throw new Error(response.body);
     }
 
-    this.updateStore({ notifications: response.body });
+    this.updateStore({
+      notifications: response.body,
+    });
+
+    if (!!response.body?.length && response.body[0].createdAt > userManager.store.user.viewedNotificationsAt) {
+      this.setHasNewNotifications(true);
+    }
 
     return response.body;
   }
@@ -114,6 +142,10 @@ export default class NotificationsManager extends Manager {
 
   permissionRequested() {
     return !!this.store.permissionRequested;
+  }
+
+  setHasNewNotifications(boolean) {
+    this.updateStore({ hasNewNotifications: boolean });
   }
 
   /*

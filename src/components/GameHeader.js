@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
@@ -6,10 +6,11 @@ import maestro from '../maestro';
 const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 const { userManager } = maestro.managers;
 
-export default class GameHeader extends Component {
+export default class GameHeader extends PureComponent {
   state = {
     user: userManager.store.user,
     hasTrack: false,
+    hasNewNotifications: false,
   }
 
   componentDidMount() {
@@ -20,7 +21,7 @@ export default class GameHeader extends Component {
     maestro.unlink(this);
   }
 
-  receiveStoreUpdate({ user, tracks }) {
+  receiveStoreUpdate({ user, tracks, notifications }) {
     const oldExp = this.state.user.exp;
     const newExp = user.user.exp;
 
@@ -32,11 +33,11 @@ export default class GameHeader extends Component {
       }
     }
 
-    if (tracks.tracks?.length) {
-      this.setState({ hasTrack: true });
-    }
-
-    this.setState({ user: user.user });
+    this.setState({
+      user: user.user,
+      hasTrack: !!tracks.tracks?.length,
+      hasNewNotifications: notifications.hasNewNotifications,
+    });
   }
 
   _openNotifications = () => {
@@ -48,7 +49,7 @@ export default class GameHeader extends Component {
   }
 
   render() {
-    const { user, hasTrack } = this.state;
+    const { user, hasTrack, hasNewNotifications } = this.state;
     const relativeLevelExp = levelsHelper.relativeLevelExp(user.exp);
     const relativeNextLevelExp = levelsHelper.relativeExpForNextLevel(user.exp);
 
@@ -89,7 +90,7 @@ export default class GameHeader extends Component {
               style={styles.notificationsIcon}
             />
 
-            {true && (
+            {hasNewNotifications && (
               <View style={styles.notificationsBubble} />
             )}
           </TouchableOpacity>

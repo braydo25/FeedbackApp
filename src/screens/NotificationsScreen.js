@@ -13,6 +13,8 @@ export default class NotificationsScreen extends Component {
   componentDidMount() {
     maestro.link(this);
 
+    userManager.updateUser({ viewedNotificationsAt: new Date() });
+
     this._loadNotifications();
   }
 
