@@ -30,7 +30,7 @@ export default class SetupProfileScreen extends Component {
     const image = await filesHelper.selectImage({
       allowsEditing: true,
       aspect: [ 1, 1 ],
-      quality: 1,
+      width: 384,
     });
 
     if (image && !image.cancelled) {

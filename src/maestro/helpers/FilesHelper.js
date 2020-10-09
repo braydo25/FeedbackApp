@@ -1,6 +1,7 @@
 import { Helper } from 'react-native-maestro';
 import { Alert, Platform, Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default class FilesHelper extends Helper {
   static get instanceKey() {
@@ -25,9 +26,29 @@ export default class FilesHelper extends Helper {
       }
     }
 
-    return ImagePicker.launchImageLibraryAsync({
+    let image = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.Images,
       ...options,
     });
+
+    if (image.cancelled) {
+      return image;
+    }
+
+    if (options.width || options.height) {
+      image = await ImageManipulator.manipulateAsync(image.uri, [
+        {
+          resize: {
+            height: options.height,
+            width: options.width,
+          },
+        },
+      ], {
+        compress: 0.8,
+        format: ImageManipulator.SaveFormat.JPEG,
+      });
+    }
+
+    return image;
   }
 }
