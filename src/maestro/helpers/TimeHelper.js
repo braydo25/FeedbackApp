@@ -26,7 +26,7 @@ export default class TimeHelper extends Helper {
   }
 
   fromNow(time) {
-    return moment(time).fromNow(true);
+    return `${moment(time).fromNow(true)} ago`;
   }
 
   calendarTime(time) {

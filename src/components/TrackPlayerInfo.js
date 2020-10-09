@@ -17,7 +17,7 @@ export default class TrackPlayerInfo extends ProgressComponent {
     return (
       <View style={[ styles.container, style ]}>
         <Image
-          source={{ uri: (track.userId !== user.id) ? track.user.avatarUrl : user.avatarUrl }}
+          source={{ uri: (user && track.userId === user.id) ? user.avatarUrl : track.user.avatarUrl }}
           resizeMode={'contain'}
           style={styles.artistImage}
         />

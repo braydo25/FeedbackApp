@@ -36,7 +36,7 @@ export default class ProfileEditScreen extends Component {
       quality: 1,
     });
 
-    if (!image.cancelled) {
+    if (image && !image.cancelled) {
       this.setState({ avatarImageUri: image.uri });
     }
   }

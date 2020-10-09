@@ -21,7 +21,7 @@ export default class TrackComment extends Component {
 
         <View style={styles.textContainer}>
           <Text style={styles.commentText}>{text}</Text>
-          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)} | {timeHelper.fromNow(createdAt)} ago</Text>
+          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)} | {timeHelper.fromNow(createdAt)}</Text>
         </View>
 
         {!!id && user.id === userManager.store.user.id && (

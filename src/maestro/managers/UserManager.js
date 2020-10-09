@@ -123,7 +123,9 @@ export default class UserManager extends Manager {
   logout() {
     const { navigationHelper } = this.maestro.helpers;
 
-    this._setLoggedInUser(null);
+    setTimeout(() => {
+      this._setLoggedInUser(null);
+    }, 3000);
 
     navigationHelper.resetRoot('Landing');
   }
@@ -143,13 +145,18 @@ export default class UserManager extends Manager {
    */
 
   _setLoggedInUser(user) {
-    const { tracksManager } = this.maestro.managers;
+    const { tracksManager, notificationsManager } = this.maestro.managers;
+
+    if (user) {
+      user.viewedNotificationsAt = new Date(user.viewedNotificationsAt);
+    }
 
     this.updateLocalUser(user);
     this._updateUserDevice();
 
     if (user) {
       tracksManager.loadTracks();
+      notificationsManager.loadNotifications();
     }
   }
 

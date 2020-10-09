@@ -32,7 +32,7 @@ export default class Notification extends Component {
             </Text>
 
             <Text style={styles.contentText}>{trackComment.text}</Text>
-            <Text style={styles.timeText}>Track Time {timeHelper.secondsToTime(trackComment.time)} | {timeHelper.fromNow(notification.createdAt)} ago</Text>
+            <Text style={styles.timeText}>Track Time {timeHelper.secondsToTime(trackComment.time)} | {timeHelper.fromNow(notification.createdAt)}</Text>
           </View>
         </Card>
       </TouchableOpacity>

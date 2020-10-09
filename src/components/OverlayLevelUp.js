@@ -11,7 +11,7 @@ export default class BabbleOverlayLevelUp extends Component {
   componentDidMount() {
     const { containerTranslateYAnimated } = this.state;
     const delay = this.props.data.delay || 0;
-console.log('MOUIN!');
+
     Animated.sequence([
       Animated.spring(containerTranslateYAnimated, {
         toValue: 0,
@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: 14,
     marginLeft: 1,
   },
   levelUpText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 4,
   },
   starIcon: {

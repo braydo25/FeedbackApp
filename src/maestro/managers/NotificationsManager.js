@@ -63,16 +63,21 @@ export default class NotificationsManager extends Manager {
       }
     });
 
+    // TEMP UNTIL MQTT OR WEBSOCKET - SO USER CAN GET NOTIFS WHILE IN APP.
     setInterval(() => {
-      // temporary until we have websocket or mqtt..
       const { userManager } = maestro.managers;
 
       if (userManager.store.user) {
-        try {
-          this.loadNotifications();
-        } catch (error) { /* Noop */ }
+        this.loadNotifications();
       }
     }, 10000);
+    // END TEMP
+  }
+
+  receiveEvent(name, value) {
+    if (name === 'APP_STATE_CHANGED' && value === 'active') {
+      this.loadNotifications();
+    }
   }
 
   get storeName() {
@@ -94,9 +99,7 @@ export default class NotificationsManager extends Manager {
       notifications: response.body,
     });
 
-    if (!!response.body?.length && response.body[0].createdAt > userManager.store.user.viewedNotificationsAt) {
-      this.setHasNewNotifications(true);
-    }
+    this.setHasNewNotifications(!!response.body?.length && response.body[0].createdAt > userManager.store.user.viewedNotificationsAt);
 
     return response.body;
   }
@@ -124,6 +127,10 @@ export default class NotificationsManager extends Manager {
     this._syncPermissionStatus(status);
 
     return status;
+  }
+
+  async setBadgeCount(count) {
+    return Notifications.setBadgeCountAsync(count);
   }
 
   deferPermission() {

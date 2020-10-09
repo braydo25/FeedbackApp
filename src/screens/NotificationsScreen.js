@@ -14,6 +14,7 @@ export default class NotificationsScreen extends Component {
     maestro.link(this);
 
     userManager.updateUser({ viewedNotificationsAt: new Date() });
+    notificationsManager.setBadgeCount(0);
 
     this._loadNotifications();
   }

@@ -9,7 +9,7 @@ const { userManager } = maestro.managers;
 export default class GameHeader extends PureComponent {
   state = {
     user: userManager.store.user,
-    hasTrack: false,
+    hasNoTracks: false,
     hasNewNotifications: false,
   }
 
@@ -35,7 +35,7 @@ export default class GameHeader extends PureComponent {
 
     this.setState({
       user: user.user,
-      hasTrack: !!tracks.tracks?.length,
+      hasNoTracks: (tracks.tracks && !tracks.tracks.length),
       hasNewNotifications: notifications.hasNewNotifications,
     });
   }
@@ -49,7 +49,7 @@ export default class GameHeader extends PureComponent {
   }
 
   render() {
-    const { user, hasTrack, hasNewNotifications } = this.state;
+    const { user, hasNoTracks, hasNewNotifications } = this.state;
     const relativeLevelExp = levelsHelper.relativeLevelExp(user.exp);
     const relativeNextLevelExp = levelsHelper.relativeExpForNextLevel(user.exp);
 
@@ -63,7 +63,7 @@ export default class GameHeader extends PureComponent {
               style={styles.profileImage}
             />
 
-            {!hasTrack && (
+            {hasNoTracks && (
               <View style={styles.notificationsBubble} />
             )}
           </TouchableOpacity>

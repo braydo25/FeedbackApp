@@ -4,14 +4,19 @@ import Image from './Image';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
+const { interfaceHelper } = maestro.helpers;
 
 export default class GameActions extends Component {
   state = {
     commentText: '',
   }
 
-  _submit = () => {
-    gameManager.createTrackComment(this.state.commentText);
+  _submit = async () => {
+    try {
+      await gameManager.createTrackComment(this.state.commentText);
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message });
+    }
 
     this._resetComment();
   }

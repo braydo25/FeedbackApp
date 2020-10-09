@@ -33,7 +33,7 @@ export default class SetupProfileScreen extends Component {
       quality: 1,
     });
 
-    if (!image.cancelled) {
+    if (image && !image.cancelled) {
       this.setState({ avatarImageUri: image.uri });
     }
   }

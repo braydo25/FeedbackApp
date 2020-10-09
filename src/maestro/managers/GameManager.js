@@ -109,6 +109,6 @@ export default class GameManager extends Manager {
       return trackComment.nonce !== nonce;
     });
 
-    this.updateStore(currentTrackComments);
+    this.updateStore({ currentTrackComments });
   }
 }
