@@ -33,7 +33,6 @@ export default class GameManager extends Manager {
   }
 
   async createTrackComment(text) {
-    const { levelsHelper } = this.maestro.helpers;
     const { playbackManager, tracksManager, userManager } = this.maestro.managers;
     const currentTrack = this.getCurrentTrack();
     const trackId = currentTrack.id;
@@ -50,15 +49,21 @@ export default class GameManager extends Manager {
       if (this.getCurrentTrack().id === trackId) { // prevent adding to next track if user changed cards while loading
         this._addCurrentTrackComment({ ...trackComment, user, nonce });
       }
-
-      userManager.updateLocalUser({ exp: user.exp + levelsHelper.commentExp });
     } catch (error) {
-      this._removeCurrentTrackComment(nonce);
+      this._removeCurrentTrackComment({ nonce });
 
       throw error;
     }
 
     return trackComment;
+  }
+
+  async deleteTrackComment({ trackId, trackCommentId }) {
+    const { tracksManager } = this.maestro.managers;
+
+    await tracksManager.deleteTrackComment({ trackId, trackCommentId });
+
+    this._removeCurrentTrackComment({ trackCommentId });
   }
 
   getCurrentTrack() {
@@ -104,9 +109,9 @@ export default class GameManager extends Manager {
     this.updateStore({ currentTrackComments });
   }
 
-  _removeCurrentTrackComment = nonce => {
+  _removeCurrentTrackComment = ({ trackCommentId, nonce }) => {
     const currentTrackComments = this.store.currentTrackComments.filter(trackComment => {
-      return trackComment.nonce !== nonce;
+      return (nonce && trackComment.nonce !== nonce) || (trackCommentId && trackComment.id !== trackCommentId);
     });
 
     this.updateStore({ currentTrackComments });

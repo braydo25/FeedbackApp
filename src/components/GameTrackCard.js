@@ -9,6 +9,7 @@ import TrackPlayerControls from './TrackPlayerControls';
 import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
 
+const { interfaceHelper } = maestro.helpers;
 const { gameManager } = maestro.managers;
 
 export default class GameTrackCard extends Component {
@@ -50,9 +51,21 @@ export default class GameTrackCard extends Component {
     });
   }
 
+  _onDeleteComment = async trackComment => {
+    try {
+      await gameManager.deleteTrackComment({
+        trackId: trackComment.trackId,
+        trackCommentId: trackComment.id,
+      });
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message });
+    }
+  }
+
   _renderItem = ({ item, index }) => {
     return (
       <TrackComment
+        onDelete={() => this._onDeleteComment(item)}
         trackComment={item}
         style={(index > 0) ? styles.comment : null}
       />

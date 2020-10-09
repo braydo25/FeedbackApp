@@ -1,5 +1,5 @@
 import { Helper } from 'react-native-maestro';
-import { Platform } from 'react-native';
+import { Alert, Platform, Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export default class FilesHelper extends Helper {
@@ -12,7 +12,16 @@ export default class FilesHelper extends Helper {
       const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
 
       if (status !== 'granted') {
-        // Show a alert to allow user to go to settings to enable the permission.
+        return Alert.alert('Permissions Required', 'You must give Soundhouse camera roll permissions in order to select an image. Do you want to fix this now?', [
+          {
+            text: 'Fix Now',
+            onPress: () => Linking.openURL('app-settings:'),
+          },
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+        ]);
       }
     }
 

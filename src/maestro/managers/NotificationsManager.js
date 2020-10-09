@@ -1,5 +1,5 @@
 import { Manager } from 'react-native-maestro';
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 

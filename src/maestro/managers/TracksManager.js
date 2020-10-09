@@ -68,7 +68,9 @@ export default class TracksManager extends Manager {
   }
 
   async createTrackComment({ trackId, text, time }) {
-    const { apiHelper } = this.maestro.helpers;
+    const { apiHelper, levelsHelper } = this.maestro.helpers;
+    const { userManager } = this.maestro.managers;
+    const { user } = userManager.store;
     const response = await apiHelper.post({
       path: `/tracks/${trackId}/comments`,
       data: { text, time },
@@ -77,6 +79,8 @@ export default class TracksManager extends Manager {
     if (response.code !== 200) {
       throw new Error(response.body);
     }
+
+    userManager.updateLocalUser({ exp: user.exp + levelsHelper.commentExp });
 
     return response.body;
   }
@@ -120,6 +124,21 @@ export default class TracksManager extends Manager {
     this._addUpdateTrack(response.body);
 
     return response.body;
+  }
+
+  async deleteTrackComment({ trackId, trackCommentId }) {
+    const { apiHelper, levelsHelper } = this.maestro.helpers;
+    const { userManager } = this.maestro.managers;
+    const { user } = userManager.store;
+    const response = await apiHelper.delete({
+      path: `/tracks/${trackId}/comments/${trackCommentId}`,
+    });
+
+    if (response.code !== 204) {
+      throw new Error(response.body);
+    }
+
+    userManager.updateLocalUser({ exp: user.exp - levelsHelper.commentExp });
   }
 
   async getGenres() {

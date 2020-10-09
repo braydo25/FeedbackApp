@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
 
@@ -7,6 +7,21 @@ const { timeHelper } = maestro.helpers;
 const { userManager } = maestro.managers;
 
 export default class TrackComment extends Component {
+  _onDeletePress = () => {
+    const { onDelete } = this.props;
+
+    Alert.alert('Are you sure?', 'Are you sure you want to delete this feedback?', [
+      {
+        text: 'Delete',
+        onPress: onDelete,
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ]);
+  }
+
   render () {
     const { trackComment, style } = this.props;
     const { id, user, text, time, createdAt } = trackComment;
@@ -25,7 +40,7 @@ export default class TrackComment extends Component {
         </View>
 
         {!!id && user.id === userManager.store.user.id && (
-          <TouchableOpacity style={styles.deleteButton}>
+          <TouchableOpacity onPress={this._onDeletePress} style={styles.deleteButton}>
             <Image
               source={require('../assets/images/delete.png')}
               resizeMode={'contain'}
