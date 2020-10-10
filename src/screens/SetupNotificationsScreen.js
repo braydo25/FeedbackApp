@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 16,
     letterSpacing: 0.4,
+    lineHeight: 22,
     marginBottom: 16,
     textAlign: 'center',
   },

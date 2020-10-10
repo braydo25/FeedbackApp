@@ -85,6 +85,8 @@ export default class SetupProfileScreen extends Component {
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={'handled'}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
           style={styles.container}
         >

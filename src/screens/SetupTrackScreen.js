@@ -26,8 +26,12 @@ export default class SetupTrackScreen extends Component {
   }
 
   _next = () => {
-    tracksManager.deferSetup();
     navigationHelper.resetRoot(userManager.nextRouteNameForUserState());
+  }
+
+  _deferSetup = () => {
+    tracksManager.deferSetup();
+    this._next();
   }
 
   render() {
@@ -47,7 +51,7 @@ export default class SetupTrackScreen extends Component {
           <Card style={styles.formCard}>
             <Button onPress={this._addTrack}>Add Track</Button>
 
-            <TouchableOpacity onPress={this._next} style={styles.notNowButton}>
+            <TouchableOpacity onPress={this._deferSetup} style={styles.notNowButton}>
               <Text style={styles.notNowButtonText}>I'll do this later</Text>
             </TouchableOpacity>
           </Card>
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: 16,
     letterSpacing: 0.4,
+    lineHeight: 22,
     marginBottom: 16,
     textAlign: 'center',
   },

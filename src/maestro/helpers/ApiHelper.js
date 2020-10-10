@@ -98,7 +98,7 @@ export default class ApiHelper extends Helper {
 
     options.headers = options.headers || {};
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
-    options.headers['X-Access-Token'] = (userManager.store.user) ? userManager.store.user.accessToken : null;
+    options.headers['X-Access-Token'] = (await userManager.isLoggedIn()) ? userManager.store.user.accessToken : null;
 
     const requestOptions = {
       headers: options.headers,

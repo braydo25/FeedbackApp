@@ -98,7 +98,7 @@ export default class UserManager extends Manager {
   }
 
   nextRouteNameForUserState() {
-    const { notificationsManager } = this.maestro.managers;
+    const { notificationsManager, tracksManager } = this.maestro.managers;
     const { user } = this.store;
 
     if (!user) {
@@ -109,12 +109,12 @@ export default class UserManager extends Manager {
       return 'SetupProfile';
     }
 
-    if (Platform.OS === 'ios' && !notificationsManager.permissionGranted() && !notificationsManager.permissionDeferred()) {
-      return 'SetupNotifications';
+    if (!user.totalTracks && !tracksManager.store.setupDeferred) {
+      return 'SetupTrack';
     }
 
-    if (Platform.OS === 'ios') {
-      return 'SetupIOSNotifications';
+    if (Platform.OS === 'ios' && !notificationsManager.permissionGranted() && !notificationsManager.permissionDeferred()) {
+      return 'SetupNotifications';
     }
 
     return 'Game';
@@ -138,6 +138,12 @@ export default class UserManager extends Manager {
     this.updateStore({ user });
 
     asyncStorageHelper.setItem(LOGGED_IN_USER_KEY, user);
+  }
+
+  async isLoggedIn() {
+    await this.store.ready;
+
+    return !!this.store.user;
   }
 
   /*

@@ -55,27 +55,29 @@ export default class NotificationsManager extends Manager {
     this.checkAndSyncPermission();
 
     Notifications.addNotificationReceivedListener(() => this.setHasNewNotifications(true));
-    Notifications.addNotificationResponseReceivedListener(() => {
+    Notifications.addNotificationResponseReceivedListener(async () => {
       const { userManager } = maestro.managers;
 
-      if (userManager.store.user) {
+      if (await userManager.isLoggedIn()) {
         navigationHelper.push('NotificationsNavigator');
       }
     });
 
     // TEMP UNTIL MQTT OR WEBSOCKET - SO USER CAN GET NOTIFS WHILE IN APP.
-    setInterval(() => {
+    setInterval(async () => {
       const { userManager } = maestro.managers;
 
-      if (userManager.store.user) {
+      if (await userManager.isLoggedIn()) {
         this.loadNotifications();
       }
     }, 10000);
     // END TEMP
   }
 
-  receiveEvent(name, value) {
-    if (name === 'APP_STATE_CHANGED' && value === 'active') {
+  async receiveEvent(name, value) {
+    const { userManager } = this.maestro.managers;
+
+    if (name === 'APP_STATE_CHANGED' && value === 'active' && await userManager.isLoggedIn()) {
       this.loadNotifications();
     }
   }

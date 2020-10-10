@@ -7,6 +7,7 @@ export default class TracksManager extends Manager {
 
   static initialStore = {
     tracks: null,
+    setupDeferred: false,
   }
 
   get storeName() {
@@ -49,13 +50,14 @@ export default class TracksManager extends Manager {
       throw new Error(response.body);
     }
 
-    this.updateStore({ tracks: response.body });
+    this._addUpdateTracks(response.body);
 
     return response.body;
   }
 
   async createTrack() {
     const { apiHelper } = this.maestro.helpers;
+    const { userManager } = this.maestro.managers;
     const response = await apiHelper.post({
       path: '/tracks',
     });
@@ -63,6 +65,8 @@ export default class TracksManager extends Manager {
     if (response.code !== 200) {
       throw new Error(response.body);
     }
+
+    userManager.updateLocalUser({ totalTracks: (userManager.store.user.totalTracks || 0) + 1 });
 
     return response.body;
   }
@@ -154,12 +158,35 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
+  deferSetup() {
+    this.updateStore({ setupDeferred: true });
+  }
+
   /*
    * Helpers
    */
 
-  _addUpdateTrack = track => {
-    const tracks = [ ...this.store.tracks ];
+  _addUpdateTracks = tracks => {
+    const updatedTracks = (this.store.tracks) ? [ ...this.store.tracks ] : [];
+
+    tracks.forEach(track => {
+      const trackId = track.id;
+      const existingIndex = updatedTracks.findIndex(updatedTrack => updatedTrack.id === trackId);
+
+      if (existingIndex !== -1) {
+        updatedTracks[existingIndex] = { ...updatedTracks[existingIndex], ...track };
+      } else {
+        updatedTracks.push(track);
+      }
+    });
+
+    updatedTracks.sort((a, b) => b.createdAt - a.createdAt);
+
+    this.updateStore({ tracks: updatedTracks });
+  }
+
+  _addUpdateTrack = (track) => {
+    const tracks = (this.store.tracks) ? [ ...this.store.tracks ] : [];
     const trackId = track.id;
     const existingIndex = tracks.findIndex(track => track.id === trackId);
 
