@@ -91,6 +91,7 @@ export default class UploadTrackScreen extends Component {
     return (
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >

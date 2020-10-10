@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, View, ScrollView, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, Card, Image, TextField } from '../components';
 import maestro from '../maestro';
 
@@ -9,16 +10,16 @@ const windowWidth = Dimensions.get('window').width;
 
 const onboardingItems = [
   {
-    title: 'Welcome',
-    text: 'Hear what others think about your tracks and discover new artists.',
+    title: 'Welcome To Soundhouse',
+    text: 'Hear what others think about your tracks, get feedback and discover new artists.',
   },
   {
     title: 'Grow by giving back',
-    text: 'Level up and expand your fanbase by discovering new artists and giving them feedback.',
+    text: 'The more feedback you give, the more Soundhouse shows your tracks to others.',
   },
   {
     title: 'No fanbase? No problem',
-    text: 'We believe great artists that help others grow, deserve an opportunity to be discovered.',
+    text: 'Soundhouse helps great artists grow while helping other artists improve.',
   },
 ];
 
@@ -67,89 +68,92 @@ export default class LandingScreen extends Component {
     const { email, password, register, onboardingIndex, loading } = this.state;
 
     return (
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        style={styles.container}
-      >
-        <View style={styles.topContainer}>
-          <View style={styles.topContainerItem}>
-            <Image
-              source={require('../assets/images/logo.png')}
-              style={styles.logoImage}
-            />
-          </View>
-
-          <View style={styles.topContainerItem}>
-            <ScrollView
-              horizontal
-              pagingEnabled
-              onMomentumScrollEnd={this._onScrollEnd}
-              showsHorizontalScrollIndicator={false}
-              style={styles.onboardingScrollView}
-            >
-              {onboardingItems.map((onboardingItem, index) => (
-                <View key={index} style={styles.onboardingItem}>
-                  <Text style={styles.onboardingItemTitleText}>{onboardingItem.title}</Text>
-                  <Text style={styles.onboardingItemInfoText}>{onboardingItem.text}</Text>
-                </View>
-              ))}
-            </ScrollView>
-
-            <View style={styles.paginationContainer}>
-              {onboardingItems.map((onboardingItem, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.paginationDot,
-                    (index === onboardingIndex) ? styles.paginationDotActive : null,
-                  ]}
-                />
-              ))}
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.formContainer}>
-          <Card style={styles.formCard}>
-            <TextField
-              onChangeText={text => this.setState({ email: text })}
-              onSubmitEditing={() => this.passwordTextField.focus()}
-              blurOnSubmit={false}
-              returnKeyType={'next'}
-              autoCompleteType={'email'}
-              keyboardType={'email-address'}
-              placeholder={'Email Address'}
-              inputPrefix={<Image source={require('../assets/images/user.png')} style={styles.userIcon} />}
-              containerStyle={styles.emailField}
-              value={email}
-            />
-
-            <TextField
-              secureTextEntry
-              onChangeText={text => this.setState({ password: text })}
-              returnKeyType={'done'}
-              placeholder={'Password'}
-              inputPrefix={<Image source={require('../assets/images/key.png')} style={styles.keyIcon} />}
-              containerStyle={styles.passwordField}
-              value={password}
-              ref={component => this.passwordTextField = component}
-            />
-
-            <Button onPress={this._submit} loading={loading}>{register ? 'Sign Up' : 'Login'}</Button>
-
-            <View>
-              <Text style={styles.bottomText}>{register ? 'Already' : 'Not'} signed up?</Text>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={'handled'}
+          contentContainerStyle={styles.contentContainer}
+          style={styles.container}
+        >
+          <View style={styles.topContainer}>
+            <View style={[ styles.topContainerItem, styles.logoContainer ]}>
+              <Image
+                source={require('../assets/images/logo.png')}
+                style={styles.logoImage}
+              />
             </View>
 
-            <TouchableOpacity
-              loading={loading}
-              onPress={() => this.setState({ register: !register })}
-              style={styles.bottomButton}
-            >
-              <Text style={styles.bottomButtonText}>{register ? 'Login' : 'Sign Up'}</Text>
-            </TouchableOpacity>
-          </Card>
-        </View>
+            <View style={styles.topContainerItem}>
+              <ScrollView
+                horizontal
+                pagingEnabled
+                onMomentumScrollEnd={this._onScrollEnd}
+                showsHorizontalScrollIndicator={false}
+                style={styles.onboardingScrollView}
+              >
+                {onboardingItems.map((onboardingItem, index) => (
+                  <View key={index} style={styles.onboardingItem}>
+                    <Text style={styles.onboardingItemTitleText}>{onboardingItem.title}</Text>
+                    <Text style={styles.onboardingItemInfoText}>{onboardingItem.text}</Text>
+                  </View>
+                ))}
+              </ScrollView>
+
+              <View style={styles.paginationContainer}>
+                {onboardingItems.map((onboardingItem, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.paginationDot,
+                      (index === onboardingIndex) ? styles.paginationDotActive : null,
+                    ]}
+                  />
+                ))}
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.formContainer}>
+            <Card style={styles.formCard}>
+              <TextField
+                onChangeText={text => this.setState({ email: text })}
+                onSubmitEditing={() => this.passwordTextField.focus()}
+                blurOnSubmit={false}
+                returnKeyType={'next'}
+                autoCompleteType={'email'}
+                keyboardType={'email-address'}
+                placeholder={'Email Address'}
+                inputPrefix={<Image source={require('../assets/images/user.png')} style={styles.userIcon} />}
+                containerStyle={styles.emailField}
+                value={email}
+              />
+
+              <TextField
+                secureTextEntry
+                onChangeText={text => this.setState({ password: text })}
+                returnKeyType={'done'}
+                placeholder={'Password'}
+                inputPrefix={<Image source={require('../assets/images/key.png')} style={styles.keyIcon} />}
+                containerStyle={styles.passwordField}
+                value={password}
+                ref={component => this.passwordTextField = component}
+              />
+
+              <Button onPress={this._submit} loading={loading}>{register ? 'Sign Up' : 'Login'}</Button>
+
+              <View>
+                <Text style={styles.bottomText}>{register ? 'Already' : 'Not'} signed up?</Text>
+              </View>
+
+              <TouchableOpacity
+                loading={loading}
+                onPress={() => this.setState({ register: !register })}
+                style={styles.bottomButton}
+              >
+                <Text style={styles.bottomButtonText}>{register ? 'Login' : 'Sign Up'}</Text>
+              </TouchableOpacity>
+            </Card>
+          </View>
+        </KeyboardAwareScrollView>
 
         <Image
           source={require('../assets/images/landing-background.png')}
@@ -157,7 +161,7 @@ export default class LandingScreen extends Component {
           blurRadius={39}
           style={styles.topContainerBackgroundImage}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
@@ -181,6 +185,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: 32,
+  },
   emailField: {
     marginBottom: 16,
   },
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
   formContainer: {
-    flex: 1.4,
+    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 16,
   },
@@ -200,9 +209,12 @@ const styles = StyleSheet.create({
     marginRight: -2,
     width: 20,
   },
+  logoContainer: {
+    paddingHorizontal: 32,
+  },
   logoImage: {
-    height: 52,
-    width: 300,
+    aspectRatio: 4.19,
+    width: '100%',
   },
   onboardingItem: {
     alignItems: 'center',
