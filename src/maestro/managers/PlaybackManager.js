@@ -42,18 +42,12 @@ export default class PlaybackManager extends Manager {
   }
 
   async play(track) {
-    const { currentTrackId, currentTrackStartedAt } = this.store;
-    const { tracksManager } = this.maestro.managers;
+    const { currentTrackId } = this.store;
 
     await this.store.ready;
 
     if (track.id !== currentTrackId) {
-      if (currentTrackId) {
-        tracksManager.createTrackPlay({
-          trackId: currentTrackId,
-          duration: Math.floor((Date.now() - currentTrackStartedAt) / 1000),
-        });
-      }
+      this._createCurrentTrackPlay();
 
       await TrackPlayer.reset();
       await TrackPlayer.add(this._trackToTrackObject(track));
@@ -76,6 +70,8 @@ export default class PlaybackManager extends Manager {
   async stop() {
     await this.store.ready;
 
+    this._createCurrentTrackPlay();
+
     return TrackPlayer.stop();
   }
 
@@ -91,13 +87,21 @@ export default class PlaybackManager extends Manager {
     return Math.floor(position);
   }
 
-  async getCurrentTrackId() {
-    return TrackPlayer.getCurrentTrack();
-  }
-
   /*
    * Helpers
    */
+
+  _createCurrentTrackPlay = async () => {
+    const { tracksManager } = this.maestro.managers;
+    const { currentTrackId, currentTrackStartedAt } = this.store;
+
+    if (currentTrackId) {
+      tracksManager.createTrackPlay({
+        trackId: currentTrackId,
+        duration: Math.floor((Date.now() - currentTrackStartedAt) / 1000),
+      });
+    }
+  }
 
   _trackToTrackObject = track => {
     return {

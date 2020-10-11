@@ -86,6 +86,8 @@ export default class GameTrackCardStack extends Component {
 
     if (nextTrack) {
       playbackManager.play(nextTrack);
+    } else {
+      playbackManager.stop();
     }
 
     Animated.decay(this.state.panAnimatedValue, {

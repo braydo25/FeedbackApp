@@ -23,7 +23,7 @@ export default class GameImageBackground extends Component {
 
   receiveStoreUpdate({ game }) {
     if (!this.state.imageOneUrl && game.tracks) {
-      this.setState({ imageOneUrl: game.tracks[0].user.avatarUrl });
+      this.setState({ imageOneUrl: game.tracks[0]?.user?.avatarUrl });
       this._animate();
     }
   }

@@ -31,7 +31,11 @@ export default class GameScreen extends Component {
   _loadTracks = async () => {
     await gameManager.loadTracks();
 
-    playbackManager.play(gameManager.getCurrentTrack());
+    const currentTrack = gameManager.getCurrentTrack();
+
+    if (currentTrack) {
+      playbackManager.play(currentTrack);
+    }
   }
 
   _onLayout = ({ nativeEvent }) => {
