@@ -15,10 +15,6 @@ export default class GameNoTracksCard extends Component {
   _loadTracks = async () => {
     this.setState({ loading: true });
 
-    await (new Promise(resolve => {
-      setTimeout(resolve, 3000);
-    }));
-
     try {
       const newTracks = await gameManager.loadTracks();
 
