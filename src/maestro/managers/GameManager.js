@@ -17,8 +17,6 @@ export default class GameManager extends Manager {
 
   async loadTracks() {
     const { apiHelper } = this.maestro.helpers;
-    const { store } = this;
-    const tracks = (store.tracks) ? [ ...store.tracks ] : [];
     const response = await apiHelper.get({
       path: '/game',
     });
@@ -27,7 +25,7 @@ export default class GameManager extends Manager {
       throw new Error(response.body);
     }
 
-    this.updateStore({ tracks: [ ...tracks, ...response.body ] });
+    this._addUpdateTracks(response.body);
 
     return response.body;
   }
@@ -83,15 +81,37 @@ export default class GameManager extends Manager {
   }
 
   nextTrack() {
+    const { tracks, currentTrackIndex } = this.store;
+
+    if (tracks.length - (currentTrackIndex + 1) < 3) {
+      this.loadTracks();
+    }
+
     this.updateStore({
       currentTrackComments: [],
-      currentTrackIndex: this.store.currentTrackIndex + 1,
+      currentTrackIndex: currentTrackIndex + 1,
     });
   }
 
   /*
    * Helpers
    */
+
+  _addUpdateTracks = newTracks => {
+    const tracks = (this.store.tracks) ? [ ...this.store.tracks ] : [];
+
+    newTracks.forEach(newTrack => {
+      const existingIndex = tracks.findIndex(track => track.id === newTrack.id);
+
+      if (existingIndex !== -1) {
+        tracks[existingIndex] = newTrack;
+      } else {
+        tracks.push(newTrack);
+      }
+    });
+
+    this.updateStore({ tracks });
+  }
 
   _addCurrentTrackComment = trackComment => {
     const currentTrackComments = [ ...this.store.currentTrackComments ];
