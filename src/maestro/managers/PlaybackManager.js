@@ -73,10 +73,16 @@ export default class PlaybackManager extends Manager {
     return TrackPlayer.pause();
   }
 
-  async stop () {
+  async stop() {
     await this.store.ready;
 
     return TrackPlayer.stop();
+  }
+
+  async seekTo(seconds) {
+    await this.store.ready;
+
+    return TrackPlayer.seekTo(seconds);
   }
 
   async getCurrentTrackPosition() {

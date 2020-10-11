@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Card from './Card';
+import Track from './Track';
 import TrackComment from './TrackComment';
-import TrackPlayerInfo from './TrackPlayerInfo';
-import TrackPlayerControls from './TrackPlayerControls';
 import maestro from '../maestro';
 
 const { navigationHelper, interfaceHelper } = maestro.helpers;
@@ -22,8 +21,7 @@ export default class TrackCard extends Component {
 
     return (
       <Card style={style}>
-        <TrackPlayerInfo showMetadata track={track} style={styles.trackPlayerInfo} />
-        <TrackPlayerControls track={track} style={styles.trackPlayerControls} />
+        <Track showMetadata track={track} style={styles.track} />
 
         {trackComments?.length > 0 && (
           <View style={styles.commentsContainer}>
@@ -82,16 +80,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginLeft: 8,
   },
-  trackComment: {
-    marginBottom: 8,
-  },
-  trackPlayerControls: {
+  track: {
     marginVertical: 16,
     paddingHorizontal: 16,
   },
-  trackPlayerInfo: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+  trackComment: {
+    marginBottom: 8,
   },
   viewMoreButton: {
     marginTop: 8,

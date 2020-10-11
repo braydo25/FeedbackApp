@@ -43,15 +43,9 @@ export default class TrackPlayerControls extends PureComponent {
   }
 
   render() {
-    const { track, style } = this.props;
+    const { onSeek, track, style } = this.props;
     const { playbackState } = this.state;
     const hasTrack = !!track.mp3Url;
-
-    const { currentTrackId } = playbackManager.store;
-
-    if (track.id === currentTrackId) {
-      console.log(playbackState);
-    }
 
     return (
       <View style={[ styles.container, style ]}>
@@ -78,7 +72,7 @@ export default class TrackPlayerControls extends PureComponent {
         </TouchableOpacity>
 
         {!!hasTrack && (
-          <TrackPlayerScrubber track={track} />
+          <TrackPlayerScrubber onSeek={onSeek} track={track} />
         )}
 
         {!hasTrack && (

@@ -8,6 +8,10 @@ const { playbackManager, userManager } = maestro.managers;
 const { timeHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackPlayerInfo extends ProgressComponent {
+  setPosition(position) {
+    this.setState({ position });
+  }
+
   render() {
     const { track, showMetadata, style } = this.props;
     const { currentTrackId } = playbackManager.store;

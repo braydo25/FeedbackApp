@@ -4,9 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Card from './Card';
 import GameTrackCardDescription from './GameTrackCardDescription';
 import GameTrackCardTip from './GameTrackCardTip';
+import Track from './Track';
 import TrackComment from './TrackComment';
-import TrackPlayerControls from './TrackPlayerControls';
-import TrackPlayerInfo from './TrackPlayerInfo';
 import maestro from '../maestro';
 
 const { interfaceHelper } = maestro.helpers;
@@ -46,9 +45,7 @@ export default class GameTrackCard extends Component {
   }
 
   reset = () => {
-    this.setState({
-      comments: [],
-    });
+    this.setState({ comments: [] });
   }
 
   _onDeleteComment = async trackComment => {
@@ -113,8 +110,7 @@ export default class GameTrackCard extends Component {
           </View>
         </View>
 
-        <TrackPlayerInfo track={track} style={styles.trackPlayerInfo} />
-        <TrackPlayerControls track={track} style={styles.trackPlayerControls} />
+        <Track track={track} style={styles.track} />
       </Card>
     );
   }
@@ -148,14 +144,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  trackPlayerControls: {
-    marginVertical: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
-    paddingHorizontal: 16,
-  },
-  trackPlayerInfo: {
+  track: {
     borderTopColor: '#E3E3E9',
     borderTopWidth: 1,
     paddingHorizontal: 16,
-    paddingTop: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
+    paddingVertical: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
   },
 });
