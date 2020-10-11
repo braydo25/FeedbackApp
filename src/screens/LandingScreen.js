@@ -71,6 +71,7 @@ export default class LandingScreen extends Component {
       <View style={styles.container}>
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps={'handled'}
+          extraHeight={270}
           contentContainerStyle={styles.contentContainer}
           style={styles.container}
         >

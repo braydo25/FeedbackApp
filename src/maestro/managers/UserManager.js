@@ -121,9 +121,11 @@ export default class UserManager extends Manager {
   }
 
   logout() {
+    const { tracksManager } = this.maestro.managers;
     const { navigationHelper } = this.maestro.helpers;
 
     setTimeout(() => {
+      tracksManager.resetStore();
       this._setLoggedInUser(null);
     }, 3000);
 

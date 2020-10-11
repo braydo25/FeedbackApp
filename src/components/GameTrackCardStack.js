@@ -71,7 +71,7 @@ export default class GameTrackCardStack extends Component {
     }
   }
 
-  _animateNextTrack = (velocityX, velocityY) => {
+  _animateNextTrack = async (velocityX, velocityY) => {
     maestro.dispatchEvent('GAME_ANIMATING_NEXT_TRACK');
 
     if (this.state.animating) {
@@ -79,6 +79,8 @@ export default class GameTrackCardStack extends Component {
     }
 
     const nextTrack = gameManager.getNextTrack();
+
+    await playbackManager.pause();
 
     this.setState({ animating: true });
 
