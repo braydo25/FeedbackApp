@@ -121,8 +121,10 @@ export default class UserManager extends Manager {
   }
 
   logout() {
-    const { tracksManager } = this.maestro.managers;
+    const { tracksManager, playbackManager } = this.maestro.managers;
     const { navigationHelper } = this.maestro.helpers;
+
+    playbackManager.stop();
 
     setTimeout(() => {
       tracksManager.resetStore();

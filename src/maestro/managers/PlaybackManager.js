@@ -3,10 +3,10 @@ import TrackPlayer from 'react-native-track-player';
 
 let resolveInitialReadyPromise = null;
 
-// DEBUG! otherwise track player won't reset on fast refreshes.
-TrackPlayer.stop(); // react native debugging.
-TrackPlayer.destroy();
-// END DEBUG
+if (__DEV__) { // DEBUG! otherwise track player won't reset on fast refreshes.
+  TrackPlayer.stop();
+  TrackPlayer.destroy();
+}
 
 export default class PlaybackManager extends Manager {
   static get instanceKey() {
@@ -70,7 +70,13 @@ export default class PlaybackManager extends Manager {
   async pause() {
     await this.store.ready;
 
-    TrackPlayer.pause();
+    return TrackPlayer.pause();
+  }
+
+  async stop () {
+    await this.store.ready;
+
+    return TrackPlayer.stop();
   }
 
   async getCurrentTrackPosition() {

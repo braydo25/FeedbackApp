@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import Image from './Image';
 import TrackPlayerScrubber from './TrackPlayerScrubber';
@@ -7,7 +7,7 @@ import maestro from '../maestro';
 const { playbackManager } = maestro.managers;
 const { interfaceHelper } = maestro.helpers;
 
-export default class TrackPlayerControls extends Component {
+export default class TrackPlayerControls extends PureComponent {
   state = {
     playbackState: 'stopped',
   }
@@ -46,6 +46,12 @@ export default class TrackPlayerControls extends Component {
     const { track, style } = this.props;
     const { playbackState } = this.state;
     const hasTrack = !!track.mp3Url;
+
+    const { currentTrackId } = playbackManager.store;
+
+    if (track.id === currentTrackId) {
+      console.log(playbackState);
+    }
 
     return (
       <View style={[ styles.container, style ]}>

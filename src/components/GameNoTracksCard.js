@@ -24,12 +24,13 @@ export default class GameNoTracksCard extends Component {
 
       if (newTracks.length) {
         maestro.dispatchEvent('GAME_ANIMATING_NEXT_TRACK');
+      } else {
+        this.setState({ loading: false });
       }
     } catch (error) {
       interfaceHelper.showError({ message: error.message });
+      this.setState({ loading: false });
     }
-
-    this.setState({ loading: false });
   }
 
   render() {
