@@ -23,7 +23,7 @@ export default class PlaybackManager extends Manager {
   constructor(maestro) {
     super(maestro);
 
-    TrackPlayer.setupPlayer({ playBuffer: 1.5 }).then(() => {
+    TrackPlayer.setupPlayer().then(() => {
       TrackPlayer.addEventListener('playback-state', this._playbackStateChanged);
       resolveInitialReadyPromise();
     });
