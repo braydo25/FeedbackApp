@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 16,
     textAlign: 'center',
   },
   titleText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     marginBottom: 8,
   },
 });

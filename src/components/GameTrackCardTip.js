@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 const tips = [
   "If your feedback is marked as useful by a track’s artist, you'll get a major EXP boost!",
@@ -42,17 +45,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: '100%',
     paddingHorizontal: 8,
+    paddingVertical: 12,
   },
   tipText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     lineHeight: 20,
     marginTop: 8,
   },
   titleText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
 });

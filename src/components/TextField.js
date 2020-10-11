@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import FieldLabel from './FieldLabel';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default class TextField extends Component {
   state = {
@@ -117,10 +120,10 @@ const styles = StyleSheet.create({
   textInput: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
-    padding: 22,
-    paddingBottom: 22, // multiline fix
-    paddingTop: 22, // multiline fix
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
+    padding: interfaceHelper.deviceValue({ default: 22, xs: 19 }),
+    paddingBottom: interfaceHelper.deviceValue({ default: 22, xs: 19 }), // multiline fix
+    paddingTop: interfaceHelper.deviceValue({ default: 22, xs: 19 }), // multiline fix
     width: '100%',
   },
   textInputContainer: {
@@ -134,9 +137,9 @@ const styles = StyleSheet.create({
     borderWidth: 4,
   },
   textInputFocused: {
-    paddingBottom: 16, // multiline fix
-    paddingRight: 16,
-    paddingTop: 16, // multiline fix
+    paddingBottom: interfaceHelper.deviceValue({ default: 16, xs: 13 }), // multiline fix
+    paddingRight: interfaceHelper.deviceValue({ default: 16, xs: 13 }),
+    paddingTop: interfaceHelper.deviceValue({ default: 16, xs: 13 }), // multiline fix
   },
   textInputInnerContainer: {
     alignItems: 'center',

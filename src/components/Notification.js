@@ -4,7 +4,7 @@ import Card from './Card';
 import Image from './Image';
 import maestro from '../maestro';
 
-const { navigationHelper, timeHelper } = maestro.helpers;
+const { navigationHelper, timeHelper, interfaceHelper } = maestro.helpers;
 
 export default class Notification extends Component {
   render() {
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
   contentText: {
     color: 'rgba(0, 0, 0, 1)',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 6,
   },
   leftImage: {
-    borderRadius: 10,
-    height: 40,
-    width: 40,
+    borderRadius: interfaceHelper.deviceValue({ default: 10, xs: 8 }),
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   textContainer: {
     flex: 1,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#8A8A8A',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 12,
+    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11 }),
   },
   titleNameText: {
     color: '#000000',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: 'rgba(0, 0, 0, 0.8)',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 4,
   },
 });

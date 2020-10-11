@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default props => (
   <View style={[ styles.container, props.containerStyle ]}>
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#4D4D4D',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
   labelContainer: {
     flexDirection: 'row',
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
   labelText: {
     color: '#101426',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     letterSpacing: 0.1,
   },
 });

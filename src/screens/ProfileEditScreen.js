@@ -5,7 +5,7 @@ import { Image, TextField, MultiSelectField } from '../components';
 import maestro from '../maestro';
 
 const { userManager, tracksManager } = maestro.managers;
-const { filesHelper } = maestro.helpers;
+const { filesHelper, interfaceHelper } = maestro.helpers;
 
 export default class ProfileEditScreen extends Component {
   state = {
@@ -174,6 +174,6 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#7C4BCE',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
 });

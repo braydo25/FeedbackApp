@@ -5,6 +5,7 @@ import TrackPlayerScrubber from './TrackPlayerScrubber';
 import maestro from '../maestro';
 
 const { playbackManager } = maestro.managers;
+const { interfaceHelper } = maestro.helpers;
 
 export default class TrackPlayerControls extends Component {
   state = {
@@ -33,7 +34,6 @@ export default class TrackPlayerControls extends Component {
     const { playbackState } = this.state;
 
     if ([ 'ready', 'paused', 'connecting', 'stopped' ].includes(playbackState)) {
-      console.log(track);
       playbackManager.play(track);
     }
 
@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#7D4CCF',
     borderRadius: 20,
-    height: 40,
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     justifyContent: 'center',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.08,
     shadowRadius: 1.00,
-    width: 40,
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   uploadingText: {
     color: '#7D4CCF',

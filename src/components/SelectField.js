@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import FieldLabel from './FieldLabel';
 import Image from './Image';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default class SelectField extends Component {
   state = {
@@ -99,9 +102,9 @@ const styles = StyleSheet.create({
   fieldOpen: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+    borderBottomWidth: 0,
     borderColor: '#7C4BCE',
     borderWidth: 2,
-    borderBottomWidth: 0,
     padding: 16,
   },
   inputContainerFocused: {
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   optionText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   optionsScrollview: {
     backgroundColor: '#F6F6F6',
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     flex: 1,
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   selectedOptionTextPlaceholder: {
     color: '#4D4D4D',

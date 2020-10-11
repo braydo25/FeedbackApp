@@ -3,8 +3,8 @@ import { SafeAreaView, View, Text, TouchableOpacity, LayoutAnimation, StyleSheet
 import Image from './Image';
 import maestro from '../maestro';
 
-const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 const { userManager } = maestro.managers;
+const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 
 export default class GameHeader extends PureComponent {
   state = {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   levelBarOutline: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 5,
-    height: 6,
+    height: interfaceHelper.deviceValue({ default: 6, xs: 5 }),
     marginVertical: 2,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
   levelExpText: {
     color: 'rgba(255, 255, 255, 0.7)',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 12,
+    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11 }),
   },
   levelText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
   notificationsBubble: {
     backgroundColor: '#FF0000',

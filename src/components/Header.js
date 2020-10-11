@@ -4,7 +4,7 @@ import { BlurView } from 'expo-blur';
 import Image from './Image';
 import maestro from '../maestro';
 
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class Header extends Component {
   render() {
@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
   rightButtonText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 20,
+    fontSize: interfaceHelper.deviceValue({ default: 20, xs: 18 }),
   },
   titleText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 22,
+    fontSize: interfaceHelper.deviceValue({ default: 22, xs: 19 }),
     textAlign: 'center',
   },
 });

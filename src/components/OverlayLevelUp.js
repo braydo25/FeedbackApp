@@ -3,6 +3,8 @@ import { View, Text, Animated, StyleSheet } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
 
+const { interfaceHelper } = maestro.helpers;
+
 export default class BabbleOverlayLevelUp extends Component {
   state = {
     containerTranslateYAnimated: new Animated.Value(-250),
@@ -75,25 +77,25 @@ const styles = StyleSheet.create({
     paddingTop: 76,
     position: 'absolute',
     right: 0,
-    top: -20,
+    top: interfaceHelper.deviceValue({ default: -20, xs: -40 }),
     zIndex: 2,
   },
   infoText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginLeft: 1,
   },
   levelUpText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 18,
-    marginBottom: 4,
+    fontSize: interfaceHelper.deviceValue({ default: 18, xs: 16 }),
+    marginBottom: interfaceHelper.deviceValue({ default: 4, xs: 2 }),
   },
   starIcon: {
-    height: 32,
+    height: interfaceHelper.deviceValue({ default: 32, xs: 28 }),
     marginLeft: 16,
-    width: 32,
+    width: interfaceHelper.deviceValue({ default: 32, xs: 28 }),
   },
   textContainer: {
     flex: 1,

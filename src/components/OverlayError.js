@@ -3,6 +3,8 @@ import { Text, Animated, StyleSheet } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
 
+const { interfaceHelper } = maestro.helpers;
+
 export default class BabbleOverlayError extends Component {
   state = {
     containerTranslateYAnimated: new Animated.Value(-250),
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     paddingTop: 76,
     position: 'absolute',
     right: 0,
-    top: -20,
+    top: interfaceHelper.deviceValue({ default: -20, xs: -40 }),
     zIndex: 2,
   },
   errorIcon: {
@@ -72,7 +74,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     flex: 1,
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 18,
+    fontSize: interfaceHelper.deviceValue({ default: 18, xs: 16 }),
+    marginTop: interfaceHelper.deviceValue({ default: 0, xs: 2 }),
     paddingHorizontal: 16,
   },
 });

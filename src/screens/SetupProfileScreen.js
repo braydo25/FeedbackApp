@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   artistNameText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 18,
+    fontSize: interfaceHelper.deviceValue({ default: 18, xs: 16 }),
     marginTop: 16,
     minHeight: 22,
     shadowColor: '#000000',

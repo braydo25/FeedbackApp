@@ -5,7 +5,7 @@ import Image from './Image';
 import maestro from '../maestro';
 
 const { playbackManager, userManager } = maestro.managers;
-const { timeHelper } = maestro.helpers;
+const { timeHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackPlayerInfo extends ProgressComponent {
   render() {
@@ -68,14 +68,14 @@ export default class TrackPlayerInfo extends ProgressComponent {
 const styles = StyleSheet.create({
   artistImage: {
     borderRadius: 10,
-    height: 40,
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     marginRight: 16,
-    width: 40,
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   artistText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
   container: {
     alignItems: 'center',
@@ -96,15 +96,15 @@ const styles = StyleSheet.create({
   genreText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 12,
+    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11.5 }),
   },
   genreTextBox: {
     alignItems: 'center',
     backgroundColor: '#7D4CCF',
     borderRadius: 4,
     marginTop: 3,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
+    paddingHorizontal: interfaceHelper.deviceValue({ default: 4, xs: 3 }),
+    paddingVertical: interfaceHelper.deviceValue({ default: 1, xs: 0.5 }),
   },
   metadataCommentsIcon: {
     height: 10,
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
   metadataText: {
     color: '#B8BFC9',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginRight: 12,
   },
   nameText: {
     color: '#021224',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
-    marginBottom: 2,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    marginBottom: interfaceHelper.deviceValue({ default: 2, xs: 3 }),
     marginRight: 5,
   },
   timeCurrentText: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#B8BFC9',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     textAlign: 'right',
   },
 });

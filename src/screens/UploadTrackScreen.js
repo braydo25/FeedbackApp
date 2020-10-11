@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AudioFileField, Image, SelectField, TextField, Button } from '../components';
 import maestro from '../maestro';
@@ -95,84 +95,86 @@ export default class UploadTrackScreen extends Component {
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
-        {!track && (
-          <>
-            {!file && (
-              <>
-                <TextField
-                  onChangeText={text => this.setState({ url: text })}
-                  label={'Paste Link'}
-                  labelPrefix={<Image source={require('../assets/images/link.png')} style={styles.linkIcon} />}
-                  info={"Import a SoundCloud track or a YouTube video's audio."}
-                  returnKeyType={'done'}
-                  placeholder={'soundcloud.com/yourname/trackname'}
-                  value={url}
-                />
+        <SafeAreaView style={styles.container}>
+          {!track && (
+            <>
+              {!file && (
+                <>
+                  <TextField
+                    onChangeText={text => this.setState({ url: text })}
+                    label={'Paste Link'}
+                    labelPrefix={<Image source={require('../assets/images/link.png')} style={styles.linkIcon} />}
+                    info={"Import a SoundCloud track or a YouTube video's audio."}
+                    returnKeyType={'done'}
+                    placeholder={'soundcloud.com/yourname/trackname'}
+                    value={url}
+                  />
 
-                <Text style={styles.orText}>- or -</Text>
-              </>
-            )}
+                  <Text style={styles.orText}>- or -</Text>
+                </>
+              )}
 
-            <AudioFileField
-              onFileChanged={file => this.setState({ file })}
-              label={'Select Audio File'}
-              labelPrefix={<Image source={require('../assets/images/file.png')} style={styles.fileIcon} />}
-              disabled={loading}
-              style={styles.audioFileField}
-            />
+              <AudioFileField
+                onFileChanged={file => this.setState({ file })}
+                label={'Select Audio File'}
+                labelPrefix={<Image source={require('../assets/images/file.png')} style={styles.fileIcon} />}
+                disabled={loading}
+                style={styles.audioFileField}
+              />
 
-            <Button onPress={this._upload} loading={loading} style={styles.button}>Continue</Button>
-
-            <Text style={styles.infoText}>
-              {
-                url && !file && loading
-                  ? 'Your track is being processed...\nThis can take up to a minute.'
-                  : "By continuing, you confirm that your sounds comply with our terms of service and don't infringe on other's rights."
-              }
-            </Text>
-          </>
-        )}
-
-        {!!track && (
-          <>
-            <TextField
-              onChangeText={text => this.setState({ name: text })}
-              label={'Track Name'}
-              placeholder={'Enter a name for this track...'}
-              value={name}
-              containerStyle={styles.formField}
-            />
-
-            <SelectField
-              onOptionPress={option => this.setState({ genreId: option.value })}
-              label={'Genre'}
-              options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
-              selectedOption={genreId}
-              style={styles.formField}
-            />
-
-            <TextField
-              onChangeText={text => this.setState({ description: text })}
-              multiline
-              label={'Description'}
-              placeholder={'(Optional) What do you want people to know about this track?'}
-              value={description}
-              style={styles.descriptionField}
-            />
-
-            <View style={styles.bottomContainer}>
-              <Button onPress={this._save} loading={loading} style={styles.button}>Submit</Button>
+              <Button onPress={this._upload} loading={loading} style={styles.button}>Continue</Button>
 
               <Text style={styles.infoText}>
                 {
-                  !loading
-                    ? 'Submit your track to start getting feedback.\nSomething something'
-                    : "Please wait, we're uploading your track...\nThis may take a moment..."
+                  url && !file && loading
+                    ? 'Your track is being processed...\nThis can take up to a minute.'
+                    : "By continuing, you confirm that your sounds comply with our terms of service and don't infringe on other's rights."
                 }
               </Text>
-            </View>
-          </>
-        )}
+            </>
+          )}
+
+          {!!track && (
+            <>
+              <TextField
+                onChangeText={text => this.setState({ name: text })}
+                label={'Track Name'}
+                placeholder={'Enter a name for this track...'}
+                value={name}
+                containerStyle={styles.formField}
+              />
+
+              <SelectField
+                onOptionPress={option => this.setState({ genreId: option.value })}
+                label={'Genre'}
+                options={genres.map(genre => ({ text: genre.name, value: genre.id }))}
+                selectedOption={genreId}
+                style={styles.formField}
+              />
+
+              <TextField
+                onChangeText={text => this.setState({ description: text })}
+                multiline
+                label={'Description'}
+                placeholder={'(Optional) What do you want people to know about this track?'}
+                value={description}
+                style={styles.descriptionField}
+              />
+
+              <View style={styles.bottomContainer}>
+                <Button onPress={this._save} loading={loading} style={styles.button}>Submit</Button>
+
+                <Text style={styles.infoText}>
+                  {
+                    !loading
+                      ? 'Submit your track to start getting feedback.\nSomething something'
+                      : "Please wait, we're uploading your track...\nThis may take a moment..."
+                  }
+                </Text>
+              </View>
+            </>
+          )}
+        </SafeAreaView>
       </KeyboardAwareScrollView>
     );
   }
@@ -196,16 +198,16 @@ const styles = StyleSheet.create({
   contentContainer: {
     minHeight: '100%',
     paddingHorizontal: 16,
-    paddingTop: 96,
+    paddingTop: interfaceHelper.deviceValue({ default: 96, xs: 72 }),
   },
   descriptionField: {
     minHeight: 150,
   },
   fileIcon: {
-    height: 20,
-    marginLeft: 4,
+    height: interfaceHelper.deviceValue({ default: 20, xs: 16 }),
+    marginLeft: interfaceHelper.deviceValue({ default: 4, xs: 6 }),
     marginRight: 8,
-    width: 16,
+    width: interfaceHelper.deviceValue({ default: 16, xs: 13 }),
   },
   formField: {
     marginBottom: 24,
@@ -213,24 +215,21 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#4C4C4C',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
-    marginBottom: 60,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    marginBottom: interfaceHelper.deviceValue({ default: 10, xs: 20 }),
     textAlign: 'center',
     width: '100%',
   },
   linkIcon: {
-    height: 20,
-    marginRight: 8,
-    width: 20,
+    height: interfaceHelper.deviceValue({ default: 20, xs: 18 }),
+    marginRight: interfaceHelper.deviceValue({ default: 8, xs: 6 }),
+    width: interfaceHelper.deviceValue({ default: 20, xs: 18 }),
   },
   orText: {
     alignSelf: 'center',
     color: '#4C4C4C',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     marginVertical: 16,
-  },
-  saveButton: {
-    marginBottom: 60,
   },
 });

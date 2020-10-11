@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import FieldLabel from './FieldLabel';
 import Image from './Image';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default class AudioFileField extends Component {
   state = {
@@ -88,34 +91,34 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderWidth: 2,
     justifyContent: 'center',
-    paddingVertical: 40,
+    paddingVertical: interfaceHelper.deviceValue({ default: 40, xs: 30 }),
     width: '100%',
   },
   fileCallToActionText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 20,
+    fontSize: interfaceHelper.deviceValue({ default: 20, xs: 17 }),
     letterSpacing: 0.44,
   },
   fileCheckmarkIcon: {
     bottom: 16,
-    height: 24,
+    height: interfaceHelper.deviceValue({ default: 24, xs: 20 }),
     position: 'absolute',
     right: 0,
-    width: 24,
+    width: interfaceHelper.deviceValue({ default: 24, xs: 20 }),
   },
   fileFormatsText: {
     color: '#7C4BCE',
   },
   fileImage: {
-    height: 84,
-    marginBottom: 24,
-    width: 67,
+    height: interfaceHelper.deviceValue({ default: 84, xs: 63 }),
+    marginBottom: interfaceHelper.deviceValue({ default: 24, xs: 18 }),
+    width: interfaceHelper.deviceValue({ default: 67, xs: 50 }),
   },
   supportedFilesText: {
     color: '#999999',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     letterSpacing: 0.35,
     marginTop: 6,
   },

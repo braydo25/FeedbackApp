@@ -4,7 +4,7 @@ import { Button, Card, Image } from '../components';
 import maestro from '../maestro';
 
 const { userManager, tracksManager } = maestro.managers;
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class SetupTrackScreen extends Component {
   componentDidMount() {
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fileImage: {
-    height: 150,
-    width: 120,
+    height: interfaceHelper.deviceValue({ default: 150, xs: 110 }),
+    width: interfaceHelper.deviceValue({ default: 120, xs: 88 }),
     zIndex: 1,
   },
   formCard: {
@@ -88,29 +88,29 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     letterSpacing: 0.4,
-    lineHeight: 22,
+    lineHeight: interfaceHelper.deviceValue({ default: 22, xs: 19 }),
     marginBottom: 16,
     textAlign: 'center',
   },
   notNowButton: {
     alignItems: 'center',
-    marginTop: 16,
-    padding: 16,
+    marginTop: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
+    padding: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
     width: '100%',
   },
   notNowButtonText: {
     color: '#AAAAAA',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   titleText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 24,
+    fontSize: interfaceHelper.deviceValue({ default: 24, xs: 21 }),
     marginBottom: 8,
-    marginTop: 32,
+    marginTop: interfaceHelper.deviceValue({ default: 32, xs: 28 }),
     textAlign: 'center',
   },
   topContainer: {

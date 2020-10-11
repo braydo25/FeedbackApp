@@ -4,7 +4,7 @@ import Button from './Button';
 import Card from './Card';
 import maestro from '../maestro';
 
-const { navigationHelper } = maestro.helpers;
+const { interfaceHelper, navigationHelper } = maestro.helpers;
 
 export default class UploadTrackCard extends Component {
   _openUploadTrack = () => {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: '#04112A',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 18,
+    fontSize: interfaceHelper.deviceValue({ default: 18, xs: 16 }),
     marginBottom: 32,
   },
 });

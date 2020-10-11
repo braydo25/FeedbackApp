@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } fr
 import Image from './Image';
 import maestro from '../maestro';
 
-const { timeHelper } = maestro.helpers;
 const { userManager } = maestro.managers;
+const { timeHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackComment extends Component {
   _onDeletePress = () => {
@@ -62,14 +62,14 @@ export default class TrackComment extends Component {
 const styles = StyleSheet.create({
   avatarImage: {
     borderRadius: 10,
-    height: 40,
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     marginRight: 10,
-    width: 40,
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   commentText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     lineHeight: 18,
     marginBottom: 2,
     marginRight: 35,
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
   deleteButton: {
     alignItems: 'center',
     backgroundColor: '#FFE2E2',
-    borderRadius: 16,
-    height: 40,
+    borderRadius: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     justifyContent: 'center',
-    width: 40,
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   deleteIcon: {
     height: '45%',
@@ -112,6 +112,6 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#B2B2B2',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
 });

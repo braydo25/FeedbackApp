@@ -139,7 +139,7 @@ export default class LandingScreen extends Component {
                 ref={component => this.passwordTextField = component}
               />
 
-              <Button onPress={this._submit} loading={loading}>{register ? 'Sign Up' : 'Login'}</Button>
+              <Button onPress={this._submit} loading={loading}>{register ? 'Sign Up' : 'Log In'}</Button>
 
               <View>
                 <Text style={styles.bottomText}>{register ? 'Already' : 'Not'} signed up?</Text>
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   bottomButtonText: {
     color: '#563098',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   bottomText: {
     color: '#AAAAAA',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     marginTop: 16,
   },
   container: {
@@ -226,28 +226,27 @@ const styles = StyleSheet.create({
   onboardingItemInfoText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     letterSpacing: 0.1,
-    lineHeight: 22,
+    lineHeight: interfaceHelper.deviceValue({ default: 22, xs: 19 }),
     opacity: 0.8,
     textAlign: 'center',
   },
   onboardingItemTitleText: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 22,
+    fontSize: interfaceHelper.deviceValue({ default: 22, xs: 19 }),
     marginBottom: 8,
     textAlign: 'center',
   },
   onboardingScrollView: {
-    marginTop: 50,
     minHeight: 100,
   },
   paginationContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: interfaceHelper.deviceValue({ default: 10, xs: 20 }),
   },
   paginationDot: {
     backgroundColor: '#FFFFFF',

@@ -96,7 +96,10 @@ export default class GameTrackCard extends Component {
             keyExtractor={(item, index) => `${index}`}
             keyboardShouldPersistTaps={'always'}
             ListEmptyComponent={this._renderEmptyComponent}
-            contentContainerStyle={styles.commentsListContentContainer}
+            contentContainerStyle={[
+              styles.commentsListContentContainer,
+              (comments.length === 0) ? styles.commentsListContentContainerEmpty : null,
+            ]}
             style={styles.commentsList}
           />
 
@@ -139,17 +142,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 12,
   },
+  commentsListContentContainerEmpty: {
+    paddingVertical: 0,
+  },
   container: {
     flex: 1,
   },
   trackPlayerControls: {
-    marginVertical: 16,
+    marginVertical: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
     paddingHorizontal: 16,
   },
   trackPlayerInfo: {
     borderTopColor: '#E3E3E9',
     borderTopWidth: 1,
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
   },
 });

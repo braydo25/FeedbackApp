@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default class Button extends Component {
   render() {
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#7C4BCE',
     borderRadius: 10,
-    height: 56,
+    height: interfaceHelper.deviceValue({ default: 56, xs: 49 }),
     justifyContent: 'center',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
@@ -46,6 +49,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
 });

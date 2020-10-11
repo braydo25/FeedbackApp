@@ -7,7 +7,7 @@ import TrackPlayerInfo from './TrackPlayerInfo';
 import TrackPlayerControls from './TrackPlayerControls';
 import maestro from '../maestro';
 
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackCard extends Component {
   _onViewFeedbackPress = () => {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: '#04112A',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 8,
     marginLeft: 8,
   },
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
   viewMoreText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: 14,
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
 });

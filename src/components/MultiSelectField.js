@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FieldLabel from './FieldLabel';
+import maestro from '../maestro';
+
+const { interfaceHelper } = maestro.helpers;
 
 export default class MultiSelectField extends Component {
   render() {
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
   selectableText: {
     color: '#4D4D4D',
     fontFamily: 'SFProDisplay-Medium',
-    fontSize: 16,
+    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   selectedOption: {
     backgroundColor: '#FFFFFF',

@@ -3,20 +3,35 @@ import { View, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
 import maestro from '../maestro';
 
-const waveWidth = 3;
+const waveWidth = 2;
 const waveSpace = 1;
 
 const { playbackManager } = maestro.managers;
+const { interfaceHelper } = maestro.helpers;
 
 export default class TrackPlayerScrubber extends ProgressComponent {
   state = {
     adjustedWaveform: [],
+    containerWidth: 0,
+  }
+
+  componentDidUpdate(prevProps) {
+    const { containerWidth } = this.state;
+
+    if (containerWidth && prevProps.track.id !== this.props.track.id) {
+      this._adjustWaveform();
+    }
   }
 
   _onScrubberLayout = ({ nativeEvent }) => {
+    this.setState({ containerWidth: nativeEvent.layout.width }, this._adjustWaveform);
+  }
+
+  _adjustWaveform = () => {
     const { waveform } = this.props.track;
-    const displayedWaves = Math.floor(waveform.length / (waveWidth + waveSpace));
-    const aggregatePerDisplayedWave = Math.floor(waveform.length / displayedWaves);
+    const { containerWidth } = this.state;
+    const displayedWaves = Math.floor(containerWidth / (waveWidth + waveSpace));
+    const aggregatePerDisplayedWave = Math.ceil(waveform.length / displayedWaves);
     const adjustedWaveform = [];
 
     waveform.reduce((aggregate, wave, index) => {
@@ -45,7 +60,7 @@ export default class TrackPlayerScrubber extends ProgressComponent {
             key={index}
             style={[
               styles.wave,
-              { height: `${Math.abs(wave)}%` },
+              { height: `${Math.min(Math.abs(wave), 100)}%` },
               (index < Math.floor(adjustedWaveform.length * progress)) ? styles.pastWave : null,
             ]}
           />
@@ -60,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    height: 30,
+    height: interfaceHelper.deviceValue({ default: 30, xs: 30 }),
     justifyContent: 'space-between',
     marginLeft: 18,
   },
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7D4CCF',
   },
   wave: {
-    backgroundColor: '#EAECF1',
+    backgroundColor: '#D9DBE0',
     borderRadius: 3,
     width: waveWidth,
   },
