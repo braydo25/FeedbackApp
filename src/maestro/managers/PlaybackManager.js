@@ -46,7 +46,7 @@ export default class PlaybackManager extends Manager {
 
     await this.store.ready;
 
-    if (track.id !== currentTrackId) {
+    if (track.id !== currentTrackId || !(await this._trackIsInQueue(track.id))) {
       this._createCurrentTrackPlay();
 
       await TrackPlayer.reset();
@@ -112,6 +112,15 @@ export default class PlaybackManager extends Manager {
       date: track.createdAt.toISOString(),
       artwork: track.user.avatarUrl,
     };
+  }
+
+  _trackIsInQueue = async (trackId) => {
+    try {
+      await TrackPlayer.getTrack(`${trackId}`);
+      return true;
+    } catch(error) {
+      return false;
+    }
   }
 
   _playbackStateChanged = ({ state }) => {
