@@ -158,6 +158,10 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
+  removeLocalTrack(trackId) {
+    this._removeTrack(trackId);
+  }
+
   deferSetup() {
     this.updateStore({ setupDeferred: true });
   }
@@ -185,7 +189,7 @@ export default class TracksManager extends Manager {
     this.updateStore({ tracks: updatedTracks });
   }
 
-  _addUpdateTrack = (track) => {
+  _addUpdateTrack = track => {
     const tracks = (this.store.tracks) ? [ ...this.store.tracks ] : [];
     const trackId = track.id;
     const existingIndex = tracks.findIndex(track => track.id === trackId);
@@ -197,5 +201,11 @@ export default class TracksManager extends Manager {
     }
 
     this.updateStore({ tracks });
+  }
+
+  _removeTrack = trackId => {
+    const tracks = (this.store.tracks) ? [ ...this.store.tracks ] : [];
+
+    this.updateStore({ tracks: tracks.filter(track => track.id !== trackId) });
   }
 }

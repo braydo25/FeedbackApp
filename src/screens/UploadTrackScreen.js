@@ -54,6 +54,7 @@ export default class UploadTrackScreen extends Component {
         },
       });
     } catch (error) {
+      this._cleanupFailure();
       interfaceHelper.showError({ message: error.message, delay: 500 });
       navigationHelper.pop();
     }
@@ -80,8 +81,17 @@ export default class UploadTrackScreen extends Component {
 
       navigationHelper.pop();
     } catch (error) {
+      this._cleanupFailure();
       interfaceHelper.showError({ message: error.message, delay: 500 });
       this.setState({ loading: false });
+    }
+  }
+
+  _cleanupFailure = () => {
+    const { track } = this.state;
+
+    if (track) {
+      tracksManager.removeLocalTrack(track.id);
     }
   }
 

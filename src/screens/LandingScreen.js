@@ -120,7 +120,9 @@ export default class LandingScreen extends Component {
                 onSubmitEditing={() => this.passwordTextField.focus()}
                 blurOnSubmit={false}
                 returnKeyType={'next'}
+                textContentType={'emailAddress'}
                 autoCompleteType={'email'}
+                autoCapitalize={'none'}
                 keyboardType={'email-address'}
                 placeholder={'Email Address'}
                 inputPrefix={<Image source={require('../assets/images/user.png')} style={styles.userIcon} />}

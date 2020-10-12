@@ -17,7 +17,13 @@ export default class SetupTrackScreen extends Component {
 
   receiveStoreUpdate({ tracks }) {
     if (tracks.tracks?.length) {
-      this._next();
+      for (let i = 0; i < tracks.tracks.length; i++) {
+        const currentTrack = tracks.tracks[i];
+
+        if (currentTrack.name && currentTrack.genre && currentTrack.mp3Url) {
+          return this._next();
+        }
+      }
     }
   }
 
