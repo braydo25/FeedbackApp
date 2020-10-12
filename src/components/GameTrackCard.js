@@ -70,12 +70,12 @@ export default class GameTrackCard extends Component {
   }
 
   _renderEmptyComponent = () => {
-    const { track } = this.props;
+    const { track, tip } = this.props;
 
     return (track.description) ? (
       <GameTrackCardDescription track={this.props.track} />
     ) : (
-      <GameTrackCardTip />
+      <GameTrackCardTip tip={tip} />
     );
   }
 

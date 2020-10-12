@@ -6,9 +6,9 @@ export default class GameManager extends Manager {
   }
 
   static initialStore = {
+    tracks: null,
     currentTrackIndex: 0,
     currentTrackComments: [],
-    tracks: null,
   }
 
   get storeName() {
