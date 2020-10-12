@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TouchableOpacity, LayoutAnimation, StyleSheet
 import Image from './Image';
 import maestro from '../maestro';
 
-const { userManager } = maestro.managers;
+const { playbackManager, userManager } = maestro.managers;
 const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 
 export default class GameHeader extends PureComponent {
@@ -41,10 +41,12 @@ export default class GameHeader extends PureComponent {
   }
 
   _openNotifications = () => {
+    playbackManager.pause();
     navigationHelper.navigate('NotificationsNavigator');
   }
 
   _openProfile = () => {
+    playbackManager.pause();
     navigationHelper.navigate('ProfileNavigator');
   }
 

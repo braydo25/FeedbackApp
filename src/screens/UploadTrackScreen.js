@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, LayoutAnimation, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AudioFileField, Image, SelectField, TextField, Button } from '../components';
 import maestro from '../maestro';
@@ -38,6 +38,8 @@ export default class UploadTrackScreen extends Component {
     try {
       const track = await tracksManager.createTrack();
       const audioData = (url) ? await scraperHelper.scrapeUrlAudioData(this.state.url) : null;
+
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
       this.setState({
         track,

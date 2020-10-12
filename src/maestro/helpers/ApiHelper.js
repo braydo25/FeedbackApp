@@ -8,7 +8,7 @@ export default class ApiHelper extends Helper {
     return 'apiHelper';
   }
 
-  _host = (__DEV__) ? 'https://bd119d4af01f.ngrok.io' : 'https://bd119d4af01f.ngrok.io';
+  _host = (__DEV__) ? 'http://localhost:8000' : 'https://api.soundhouseapp.com';
 
   get(options) {
     return this._request({ ...options, method: 'GET' });

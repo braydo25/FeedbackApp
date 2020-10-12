@@ -10,7 +10,8 @@ const tips = [
   "Working on a track idea but don't quite have it finished? Add your work in progress tracks to SoundHouse to get ideas from others!",
   "Earn EXP to level up by listening to and giving feedback on others' tracks.",
   'When you add a new track to SoundHouse, use the description of your track as a way to communicate with others who listen to it and give feedback on it.',
-  'Connect with the SoundHouse team! Follow us on social media! @soundhouse',
+  'Connect with the SoundHouse team! Follow us on social media! @soundhouseapp',
+  'Help us improve Soundhouse! Check your email for an invite to the official Soundhouse discord server.',
   'SoundHouse was built as a way for any musician or producer to be heard and get feedback on their music.',
 ];
 

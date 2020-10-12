@@ -20,7 +20,7 @@ export default class SetupTrackScreen extends Component {
       for (let i = 0; i < tracks.tracks.length; i++) {
         const currentTrack = tracks.tracks[i];
 
-        if (currentTrack.name && currentTrack.genre && currentTrack.mp3Url) {
+        if (currentTrack.name && currentTrack.genre) {
           return this._next();
         }
       }

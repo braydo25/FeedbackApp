@@ -1,7 +1,7 @@
 import { Helper } from 'react-native-maestro';
 import { Dimensions } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class InterfaceHelper extends Helper {
   static get instanceKey() {
@@ -28,7 +28,7 @@ export default class InterfaceHelper extends Helper {
   deviceValue = options => {
     let result = options.default;
 
-    result = (width < 411 && options.xs) ? options.xs : result;
+    result = (width < 411 && height < 700 && options.xs) ? options.xs : result;
     result = (width >= 411 && options.sm) ? options.sm : result;
     result = (width >= 568 && options.md) ? options.md : result;
     result = (width >= 768 && options.lg) ? options.lg : result;

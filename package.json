@@ -5,7 +5,6 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "postinstall": "patch-package",
     "test": "jest"
   },
   "dependencies": {
@@ -13,7 +12,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.4",
     "@react-navigation/stack": "^5.9.1",
-    "expo": "~39.0.2",
+    "expo": "~39.0.3",
     "expo-blur": "~8.2.0",
     "expo-device": "~2.3.0",
     "expo-document-picker": "~8.4.0",
@@ -29,7 +28,7 @@
     "moment": "^2.29.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "~0.63.2",
+    "react-native": "~0.63.3",
     "react-native-fast-image": "^8.3.2",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-keyboard-aware-scroll-view": "https://github.com/APSL/react-native-keyboard-aware-scroll-view#fb40649a9c84aa23d6a55355e9e0e432795967a6",
@@ -58,7 +57,6 @@
     "eslint-plugin-react-native": "^3.9.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "~25.2.6",
-    "patch-package": "^6.2.2",
     "react-test-renderer": "~16.13.1"
   },
   "jest": {
