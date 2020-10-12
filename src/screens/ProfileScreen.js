@@ -4,7 +4,7 @@ import { Button, Card, Image, ProfileCard, TracksList, UploadTrackCard } from '.
 import maestro from '../maestro';
 
 const { navigationHelper } = maestro.helpers;
-const { userManager, tracksManager } = maestro.managers;
+const { userManager, playbackManager, tracksManager } = maestro.managers;
 
 export default class ProfileScreen extends Component {
   state = {
@@ -23,6 +23,8 @@ export default class ProfileScreen extends Component {
   }
 
   componentWillUnmount() {
+    playbackManager.pause();
+
     maestro.unlink(this);
   }
 
