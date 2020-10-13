@@ -15,9 +15,6 @@
 		96905EF65AED1B983A6B3ABC /* libPods-Soundhouse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Soundhouse.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		EF9C93C02521332A006F5388 /* SwiftFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C93BF2521332A006F5388 /* SwiftFile.swift */; };
-		FED4A8DFF05C43108CDBE78A /* SFProDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1057CACE66EE47FD9CE7E624 /* SFProDisplay-Medium.otf */; };
-		0005FA2023204918B2016586 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36C0AEA8CD8C487A9814FD4A /* SFProDisplay-Regular.otf */; };
-		7FC9AB325DF841A1B0F06E03 /* SFProDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6267460A112B40E9BD60ED59 /* SFProDisplay-Semibold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +36,6 @@
 		EF3CF2EA252EDF2500C74089 /* Soundhouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Soundhouse.entitlements; sourceTree = "<group>"; };
 		EF9C93BE25213329006F5388 /* Soundhouse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Soundhouse-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF9C93BF2521332A006F5388 /* SwiftFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftFile.swift; sourceTree = "<group>"; };
-		1057CACE66EE47FD9CE7E624 /* SFProDisplay-Medium.otf */ = {isa = PBXFileReference; name = "SFProDisplay-Medium.otf"; path = "../src/assets/fonts/SFProDisplay-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		36C0AEA8CD8C487A9814FD4A /* SFProDisplay-Regular.otf */ = {isa = PBXFileReference; name = "SFProDisplay-Regular.otf"; path = "../src/assets/fonts/SFProDisplay-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6267460A112B40E9BD60ED59 /* SFProDisplay-Semibold.otf */ = {isa = PBXFileReference; name = "SFProDisplay-Semibold.otf"; path = "../src/assets/fonts/SFProDisplay-Semibold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +71,7 @@
 		};
 		28A59650C5594A7F83306D3B /* Resources */ = {
 			isa = PBXGroup;
-			children = (
-				1057CACE66EE47FD9CE7E624 /* SFProDisplay-Medium.otf */,
-				36C0AEA8CD8C487A9814FD4A /* SFProDisplay-Regular.otf */,
-				6267460A112B40E9BD60ED59 /* SFProDisplay-Semibold.otf */,
-			);
+			children = ();
 			name = Resources;
 			sourceTree = "<group>";
 		};
@@ -209,9 +199,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				FED4A8DFF05C43108CDBE78A /* SFProDisplay-Medium.otf in Resources */,
-				0005FA2023204918B2016586 /* SFProDisplay-Regular.otf in Resources */,
-				7FC9AB325DF841A1B0F06E03 /* SFProDisplay-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

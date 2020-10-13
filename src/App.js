@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { loadAsync } from 'expo-font';
 import { OverlaysContainer } from './components';
 import RootNavigator from './navigators/RootNavigator';
 import maestro from './maestro';
@@ -12,12 +13,15 @@ const { navigationHelper } = maestro.helpers;
 
 export default class App extends Component {
   state = {
+    fontsLoaded: false,
     initialRouteName: 'Landing',
     containerOpacityAnimated: new Animated.Value(0),
   }
 
   async componentDidMount() {
     maestro.link(this);
+
+    this._loadFonts();
 
     await userManager.store.ready;
 
@@ -44,6 +48,18 @@ export default class App extends Component {
     }
   }
 
+  _loadFonts = async () => {
+    try {
+      await loadAsync({
+        'SFProDisplay-Medium': require('./assets/fonts/SFProDisplay-Medium.otf'),
+        'SFProDisplay-Regular': require('./assets/fonts/SFProDisplay-Regular.otf'),
+        'SFProDisplay-SemiBold': require('./assets/fonts/SFProDisplay-SemiBold.otf'),
+      });
+    } catch (error) { /* NOOP */ }
+
+    this.setState({ fontsLoaded: true });
+  }
+
   _toggleVisibility = show => {
     return new Promise(resolve => {
       Animated.timing(this.state.containerOpacityAnimated, {
@@ -55,7 +71,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { initialRouteName, containerOpacityAnimated } = this.state;
+    const { initialRouteName, containerOpacityAnimated, fontsLoaded } = this.state;
+
+    if (!fontsLoaded) {
+      return null;
+    }
 
     return (
       <Animated.View style={[ styles.container, { opacity: containerOpacityAnimated } ]}>

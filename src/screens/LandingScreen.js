@@ -282,6 +282,7 @@ const styles = StyleSheet.create({
   topContainerItem: {
     flex: 1,
     justifyContent: 'flex-end',
+    paddingBottom: 32,
   },
   userIcon: {
     height: 16,
