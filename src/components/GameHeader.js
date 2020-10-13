@@ -28,7 +28,7 @@ export default class GameHeader extends PureComponent {
     if (newExp !== oldExp) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
-      if (levelsHelper.expToLevel(newExp) !== levelsHelper.expToLevel(oldExp)) {
+      if (levelsHelper.expToLevel(newExp) > levelsHelper.expToLevel(oldExp)) {
         interfaceHelper.showOverlay({ name: 'LevelUp', data: { delay: 500 } });
       }
     }
