@@ -160,8 +160,8 @@ export default class LandingScreen extends Component {
 
         <Image
           source={require('../assets/images/landing-background.png')}
-          resizeMode={'cover'}
           blurRadius={39}
+          resizeMode={'cover'}
           style={styles.topContainerBackgroundImage}
         />
       </View>
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '100%',
     opacity: 0.75,
+    width: '100%',
     zIndex: -1,
   },
   topContainerItem: {

@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '100%',
     opacity: 0.75,
+    width: '100%',
     zIndex: -1,
   },
 });

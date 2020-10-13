@@ -96,10 +96,14 @@ const styles = StyleSheet.create({
   },
   imageOne: {
     ...StyleSheet.absoluteFillObject,
+    height: '100%',
+    width: '100%',
     zIndex: 1,
   },
   imageTwo: {
     ...StyleSheet.absoluteFillObject,
+    height: '100%',
+    width: '100%',
     zIndex: 2,
   },
 });

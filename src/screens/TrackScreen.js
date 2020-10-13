@@ -66,7 +66,9 @@ export default class TrackScreen extends Component {
 const styles = StyleSheet.create({
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
+    height: '100%',
     opacity: 0.5,
+    width: '100%',
     zIndex: -1,
   },
   commentsList: {

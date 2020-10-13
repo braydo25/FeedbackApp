@@ -132,8 +132,10 @@ const styles = StyleSheet.create({
   },
   artistContainerBackgroundImage: {
     ...StyleSheet.absoluteFillObject,
+    minHeight: '100%',
     opacity: 0.5,
     top: -250,
+    width: '100%',
     zIndex: -1,
   },
   artistNameText: {
