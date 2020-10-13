@@ -82,6 +82,7 @@ export default class TextField extends Component {
               style={[
                 styles.textInput,
                 (focused) ? styles.textInputFocused : null,
+                (focused && !inputPrefix) ? styles.textInputFocusedNoPrefix : null,
                 (!value) ? styles.textInputPlaceholder : null,
                 style,
               ]}
@@ -141,8 +142,13 @@ const styles = StyleSheet.create({
     paddingRight: interfaceHelper.deviceValue({ default: 16, xs: 13 }),
     paddingTop: interfaceHelper.deviceValue({ default: 16, xs: 13 }), // multiline fix
   },
+  textInputFocusedNoPrefix: {
+    paddingHorizontal: interfaceHelper.deviceValue({ default: 16, xs: 13 }),
+  },
   textInputInnerContainer: {
     alignItems: 'center',
+    backgroundColor: '#F6F6F6',
+    borderRadius: 16,
     flex: 1,
     flexDirection: 'row',
   },

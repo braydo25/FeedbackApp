@@ -50,9 +50,10 @@ const styles = StyleSheet.create({
     borderColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 2,
+    elevation: 4,
     height: 80,
     width: 80,
-    zIndex: 2,
+    zIndex: 1,
   },
   artistText: {
     color: '#04112A',

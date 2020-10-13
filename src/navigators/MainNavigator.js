@@ -15,7 +15,7 @@ export default initialRouteName => {
   return (
     <MainStack.Navigator
       initialRouteName={initialRouteName}
-      headerMode={'float'}
+      headerMode={'screen'}
     >
       <MainStack.Screen
         name={'Game'}
