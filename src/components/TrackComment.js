@@ -24,7 +24,7 @@ export default class TrackComment extends Component {
 
   render () {
     const { trackComment, style } = this.props;
-    const { id, user, text, time, createdAt } = trackComment;
+    const { id, user, text, time } = trackComment;
 
     return (
       <View style={[ styles.container, style ]}>
@@ -36,7 +36,7 @@ export default class TrackComment extends Component {
 
         <View style={styles.textContainer}>
           <Text style={styles.commentText}>{text}</Text>
-          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)} | {timeHelper.fromNow(createdAt)}</Text>
+          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)}</Text>
         </View>
 
         {!!id && user.id === userManager.store.user.id && (
