@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import Image from './Image';
+import { STATE_READY, STATE_PAUSED, STATE_STOPPED, STATE_PLAYING, STATE_BUFFERING } from 'react-native-track-player';
 import TrackPlayerScrubber from './TrackPlayerScrubber';
 import maestro from '../maestro';
 
@@ -8,9 +9,7 @@ const { playbackManager } = maestro.managers;
 const { interfaceHelper } = maestro.helpers;
 
 export default class TrackPlayerControls extends PureComponent {
-  state = {
-    playbackState: 'stopped',
-  }
+  playbackState = STATE_STOPPED;
 
   componentDidMount() {
     maestro.link(this);
@@ -23,34 +22,36 @@ export default class TrackPlayerControls extends PureComponent {
   receiveStoreUpdate({ playback }) {
     const { track } = this.props;
     const { currentTrackId } = playbackManager.store;
+    const playbackState = (track.id === currentTrackId) ? playback.state : STATE_STOPPED;
 
-    this.setState({
-      playbackState: (track.id === currentTrackId) ? playback.state : 'stopped',
-    });
+    if (this.playbackState !== playbackState) {
+      this.playbackState = playbackState;
+      this.forceUpdate();
+    }
   }
 
   _playPause = () => {
     const { track } = this.props;
-    const { playbackState } = this.state;
+    const { playbackState } = this;
 
-    if ([ 'ready', 'paused', 'connecting', 'stopped' ].includes(playbackState)) {
+    if ([ STATE_READY, STATE_PAUSED, STATE_STOPPED, 'loading' ].includes(playbackState)) {
       playbackManager.play(track);
     }
 
-    if ([ 'playing', 'buffering' ].includes(playbackState)) {
+    if ([ STATE_PLAYING, STATE_BUFFERING ].includes(playbackState)) {
       playbackManager.pause();
     }
   }
 
   render() {
     const { onSeek, track, style } = this.props;
-    const { playbackState } = this.state;
+    const { playbackState } = this;
     const hasTrack = !!track.mp3Url;
 
     return (
       <View style={[ styles.container, style ]}>
         <TouchableOpacity disabled={!track.mp3Url} onPress={this._playPause} style={styles.playPauseButton}>
-          {(hasTrack && playbackState === 'playing') && (
+          {(hasTrack && playbackState === STATE_PLAYING) && (
             <Image
               source={require('../assets/images/pause.png')}
               resizeMode={'contain'}
@@ -58,7 +59,7 @@ export default class TrackPlayerControls extends PureComponent {
             />
           )}
 
-          {(hasTrack && [ 'ready', 'paused', 'stopped' ].includes(playbackState)) && (
+          {(hasTrack && [ STATE_READY, STATE_PAUSED, STATE_STOPPED ].includes(playbackState)) && (
             <Image
               source={require('../assets/images/play.png')}
               resizeMode={'contain'}
@@ -66,7 +67,7 @@ export default class TrackPlayerControls extends PureComponent {
             />
           )}
 
-          {(!hasTrack || [ 'loading', 'buffering', 'connecting', 'none' ].includes(playbackState)) && (
+          {(!hasTrack || [ STATE_BUFFERING, 'loading' ].includes(playbackState)) && (
             <ActivityIndicator color={'#FFFFFF'} />
           )}
         </TouchableOpacity>
