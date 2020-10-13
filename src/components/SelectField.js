@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, Keyboard, StyleSheet } from 'react-native';
 import FieldLabel from './FieldLabel';
 import Image from './Image';
 import maestro from '../maestro';
@@ -12,6 +12,8 @@ export default class SelectField extends Component {
   }
 
   _toggle = () => {
+    Keyboard.dismiss();
+
     LayoutAnimation.configureNext(LayoutAnimation.create(300, 'easeInEaseOut', 'opacity'));
 
     this.setState({ open: !this.state.open });
@@ -63,7 +65,10 @@ export default class SelectField extends Component {
           </TouchableOpacity>
 
           {open && (
-            <ScrollView style={styles.optionsScrollview}>
+            <ScrollView
+              nestedScrollEnabled
+              style={styles.optionsScrollview}
+            >
               {options.map((option, index) => (
                 <TouchableOpacity
                   onPress={() => this._onOptionPress(option)}

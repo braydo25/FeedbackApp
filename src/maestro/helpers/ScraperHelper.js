@@ -1,4 +1,5 @@
 import { Helper } from 'react-native-maestro';
+import mime from 'react-native-mime-types';
 
 export default class ScraperHelper extends Helper {
   static get instanceKey() {
@@ -20,26 +21,34 @@ export default class ScraperHelper extends Helper {
       throw new Error(response.body);
     }
 
-    if (!response.body.audio) {
+    const audioUrl = response.body.audio;
+
+    if (!audioUrl) {
       throw new Error('Could not find any audio for this URL.');
     }
 
-    const audio = await fetch(response.body.audio, {
+    const audio = await fetch(audioUrl, {
       method: 'GET',
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9',
       },
     });
 
-    const blob = await audio.blob();
+    const audioHeaders = audio.headers;
+    const audioContentType = audioHeaders.map['content-type'];
+    const audioExtension = mime.extension(audioContentType);
+    const audioBlob = await audio.blob();
+    const fileName = audioUrl.split('/').pop().split('?')[0];
 
-    if (blob.size < 1000) {
+    audioBlob.data.name = (fileName.includes('.') ? fileName : `${fileName}.${audioExtension}`);
+
+    if (audioBlob.size < 1000) {
       throw new Error('Audio retrieval failed. Try uploading your audio file instead.');
     }
 
     return {
       ...response.body,
-      blob,
+      blob: audioBlob,
     };
   }
 }

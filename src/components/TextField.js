@@ -81,6 +81,7 @@ export default class TextField extends Component {
               placeholderTextColor={'#4D4D4D'}
               style={[
                 styles.textInput,
+                (props.multiline) ? styles.textInputMultiline : null,
                 (focused) ? styles.textInputFocused : null,
                 (focused && !inputPrefix) ? styles.textInputFocusedNoPrefix : null,
                 (!value) ? styles.textInputPlaceholder : null,
@@ -156,6 +157,9 @@ const styles = StyleSheet.create({
     borderColor: '#7C4BCE',
     borderRadius: 13,
     borderWidth: 2,
+  },
+  textInputMultiline: {
+    textAlignVertical: 'top',
   },
   textInputPlaceholder: {
     fontFamily: 'SFProDisplay-Regular',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { Header } from '../components';
 
 import NotificationsScreen from '../screens/NotificationsScreen';
@@ -13,6 +13,7 @@ export default () => {
       initialRouteName={'Notifications'}
       headerMode={'screen'}
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         header: ({ scene }) => <Header scene={scene} />,
         headerTransparent: true,
       }}
