@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, TextInput, Animated, StyleSheet } from 'react-native';
 import Image from './Image';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
 const { interfaceHelper } = maestro.helpers;
 
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+
 export default class GameActions extends Component {
   state = {
     commentText: '',
+    nextButtonScaleValue: new Animated.Value(1),
+  }
+
+  componentDidMount() {
+    maestro.link(this);
+  }
+
+  componentWillUnmount() {
+    maestro.unlink(this);
+  }
+
+  receiveEvent(name, value) {
+    if (name === 'GAME_ANIMATING_NEXT_TRACK') {
+      this._pulseNextButton();
+    }
   }
 
   _submit = async () => {
@@ -29,26 +46,51 @@ export default class GameActions extends Component {
     this.setState({ commentText: '' });
   }
 
+  _pulseNextButton = () => {
+    const scaleUpAnimation = {
+      toValue: 1.12,
+      friction: 1,
+      duration: 100,
+      useNativeDriver: true,
+    };
+
+    const scaleDownAnimation = {
+      toValue: 1,
+      duration: 150,
+      useNativeDriver: true,
+    };
+
+    Animated.sequence([
+      Animated.timing(this.state.nextButtonScaleValue, scaleUpAnimation),
+      Animated.timing(this.state.nextButtonScaleValue, scaleDownAnimation),
+      Animated.timing(this.state.nextButtonScaleValue, scaleUpAnimation),
+      Animated.timing(this.state.nextButtonScaleValue, scaleDownAnimation),
+    ]).start();
+  }
+
   render() {
     const { disabled } = this.props;
-    const { commentText } = this.state;
+    const { commentText, nextButtonScaleValue } = this.state;
 
     return (
       <View style={[
         disabled ? styles.containerDisabled : null,
         styles.container,
       ]}>
-        <TouchableOpacity
+        <AnimatedTouchableOpacity
           disabled={disabled}
           onPress={this._nextTrack}
-          style={styles.button}
+          style={[
+            styles.button,
+            { transform: [ { scale: nextButtonScaleValue } ] },
+          ]}
         >
           <Image
             resizeMode={'contain'}
             source={require('../assets/images/skip.png')}
             style={styles.skipIcon}
           />
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
 
         <TextInput
           autoFocus
@@ -64,7 +106,10 @@ export default class GameActions extends Component {
         <TouchableOpacity
           disabled={!commentText || disabled}
           onPress={this._submit}
-          style={styles.button}
+          style={[
+            styles.button,
+            (!commentText && !disabled) ? styles.buttonDisabled : null,
+          ]}
         >
           <Image
             resizeMode={'contain'}
@@ -85,6 +130,9 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     width: 40,
+  },
+  buttonDisabled: {
+    opacity: 0.4,
   },
   container: {
     alignItems: 'center',
