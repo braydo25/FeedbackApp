@@ -1,4 +1,4 @@
-package com.soundhouse.app;
+package com.soundhousemusic.app;
 
 import android.os.Bundle;
 

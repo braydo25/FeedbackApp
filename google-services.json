@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:506250990674:android:2eee915dd505ae0b71fb8b",
+        "mobilesdk_app_id": "1:506250990674:android:ccc24cf9f18ec19571fb8b",
         "android_client_info": {
-          "package_name": "com.soundhouse.app"
+          "package_name": "com.soundhousemusic.app"
         }
       },
       "oauth_client": [

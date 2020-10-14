@@ -17,7 +17,7 @@
       "bundleIdentifier": "com.soundhouse.app"
     },
     "android": {
-      "package": "com.soundhouse.app",
+      "package": "com.soundhousemusic.app",
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     }

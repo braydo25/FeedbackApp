@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.soundhouse.app'
+        applicationId 'com.soundhousemusic.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

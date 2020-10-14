@@ -1,4 +1,4 @@
-package com.soundhouse.app.generated;
+package com.soundhousemusic.app.generated;
 
 import java.util.Arrays;
 import java.util.List;
