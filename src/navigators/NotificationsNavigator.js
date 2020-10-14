@@ -31,7 +31,7 @@ export default () => {
         name={'Track'}
         component={TrackScreen}
         options={{
-          title: 'Track Feedback',
+          title: 'Track',
           backEnabled: true,
         }}
       />

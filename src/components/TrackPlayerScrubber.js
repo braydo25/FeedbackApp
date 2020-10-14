@@ -24,30 +24,14 @@ export default class TrackPlayerScrubber extends ProgressComponent {
 
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onStartShouldSetPanResponderCapture: () => true,
+      onStartShouldSetPanResponderCapture: ({ nativeEvent }) => {
+        this._panHandlerSeek(nativeEvent);
+
+        return true;
+      },
       onPanResponderTerminationRequest: () => false,
       onPanResponderMove: ({ nativeEvent }) => {
-        const { onSeek, track } = this.props;
-        const { currentTrackId } = playbackManager.store;
-
-        if (track.id !== currentTrackId) {
-          return; // temp? This just disables seek on non-playing tracks.
-        }
-
-        const { containerXPosition, containerWidth } = this.state;
-        const xPos = Math.max(nativeEvent.pageX - containerXPosition, 0);
-        const xMax = containerWidth;
-        const trackDuration = Math.floor(this.state.duration);
-        const seekPercent = Math.min(xPos / xMax, 1);
-        const seekPosition = Math.floor(seekPercent * trackDuration);
-
-        playbackManager.seekTo(seekPosition);
-
-        if (onSeek) {
-          onSeek(seekPosition);
-        }
-
-        this.setState({ seekPercent });
+        this._panHandlerSeek(nativeEvent);
       },
       onPanResponderRelease: () => {
         setTimeout(() => { // flicker fix to account for seek delay
@@ -63,6 +47,30 @@ export default class TrackPlayerScrubber extends ProgressComponent {
     if (containerWidth && prevProps.track.id !== this.props.track.id) {
       this._adjustWaveform();
     }
+  }
+
+  _panHandlerSeek = nativeEvent => {
+    const { onSeek, track } = this.props;
+    const { currentTrackId } = playbackManager.store;
+
+    if (track.id !== currentTrackId) {
+      return; // temp? This just disables seek on non-playing tracks.
+    }
+
+    const { containerXPosition, containerWidth } = this.state;
+    const xPos = Math.max(nativeEvent.pageX - containerXPosition, 0);
+    const xMax = containerWidth;
+    const trackDuration = Math.floor(this.state.duration);
+    const seekPercent = Math.min(xPos / xMax, 1);
+    const seekPosition = Math.floor(seekPercent * trackDuration);
+
+    playbackManager.seekTo(seekPosition);
+
+    if (onSeek) {
+      onSeek(seekPosition);
+    }
+
+    this.setState({ seekPercent });
   }
 
   _onScrubberLayout = ({ nativeEvent }) => {
