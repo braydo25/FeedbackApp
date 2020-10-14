@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
   formContainer: {
-    flex: 1,
     justifyContent: 'center',
+    paddingBottom: 16,
     paddingHorizontal: 16,
   },
   keyIcon: {
@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   onboardingScrollView: {
-    minHeight: 100,
+    marginTop: 8,
+    maxHeight: 100,
   },
   paginationContainer: {
     alignItems: 'center',
@@ -268,7 +269,8 @@ const styles = StyleSheet.create({
   topContainer: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    marginTop: 16,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -282,9 +284,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   topContainerItem: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingBottom: 32,
+    paddingBottom: 24,
   },
   userIcon: {
     height: 16,

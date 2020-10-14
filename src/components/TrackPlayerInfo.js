@@ -43,10 +43,10 @@ export default class TrackPlayerInfo extends ProgressComponent {
             {showMetadata && (
               <View style={styles.metadataContainer}>
                 <Image source={require('../assets/images/play-gray.png')} style={styles.metadataPlayIcon} />
-                <Text style={styles.metadataText}>0</Text>
+                <Text style={styles.metadataText}>{track.totalPlays}</Text>
 
                 <Image source={require('../assets/images/comment-gray.png')} style={styles.metadataCommentsIcon} />
-                <Text style={styles.metadataText}>0</Text>
+                <Text style={styles.metadataText}>{track.totalComments}</Text>
               </View>
             )}
           </View>
