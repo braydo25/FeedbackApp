@@ -18,7 +18,8 @@
     },
     "android": {
       "package": "com.soundhouse.app",
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

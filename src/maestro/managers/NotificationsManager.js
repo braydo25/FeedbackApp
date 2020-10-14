@@ -115,6 +115,7 @@ export default class NotificationsManager extends Manager {
 
     if (status === 'granted') {
       const token = (await Notifications.getDevicePushTokenAsync()).data;
+
       this._registerForNotifications(token);
     }
 

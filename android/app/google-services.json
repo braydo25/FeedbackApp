@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "506250990674",
+    "firebase_url": "https://soundhouse-fea1f.firebaseio.com",
+    "project_id": "soundhouse-fea1f",
+    "storage_bucket": "soundhouse-fea1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506250990674:android:2eee915dd505ae0b71fb8b",
+        "android_client_info": {
+          "package_name": "com.soundhouse.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506250990674-inh49lm57a2ht76k0qt8vn40gqmoptsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQBfh8-4dj3HY1P1fR1aqW034LZm9SFNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506250990674-inh49lm57a2ht76k0qt8vn40gqmoptsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

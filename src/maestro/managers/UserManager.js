@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import { Manager } from 'react-native-maestro';
 
 const LOGGED_IN_USER_KEY = 'LOGGED_IN_USER';
@@ -113,7 +112,7 @@ export default class UserManager extends Manager {
       return 'SetupTrack';
     }
 
-    if (Platform.OS === 'ios' && !notificationsManager.permissionGranted() && !notificationsManager.permissionDeferred()) {
+    if (!notificationsManager.permissionGranted() && !notificationsManager.permissionDeferred()) {
       return 'SetupNotifications';
     }
 

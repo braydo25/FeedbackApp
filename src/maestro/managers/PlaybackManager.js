@@ -20,15 +20,17 @@ export default class PlaybackManager extends Manager {
 
     TrackPlayer.setupPlayer().then(() => {
       TrackPlayer.addEventListener('playback-state', this._playbackStateChanged);
-      resolveInitialReadyPromise();
-    });
 
-    TrackPlayer.updateOptions({
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_STOP,
-      ],
+      TrackPlayer.updateOptions({
+        capabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_STOP,
+          TrackPlayer.CAPABILITY_SEEK_TO,
+        ],
+      });
+
+      resolveInitialReadyPromise();
     });
   }
 

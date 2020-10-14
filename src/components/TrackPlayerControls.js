@@ -51,7 +51,7 @@ export default class TrackPlayerControls extends PureComponent {
     return (
       <View style={[ styles.container, style ]}>
         <TouchableOpacity disabled={!track.mp3Url} onPress={this._playPause} style={styles.playPauseButton}>
-          {(hasTrack && [ STATE_READY, STATE_PLAYING ].includes(playbackState)) && (
+          {(hasTrack && playbackState === STATE_PLAYING) && (
             <Image
               source={require('../assets/images/pause.png')}
               resizeMode={'contain'}
@@ -59,7 +59,7 @@ export default class TrackPlayerControls extends PureComponent {
             />
           )}
 
-          {(hasTrack && [ STATE_PAUSED, STATE_STOPPED ].includes(playbackState)) && (
+          {(hasTrack && [ STATE_READY, STATE_PAUSED, STATE_STOPPED ].includes(playbackState)) && (
             <Image
               source={require('../assets/images/play.png')}
               resizeMode={'contain'}
