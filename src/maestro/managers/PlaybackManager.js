@@ -22,6 +22,7 @@ export default class PlaybackManager extends Manager {
       TrackPlayer.addEventListener('playback-state', this._playbackStateChanged);
 
       TrackPlayer.updateOptions({
+        stopWithApp: true,
         capabilities: [
           TrackPlayer.CAPABILITY_PLAY,
           TrackPlayer.CAPABILITY_PAUSE,
