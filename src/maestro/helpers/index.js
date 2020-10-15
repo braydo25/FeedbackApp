@@ -1,4 +1,5 @@
 import ApiHelper from './ApiHelper';
+import AppStoreReviewHelper from './AppStoreReviewHelper';
 import AsyncStorageHelper from './AsyncStorageHelper';
 import DataHelper from './DataHelper';
 import DeviceHelper from './DeviceHelper';
@@ -11,6 +12,7 @@ import TimeHelper from './TimeHelper';
 
 export default [
   ApiHelper,
+  AppStoreReviewHelper,
   AsyncStorageHelper,
   DataHelper,
   DeviceHelper,

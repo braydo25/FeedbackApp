@@ -55,6 +55,8 @@ PODS:
   - EXSQLite (8.4.0):
     - UMCore
     - UMFileSystemInterface
+  - EXStoreReview (2.2.0):
+    - UMCore
   - EXUpdates (0.3.5):
     - React
     - UMCore
@@ -431,6 +433,7 @@ DEPENDENCIES:
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXSQLite (from `../node_modules/expo-sqlite/ios`)
+  - EXStoreReview (from `../node_modules/expo-store-review/ios`)
   - EXUpdates (from `../node_modules/expo-updates/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -559,6 +562,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-splash-screen/ios"
   EXSQLite:
     :path: "../node_modules/expo-sqlite/ios"
+  EXStoreReview:
+    :path: "../node_modules/expo-store-review/ios"
   EXUpdates:
     :path: "../node_modules/expo-updates/ios"
   FBLazyVector:
@@ -679,6 +684,7 @@ SPEC CHECKSUMS:
   EXPermissions: 30cbe5b72bd209b65c00884180ad058a60bb413d
   EXSplashScreen: 7ea40b8524f27e7444e3892411c8a4782ab6b4ce
   EXSQLite: d0d8677c13e60d5db2812387f059c697be27d3fb
+  EXStoreReview: e847ad9367e8d9ab0d856e6aa21e16c1d30f118e
   EXUpdates: 74b39409f68eca207075d87b0077bdf37865a8bf
   FBLazyVector: 878b59e31113e289e275165efbe4b54fa614d43d
   FBReactNativeSpec: 7da9338acfb98d4ef9e5536805a0704572d33c2f

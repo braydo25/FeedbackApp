@@ -4,19 +4,24 @@ import { Image, Notification } from '../components';
 import maestro from '../maestro';
 
 const { notificationsManager, userManager } = maestro.managers;
+const { appStoreReviewHelper } = maestro.helpers;
 
 export default class NotificationsScreen extends Component {
   state = {
     notifications: null,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     maestro.link(this);
 
     userManager.updateUser({ viewedNotificationsAt: new Date() });
     notificationsManager.setBadgeCount(0);
 
-    this._loadNotifications();
+    const notifications = await this._loadNotifications();
+
+    if (notifications.length >= 3) {
+      appStoreReviewHelper.requestRating();
+    }
   }
 
   componentWillUnmount() {
