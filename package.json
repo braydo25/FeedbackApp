@@ -24,6 +24,7 @@
     "expo-linear-gradient": "~8.3.0",
     "expo-notifications": "~0.7.2",
     "expo-permissions": "~9.3.0",
+    "expo-store-review": "~2.2.0",
     "expo-updates": "~0.3.2",
     "moment": "^2.29.0",
     "react": "16.13.1",
