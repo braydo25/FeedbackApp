@@ -10,6 +10,7 @@ import GameTrackCardStack from './GameTrackCardStack';
 import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
 import Image from './Image';
+import LaunchLoading from './LaunchLoading';
 import MultiSelectField from './MultiSelectField';
 import Notification from './Notification';
 import OverlaysContainer from './OverlaysContainer';
@@ -36,6 +37,7 @@ export {
   GameTrackCardTip,
   Header,
   Image,
+  LaunchLoading,
   MultiSelectField,
   Notification,
   OverlaysContainer,

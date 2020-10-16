@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { Animated, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
+import { Animated, StatusBar, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { loadAsync } from 'expo-font';
-import { OverlaysContainer } from './components';
+import { LaunchLoading, OverlaysContainer } from './components';
 import RootNavigator from './navigators/RootNavigator';
 import maestro from './maestro';
 
 TouchableOpacity.defaultProps = { ...(TouchableOpacity.defaultProps || {}), delayPressIn: 0 };
 
 const { userManager } = maestro.managers;
-const { navigationHelper } = maestro.helpers;
+const { appUpdatesHelper, navigationHelper } = maestro.helpers;
 
 export default class App extends Component {
   state = {
     fontsLoaded: false,
+    checkedForUpdates: false,
     initialRouteName: 'Landing',
     containerOpacityAnimated: new Animated.Value(0),
   }
@@ -22,6 +23,7 @@ export default class App extends Component {
     maestro.link(this);
 
     this._loadFonts();
+    this._checkForUpdates();
 
     await userManager.store.ready;
 
@@ -60,6 +62,14 @@ export default class App extends Component {
     this.setState({ fontsLoaded: true });
   }
 
+  _checkForUpdates = async () => {
+    await appUpdatesHelper.update();
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+
+    this.setState({ checkedForUpdates: true });
+  }
+
   _toggleVisibility = show => {
     return new Promise(resolve => {
       Animated.timing(this.state.containerOpacityAnimated, {
@@ -71,10 +81,10 @@ export default class App extends Component {
   }
 
   render() {
-    const { initialRouteName, containerOpacityAnimated, fontsLoaded } = this.state;
+    const { initialRouteName, containerOpacityAnimated, fontsLoaded, checkedForUpdates } = this.state;
 
-    if (!fontsLoaded) {
-      return null;
+    if (!fontsLoaded || !checkedForUpdates) {
+      return <LaunchLoading />;
     }
 
     return (

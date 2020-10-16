@@ -1,3 +1,4 @@
+import 'expo-asset';
 import { registerRootComponent } from 'expo';
 import TrackPlayer from 'react-native-track-player';
 import * as Sentry from '@sentry/react-native';

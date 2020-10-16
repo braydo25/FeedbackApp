@@ -1,7 +1,7 @@
 import { Helper } from 'react-native-maestro';
 import { Alert, Platform, Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as ImageManipulator from "expo-image-manipulator";
+import * as ImageManipulator from 'expo-image-manipulator';
 
 export default class FilesHelper extends Helper {
   static get instanceKey() {
