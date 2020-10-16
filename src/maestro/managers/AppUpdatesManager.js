@@ -1,16 +1,24 @@
-import { Helper } from 'react-native-maestro';
+import { Manager } from 'react-native-maestro';
 import { Alert } from 'react-native';
 import * as Updates from 'expo-updates';
 
-export default class AppUpdatesHelper extends Helper {
+export default class AppUpdatesHelper extends Manager {
   static get instanceKey() {
-    return 'appUpdatesHelper';
+    return 'appUpdatesManager';
+  }
+
+  async receiveEvent(name, value) {
+    const hasNewUpdate = await this.hasNewUpdate();
+
+    if (name === 'APP_STATE_CHANGED' && value === 'active' && hasNewUpdate) {
+      this.promptToUpdate();
+    }
   }
 
   async hasNewUpdate() {
     if (__DEV__) {
       console.log('Cannot check for OTA updates in debug mode.');
-      return;
+      return false;
     }
 
     const result = await Updates.checkForUpdateAsync();

@@ -1,4 +1,5 @@
 import AppManager from './AppManager';
+import AppUpdatesManager from './AppUpdatesManager';
 import GameManager from './GameManager';
 import NotificationsManager from './NotificationsManager';
 import PlaybackManager from './PlaybackManager';
@@ -7,6 +8,7 @@ import UserManager from './UserManager';
 
 export default [
   AppManager,
+  AppUpdatesManager,
   GameManager,
   NotificationsManager,
   PlaybackManager,

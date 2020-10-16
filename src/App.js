@@ -8,8 +8,8 @@ import maestro from './maestro';
 
 TouchableOpacity.defaultProps = { ...(TouchableOpacity.defaultProps || {}), delayPressIn: 0 };
 
-const { userManager } = maestro.managers;
-const { appUpdatesHelper, navigationHelper } = maestro.helpers;
+const { appUpdatesManager, userManager } = maestro.managers;
+const { navigationHelper } = maestro.helpers;
 
 export default class App extends Component {
   state = {
@@ -63,7 +63,7 @@ export default class App extends Component {
   }
 
   _checkForUpdates = async () => {
-    await appUpdatesHelper.update();
+    await appUpdatesManager.update();
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
