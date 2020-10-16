@@ -41,7 +41,7 @@ export default class AppUpdatesHelper extends Manager {
     Alert.alert('New Update Available', 'Would you like to update Soundhouse? This will only take a few seconds.', [
       {
         text: 'Update',
-        onPress: this.update,
+        onPress: () => this.update(),
       },
       {
         text: 'Not Now',
