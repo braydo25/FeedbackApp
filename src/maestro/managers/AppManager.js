@@ -14,8 +14,10 @@ export default class AppManager extends Manager {
     super(maestro);
 
     AppState.addEventListener('change', nextAppState => {
-      this.updateStore({ state: nextAppState });
-      this.maestro.dispatchEvent('APP_STATE_CHANGED', nextAppState);
+      if (this.store.state !== nextAppState) {
+        this.updateStore({ state: nextAppState });
+        this.maestro.dispatchEvent('APP_STATE_CHANGED', nextAppState);
+      }
     });
   }
 
