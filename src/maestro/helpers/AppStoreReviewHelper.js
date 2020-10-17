@@ -19,7 +19,7 @@ export default class AppStoreReviewHelper extends Helper {
     const lastRequestAt = await asyncStorageHelper.getItem(LAST_REVIEW_REQUEST_KEY);
     const reviewedApp = await asyncStorageHelper.getItem(REVIEWED_APP_KEY);
 
-    if (!(await StoreReview.isAvailableAsync()) || reviewedApp || Date.now() - lastRequestAt < minimumTimeSinceLastRequest) {
+    if (!(await StoreReview.isAvailableAsync()) || reviewedApp || (Date.now() - (lastRequestAt || 0)) < minimumTimeSinceLastRequest) {
       return;
     }
 
