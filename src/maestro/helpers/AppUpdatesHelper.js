@@ -1,18 +1,10 @@
-import { Manager } from 'react-native-maestro';
+import { Helper } from 'react-native-maestro';
 import { Alert } from 'react-native';
 import * as Updates from 'expo-updates';
 
-export default class AppUpdatesHelper extends Manager {
+export default class AppUpdatesHelper extends Helper {
   static get instanceKey() {
-    return 'appUpdatesManager';
-  }
-
-  async receiveEvent(name, value) {
-    const hasNewUpdate = await this.hasNewUpdate();
-
-    if (name === 'APP_STATE_CHANGED' && value === 'active' && hasNewUpdate) {
-      this.promptToUpdate();
-    }
+    return 'appUpdatesHelper';
   }
 
   async hasNewUpdate() {
@@ -37,7 +29,13 @@ export default class AppUpdatesHelper extends Manager {
     await Updates.reloadAsync();
   }
 
-  promptToUpdate() {
+  async promptToUpdate() {
+    const hasNewUpdate = await this.hasNewUpdate();
+
+    if (!hasNewUpdate) {
+      return;
+    }
+
     Alert.alert('New Update Available', 'Would you like to update Soundhouse? This will only take a few seconds.', [
       {
         text: 'Not Now',

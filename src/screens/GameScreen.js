@@ -4,6 +4,7 @@ import { GameImageBackground, GameTrackCardStack, GameActions } from '../compone
 import maestro from '../maestro';
 
 const { gameManager, playbackManager } = maestro.managers;
+const { appUpdatesHelper } = maestro.helpers;
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -26,6 +27,12 @@ export default class GameScreen extends Component {
 
   receiveStoreUpdate({ game }) {
     this.setState({ tracks: game.tracks });
+  }
+
+  async receiveEvent(name, value) {
+    if (name === 'APP_STATE_CHANGED' && value === 'active') {
+      appUpdatesHelper.promptToUpdate();
+    }
   }
 
   _loadTracks = async () => {
