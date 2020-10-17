@@ -12,12 +12,12 @@ export default class TrackComment extends Component {
 
     Alert.alert('Are you sure?', 'Are you sure you want to delete this feedback?', [
       {
-        text: 'Delete',
-        onPress: onDelete,
-      },
-      {
         text: 'Cancel',
         style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: onDelete,
       },
     ]);
   }

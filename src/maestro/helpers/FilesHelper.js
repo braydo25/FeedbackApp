@@ -15,12 +15,12 @@ export default class FilesHelper extends Helper {
       if (status !== 'granted') {
         return Alert.alert('Permissions Required', 'You must give Soundhouse camera roll permissions in order to select an image. Do you want to fix this now?', [
           {
-            text: 'Fix Now',
-            onPress: () => Linking.openURL('app-settings:'),
-          },
-          {
             text: 'Cancel',
             style: 'cancel',
+          },
+          {
+            text: 'Fix Now',
+            onPress: () => Linking.openURL('app-settings:'),
           },
         ]);
       }

@@ -40,12 +40,12 @@ export default class AppUpdatesHelper extends Manager {
   promptToUpdate() {
     Alert.alert('New Update Available', 'Would you like to update Soundhouse? This will only take a few seconds.', [
       {
-        text: 'Update',
-        onPress: () => this.update(),
-      },
-      {
         text: 'Not Now',
         style: 'cancel',
+      },
+      {
+        text: 'Update',
+        onPress: () => this.update(),
       },
     ]);
   }

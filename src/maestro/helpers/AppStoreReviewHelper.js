@@ -1,5 +1,5 @@
 import { Helper } from 'react-native-maestro';
-import { Alert } from 'react-native';
+import { Alert, Platform, Linking } from 'react-native';
 import * as StoreReview from 'expo-store-review';
 
 const reviewRequestTitle = 'Rate Soundhouse';
@@ -27,15 +27,22 @@ export default class AppStoreReviewHelper extends Helper {
 
     Alert.alert(reviewRequestTitle, reviewRequestText, [
       {
+        text: 'Not Now',
+        style: 'cancel',
+      },
+      {
         text: 'Rate App',
         onPress: () => {
           asyncStorageHelper.setItem(REVIEWED_APP_KEY, true);
-          StoreReview.requestReview();
+
+          if (Platform.OS === 'ios') {
+            StoreReview.requestReview();
+          }
+
+          if (Platform.OS === 'android') {
+            Linking.openURL('market://details?id=com.soundhousemusic.app');
+          }
         },
-      },
-      {
-        text: 'Not Now',
-        style: 'cancel',
       },
     ]);
   }
