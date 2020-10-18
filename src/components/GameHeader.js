@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
+import AvatarButton from './AvatarButton';
 import Image from './Image';
 import maestro from '../maestro';
 
@@ -47,7 +48,10 @@ export default class GameHeader extends PureComponent {
 
   _openProfile = () => {
     playbackManager.pause();
-    navigationHelper.navigate('ProfileNavigator');
+    navigationHelper.navigate('ProfileNavigator', {
+      screen: 'Profile',
+      params: { userId: userManager.store.user.id },
+    });
   }
 
   render() {
@@ -58,17 +62,17 @@ export default class GameHeader extends PureComponent {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <TouchableOpacity onPress={this._openProfile}>
-            <Image
-              source={{ uri: user?.avatarUrl }}
-              resizeMode={'contain'}
-              style={styles.profileImage}
+          <View>
+            <AvatarButton
+              user={user}
+              onPress={() => playbackManager.pause()}
+              style={styles.avatarButton}
             />
 
             {hasNoTracks && (
               <View style={styles.notificationsBubble} />
             )}
-          </TouchableOpacity>
+          </View>
 
           <View style={styles.levelContainer}>
             <Text style={styles.levelText}>Level {levelsHelper.expToLevel(user.exp)}</Text>
@@ -103,6 +107,11 @@ export default class GameHeader extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  avatarButton: {
+    borderRadius: 10,
+    height: 40,
+    width: 40,
+  },
   container: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -167,10 +176,5 @@ const styles = StyleSheet.create({
   notificationsIcon: {
     height: 20,
     width: 20,
-  },
-  profileImage: {
-    borderRadius: 10,
-    height: 40,
-    width: 40,
   },
 });

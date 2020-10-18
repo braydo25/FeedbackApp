@@ -27,6 +27,20 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
+  async getUserTracks(userId) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.get({
+      path: '/tracks',
+      queryParams: { userId },
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
   async getTrackComments(trackId) {
     const { apiHelper } = this.maestro.helpers;
     const response = await apiHelper.get({

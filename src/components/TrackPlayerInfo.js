@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ProgressComponent } from 'react-native-track-player';
+import AvatarButton from './AvatarButton';
 import Image from './Image';
 import maestro from '../maestro';
 
@@ -20,10 +21,9 @@ export default class TrackPlayerInfo extends ProgressComponent {
 
     return (
       <View style={[ styles.container, style ]}>
-        <Image
-          source={{ uri: (user && track.userId === user.id) ? user.avatarUrl : track.user.avatarUrl }}
-          resizeMode={'contain'}
-          style={styles.artistImage}
+        <AvatarButton
+          user={user && track.userId === user.id ? user : track.user}
+          style={styles.avatarButton}
         />
 
         <View style={styles.details}>
@@ -70,7 +70,7 @@ export default class TrackPlayerInfo extends ProgressComponent {
 }
 
 const styles = StyleSheet.create({
-  artistImage: {
+  avatarButton: {
     borderRadius: 10,
     height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     marginRight: 16,

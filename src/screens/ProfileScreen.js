@@ -3,23 +3,31 @@ import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-nat
 import { Button, Card, Image, ProfileCard, TracksList, UploadTrackCard } from '../components';
 import maestro from '../maestro';
 
-const { navigationHelper } = maestro.helpers;
+const { navigationHelper, interfaceHelper } = maestro.helpers;
 const { userManager, playbackManager, tracksManager } = maestro.managers;
 
 export default class ProfileScreen extends Component {
   state = {
-    user: userManager.store.user,
-    tracks: tracksManager.store.tracks,
+    user: null,
+    tracks: null,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     maestro.link(this);
 
-    this.props.navigation.setOptions({
-      rightButtonComponent: this._renderEditProfileButton(),
-    });
+    const params = this.props.route.params || {};
+    const { userId } = params;
 
+    if (!userId) {
+      return navigationHelper.pop();
+    }
+
+    this._loadUser();
     this._loadTracks();
+
+    this.props.navigation.setOptions({
+      rightButtonComponent: (userId === userManager.store.user.id) ? this._renderEditProfileButton() : null,
+    });
   }
 
   componentWillUnmount() {
@@ -29,14 +37,37 @@ export default class ProfileScreen extends Component {
   }
 
   receiveStoreUpdate({ user, tracks }) {
+    if (this.state.user.id !== userManager.store.user.id) {
+      return;
+    }
+
     this.setState({
       user: user.user,
       tracks: tracks.tracks,
     });
   }
 
+  _loadUser = async () => {
+    const params = this.props.route.params || {};
+    const { userId } = params;
+
+    try {
+      this.setState({ user: await userManager.getUser(userId) });
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message });
+      navigationHelper.pop();
+    }
+  }
+
   _loadTracks = async () => {
-    return tracksManager.loadTracks();
+    const params = this.props.route.params || {};
+    const { userId } = params;
+
+    try {
+      this.setState({ tracks: await tracksManager.getUserTracks(userId) });
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message });
+    }
   }
 
   _renderEditProfileButton = () => {
@@ -52,13 +83,13 @@ export default class ProfileScreen extends Component {
   }
 
   _renderHeader = () => {
-    const { tracks } = this.state;
+    const { user,  tracks } = this.state;
 
     return (
       <>
         <ProfileCard user={this.state.user} style={styles.profileCard} />
 
-        {!!tracks?.length && (
+        {!!tracks?.length && user && user.id === userManager.store.user.id && (
           <Card style={styles.uploadTrackCard}>
             <Button small onPress={() => navigationHelper.navigate('UploadTrackNavigator')}>Add New Track</Button>
           </Card>
@@ -68,8 +99,18 @@ export default class ProfileScreen extends Component {
   }
 
   _renderNoTracks = () => {
-    return (
+    const { user, tracks } = this.state;
+
+    return (user && user.id === userManager.store.user.id && tracks !== null) ? (
       <UploadTrackCard />
+    ) : null;
+  }
+
+  _renderLoading = () => {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size={'large'} />
+      </View>
     );
   }
 
@@ -81,6 +122,10 @@ export default class ProfileScreen extends Component {
 
   render() {
     const { user, tracks } = this.state;
+
+    if (!user) {
+      return this._renderLoading();
+    }
 
     return (
       <View style={styles.container}>
@@ -143,6 +188,11 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingHorizontal: 16,
     paddingTop: 96,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
   profileCard: {
     marginBottom: 16,

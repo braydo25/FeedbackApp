@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import Image from './Image';
+import AvatarButton from './AvatarButton';
 import maestro from '../maestro';
 
 const { userManager } = maestro.managers;
@@ -28,10 +29,9 @@ export default class TrackComment extends Component {
 
     return (
       <View style={[ styles.container, style ]}>
-        <Image
-          source={{ uri: user.avatarUrl }}
-          resizeMode={'contain'}
-          style={styles.avatarImage}
+        <AvatarButton
+          user={user}
+          style={styles.avatarButton}
         />
 
         <View style={styles.textContainer}>
@@ -60,7 +60,7 @@ export default class TrackComment extends Component {
 }
 
 const styles = StyleSheet.create({
-  avatarImage: {
+  avatarButton: {
     borderRadius: 10,
     height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
     marginRight: 10,

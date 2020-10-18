@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import AvatarButton from './AvatarButton';
 import Card from './Card';
 import Image from './Image';
 import maestro from '../maestro';
@@ -16,9 +17,9 @@ export default class Notification extends Component {
       <TouchableOpacity onPress={() => navigationHelper.navigate('Track', { trackId: trackComment.trackId })} style={styles.container}>
         <Card style={styles.card}>
           <View style={styles.leftImageContainer}>
-            <Image
-              source={{ uri: user.avatarUrl }}
-              style={styles.leftImage}
+            <AvatarButton
+              user={user}
+              style={styles.avatarButton}
             />
 
             <View style={styles.commentIconContainer}>
@@ -41,6 +42,11 @@ export default class Notification extends Component {
 }
 
 const styles = StyleSheet.create({
+  avatarButton: {
+    borderRadius: interfaceHelper.deviceValue({ default: 10, xs: 8 }),
+    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+  },
   card: {
     borderRadius: 20,
     flexDirection: 'row',
@@ -72,11 +78,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Regular',
     fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 6,
-  },
-  leftImage: {
-    borderRadius: interfaceHelper.deviceValue({ default: 10, xs: 8 }),
-    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
-    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
   },
   textContainer: {
     flex: 1,

@@ -40,7 +40,7 @@ export default class TrackCard extends Component {
             )}
 
             <TouchableOpacity onPress={this._onViewFeedbackPress} style={styles.viewMoreButton}>
-              <Text style={styles.viewMoreText}>View All Feedback</Text>
+              <Text style={styles.viewMoreText}>View All Feedback ({track.totalComments})</Text>
             </TouchableOpacity>
 
             <LinearGradient

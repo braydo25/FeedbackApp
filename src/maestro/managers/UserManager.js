@@ -69,6 +69,17 @@ export default class UserManager extends Manager {
     return response;
   }
 
+  async getUser(userId) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.get({ path: `/users/${userId}` });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
   async updateUser(fields) {
     const { apiHelper } = this.maestro.helpers;
     const { avatarImageUri, ...data } = fields;
