@@ -37,7 +37,7 @@ export default class ProfileScreen extends Component {
   }
 
   receiveStoreUpdate({ user, tracks }) {
-    if (this.state.user.id !== userManager.store.user.id) {
+    if (!this.state.user || this.state.user.id !== userManager.store.user.id) {
       return;
     }
 
@@ -83,7 +83,7 @@ export default class ProfileScreen extends Component {
   }
 
   _renderHeader = () => {
-    const { user,  tracks } = this.state;
+    const { user, tracks } = this.state;
 
     return (
       <>
