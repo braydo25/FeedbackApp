@@ -34,7 +34,6 @@ export default class GameTrackCardStack extends Component {
   }
 
   panResponder = null;
-  resetTimeout = null;
   topCard = null;
 
   constructor() {
@@ -69,8 +68,6 @@ export default class GameTrackCardStack extends Component {
 
   componentWillUnmount() {
     maestro.unlink(this);
-
-    clearTimeout(this.resetTimeout);
   }
 
   receiveStoreUpdate({ game }) {
@@ -105,6 +102,10 @@ export default class GameTrackCardStack extends Component {
       playbackManager.stop();
     }
 
+    if (this.topCard) {
+      this.topCard.reset();
+    }
+
     Animated.decay(this.state.panAnimatedValue, {
       velocity: { x: velocityX, y: velocityY },
       useNativeDriver: true,
@@ -132,10 +133,6 @@ export default class GameTrackCardStack extends Component {
         currentTip: this.state.nextTip,
         nextTip: getTip(),
       });
-
-      if (this.topCard) {
-        this.topCard.reset();
-      }
 
       this.state.panAnimatedValue.stopAnimation();
       this.state.panAnimatedValue.setValue({ x: 0, y: 0 });

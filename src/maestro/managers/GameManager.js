@@ -8,7 +8,6 @@ export default class GameManager extends Manager {
   static initialStore = {
     tracks: null,
     currentTrackIndex: 0,
-    currentTrackComments: [],
   }
 
   get storeName() {
@@ -88,7 +87,6 @@ export default class GameManager extends Manager {
     }
 
     this.updateStore({
-      currentTrackComments: [],
       currentTrackIndex: currentTrackIndex + 1,
     });
   }
@@ -114,26 +112,34 @@ export default class GameManager extends Manager {
   }
 
   _addCurrentTrackComment = trackComment => {
-    const currentTrackComments = [ ...this.store.currentTrackComments ];
+    const tracks = [ ...this.store.tracks ];
+    const { currentTrackIndex } = this.store;
+    const currentTrack = tracks[currentTrackIndex];
     const { nonce } = trackComment;
-    const existingIndex = currentTrackComments.findIndex(trackComment => {
+    const existingIndex = currentTrack.trackComments.findIndex(trackComment => {
       return nonce && trackComment.nonce === nonce;
     });
 
     if (existingIndex !== -1) {
-      currentTrackComments[existingIndex] = trackComment;
+      currentTrack.trackComments[existingIndex] = trackComment;
     } else {
-      currentTrackComments.unshift(trackComment);
+      currentTrack.trackComments.unshift(trackComment);
     }
 
-    this.updateStore({ currentTrackComments });
+    tracks[currentTrackIndex] = currentTrack;
+
+    this.updateStore({ tracks });
   }
 
   _removeCurrentTrackComment = ({ trackCommentId, nonce }) => {
-    const currentTrackComments = this.store.currentTrackComments.filter(trackComment => {
+    const tracks = [ ...this.store.tracks ];
+    const { currentTrackIndex } = this.store;
+    const currentTrack = tracks[currentTrackIndex];
+
+    currentTrack.trackComments = currentTrack.trackComments.filter(trackComment => {
       return (nonce && trackComment.nonce !== nonce) || (trackCommentId && trackComment.id !== trackCommentId);
     });
 
-    this.updateStore({ currentTrackComments });
+    this.updateStore({ tracks });
   }
 }

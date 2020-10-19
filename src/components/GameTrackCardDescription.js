@@ -29,10 +29,12 @@ const styles = StyleSheet.create({
     fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
   },
   container: {
+    borderBottomColor: '#E8E8E8',
+    borderBottomWidth: 0.5,
     justifyContent: 'center',
-    minHeight: '100%',
+    marginBottom: 16,
     paddingHorizontal: 8,
-    paddingVertical: 12,
+    paddingVertical: 16,
   },
   descriptionText: {
     color: '#000000',

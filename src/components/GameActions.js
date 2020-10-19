@@ -95,6 +95,7 @@ export default class GameActions extends Component {
         <TextInput
           autoFocus
           multiline
+          autoCorrect={false}
           placeholder={'What do you think?'}
           placeholderTextColor={'#ACACAC'}
           onChangeText={text => this.setState({ commentText: text })}
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 20,
-    paddingBottom: 20,
+    marginTop: 16,
+    paddingBottom: 16,
     width: '100%',
   },
   containerDisabled: {

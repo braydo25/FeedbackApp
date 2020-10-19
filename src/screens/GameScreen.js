@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     paddingBottom: 14,
-    paddingHorizontal: 16,
-    paddingTop: 70,
+    paddingHorizontal: 12,
+    paddingTop: 68,
   },
   loadingContainer: {
     alignItems: 'center',

@@ -4,8 +4,6 @@ import TrackPlayerInfo from './TrackPlayerInfo';
 import TrackPlayerControls from './TrackPlayerControls';
 import maestro from '../maestro';
 
-const { interfaceHelper } = maestro.helpers;
-
 export default class Track extends Component {
   trackPlayerInfo = null;
   trackPlayerControls = null;
@@ -37,6 +35,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   trackPlayerControls: {
-    paddingTop: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
+    paddingTop: 12,
   },
 });

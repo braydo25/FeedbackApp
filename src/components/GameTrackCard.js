@@ -12,41 +12,7 @@ const { interfaceHelper } = maestro.helpers;
 const { gameManager } = maestro.managers;
 
 export default class GameTrackCard extends Component {
-  state = {
-    comments: [],
-  }
-
-  componentDidMount() {
-    maestro.link(this);
-  }
-
-  componentWillUnmount() {
-    maestro.unlink(this);
-  }
-
-  receiveStoreUpdate({ game }) {
-    const { track } = this.props;
-    const currentTrack = gameManager.getCurrentTrack();
-
-    if (currentTrack && track.id === currentTrack.id) {
-      this.setState({ comments: game.currentTrackComments });
-    }
-  }
-
-  receiveEvent(name, value) {
-    if (name === 'GAME_COMMENT_CREATED') {
-      this.setState({
-        comments: [
-          { comment: true, ...value },
-          ...this.state.comments,
-        ],
-      });
-    }
-  }
-
-  reset = () => {
-    this.setState({ comments: [] });
-  }
+  flatlist = null;
 
   _onDeleteComment = async trackComment => {
     try {
@@ -59,6 +25,10 @@ export default class GameTrackCard extends Component {
     }
   }
 
+  reset = () => {
+    this.flatlist.scrollToOffset({ offset: 0 });
+  }
+
   _renderItem = ({ item, index }) => {
     return (
       <TrackComment
@@ -69,7 +39,7 @@ export default class GameTrackCard extends Component {
     );
   }
 
-  _renderEmptyComponent = () => {
+  _renderFooterComponent = () => {
     const { track, tip } = this.props;
 
     return (track.description) ? (
@@ -81,22 +51,22 @@ export default class GameTrackCard extends Component {
 
   render() {
     const { track } = this.props;
-    const { comments } = this.state;
 
     return (
       <Card style={styles.container}>
         <View style={styles.commentsContainer}>
           <FlatList
-            inverted={comments?.length > 0}
-            data={comments}
+            inverted
+            data={track.trackComments}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => `${index}`}
             keyboardShouldPersistTaps={'always'}
-            ListEmptyComponent={this._renderEmptyComponent}
+            ListFooterComponent={this._renderFooterComponent}
             contentContainerStyle={[
               styles.commentsListContentContainer,
-              (comments.length === 0) ? styles.commentsListContentContainerEmpty : null,
+              (track.trackComments?.length === 0) ? styles.commentsListContentContainerEmpty : null,
             ]}
+            ref={component => this.flatlist = component}
             style={styles.commentsList}
           />
 
@@ -118,14 +88,14 @@ export default class GameTrackCard extends Component {
 
 const styles = StyleSheet.create({
   comment: {
-    marginBottom: 8,
+    marginBottom: 12,
   },
   commentsBackgroundGradient: {
     ...StyleSheet.absoluteFillObject,
     zIndex: -1,
   },
   commentsContainer: {
-    backgroundColor: '#F1EAF1',
+    backgroundColor: '#FBFBFC',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flex: 1,
@@ -135,8 +105,7 @@ const styles = StyleSheet.create({
   },
   commentsListContentContainer: {
     flexGrow: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+    padding: 12,
   },
   commentsListContentContainerEmpty: {
     paddingVertical: 0,
@@ -145,9 +114,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   track: {
-    borderTopColor: '#E3E3E9',
+    borderTopColor: '#DBDBE1',
     borderTopWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
+    paddingHorizontal: 12,
+    paddingVertical: 12,
   },
 });

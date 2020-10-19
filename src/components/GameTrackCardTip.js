@@ -18,21 +18,23 @@ export default props => (
 
 const styles = StyleSheet.create({
   container: {
+    borderBottomColor: '#E8E8E8',
+    borderBottomWidth: 0.5,
     justifyContent: 'center',
-    minHeight: '100%',
+    marginBottom: 16,
     paddingHorizontal: 8,
-    paddingVertical: 12,
+    paddingVertical: 16,
   },
   tipText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
     lineHeight: 20,
     marginTop: 8,
   },
   titleText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
 });

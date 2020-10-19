@@ -8,6 +8,10 @@ const { userManager } = maestro.managers;
 const { timeHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackComment extends Component {
+  state = {
+    liked: false,
+  }
+
   _onDeletePress = () => {
     const { onDelete } = this.props;
 
@@ -23,9 +27,16 @@ export default class TrackComment extends Component {
     ]);
   }
 
+  _onLikePress = () => {
+    this.setState({ liked: !this.state.liked });
+  }
+
   render () {
     const { trackComment, style } = this.props;
+    const { liked } = this.state;
     const { id, user, text, time } = trackComment;
+    const heartEmptyImage = require('../assets/images/heart-empty.png');
+    const heartFullImage = require('../assets/images/heart-full.png');
 
     return (
       <View style={[ styles.container, style ]}>
@@ -35,8 +46,8 @@ export default class TrackComment extends Component {
         />
 
         <View style={styles.textContainer}>
+          <Text style={styles.userText}><Text style={styles.nameText}>{user.name}</Text> at {timeHelper.secondsToTime(time)}</Text>
           <Text style={styles.commentText}>{text}</Text>
-          <Text style={styles.timeText}>{user.name} at {timeHelper.secondsToTime(time)}</Text>
         </View>
 
         {!!id && user.id === userManager.store.user.id && (
@@ -45,6 +56,16 @@ export default class TrackComment extends Component {
               source={require('../assets/images/delete.png')}
               resizeMode={'contain'}
               style={styles.deleteIcon}
+            />
+          </TouchableOpacity>
+        )}
+
+        {user.id !== userManager.store.user.id && (
+          <TouchableOpacity onPress={this._onLikePress} style={styles.likeButton}>
+            <Image
+              source={liked ? heartFullImage : heartEmptyImage}
+              resizeMode={'contain'}
+              style={styles.likeIcon}
             />
           </TouchableOpacity>
         )}
@@ -62,56 +83,64 @@ export default class TrackComment extends Component {
 const styles = StyleSheet.create({
   avatarButton: {
     borderRadius: 10,
-    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    height: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
     marginRight: 10,
-    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    width: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
   },
   commentText: {
     color: '#000000',
-    fontFamily: 'SFProDisplay-Medium',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontFamily: 'SFProDisplay-Regular',
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
     lineHeight: 18,
-    marginBottom: 2,
+    marginBottom: 1,
     marginRight: 35,
   },
   container: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
     flexDirection: 'row',
-    padding: 6,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 1.00,
   },
   deleteButton: {
     alignItems: 'center',
     backgroundColor: '#FFE2E2',
-    borderRadius: interfaceHelper.deviceValue({ default: 16, xs: 12 }),
-    height: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    borderRadius: 12,
+    height: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
     justifyContent: 'center',
-    width: interfaceHelper.deviceValue({ default: 40, xs: 35 }),
+    width: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
   },
   deleteIcon: {
     height: '45%',
     opacity: 0.8,
     width: '45%',
   },
+  likeButton: {
+    alignItems: 'center',
+    backgroundColor: '#F6F6F6',
+    borderRadius: 12,
+    height: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
+    justifyContent: 'center',
+    width: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
+  },
+  likeIcon: {
+    height: '55%',
+    width: '55%',
+  },
   loadingContainer: {
     alignItems: 'center',
     backgroundColor: '#FAF4FA',
-    borderRadius: 16,
-    height: 40,
+    borderRadius: 12,
+    height: 35,
     justifyContent: 'center',
-    width: 40,
+    width: 35,
+  },
+  nameText: {
+    color: '#000000',
   },
   textContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  timeText: {
+  userText: {
     color: '#B2B2B2',
-    fontFamily: 'SFProDisplay-Regular',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontFamily: 'SFProDisplay-SemiBold',
+    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11 }),
   },
 });

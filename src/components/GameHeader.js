@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 10,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
