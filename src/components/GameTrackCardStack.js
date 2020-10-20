@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, PanResponder, Animated, Easing, StyleSheet } from 'react-native';
+import React, { PureComponent } from 'react';
+import { View, PanResponder, Animated, Easing, StyleSheet, Platform } from 'react-native';
 import GameNoTracksCard from './GameNoTracksCard';
 import GameTrackCard from './GameTrackCard';
 import maestro from '../maestro';
@@ -21,7 +21,7 @@ const tips = [
 
 const { gameManager, playbackManager } = maestro.managers;
 
-export default class GameTrackCardStack extends Component {
+export default class GameTrackCardStack extends PureComponent {
   state = {
     animating: false,
     currentTrackIndex: gameManager.store.currentTrackIndex,
@@ -149,8 +149,9 @@ export default class GameTrackCardStack extends Component {
   _panResponderRelease = (event, gestureState) => {
     const absVelocityX = Math.abs(gestureState.vx);
     const absVelocityY = Math.abs(gestureState.vy);
+    const swipeVelocity = Platform.OS === 'ios' ? 0.65 : 0.45;
 
-    if (absVelocityX > 0.75 || absVelocityY > 0.75) {
+    if (absVelocityX > swipeVelocity || absVelocityY > swipeVelocity) {
       this._animateNextTrack(gestureState.vx, gestureState.vy);
     } else {
       Animated.spring(this.state.panAnimatedValue, {

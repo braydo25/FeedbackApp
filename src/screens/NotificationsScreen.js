@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import { Image, Notification } from '../components';
 import maestro from '../maestro';
@@ -6,7 +6,7 @@ import maestro from '../maestro';
 const { notificationsManager, userManager } = maestro.managers;
 const { appStoreReviewHelper } = maestro.helpers;
 
-export default class NotificationsScreen extends Component {
+export default class NotificationsScreen extends PureComponent {
   state = {
     notifications: null,
   }

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Animated, View, Easing, StyleSheet } from 'react-native';
 import maestro from '../maestro';
 
 const { gameManager } = maestro.managers;
 
-export default class GameImageBackground extends Component {
+export default class GameImageBackground extends PureComponent {
   state = {
     lastVisibileImage: 'one',
     imageOneUrl: null,

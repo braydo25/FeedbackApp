@@ -18,10 +18,10 @@ export default class GameNoTracksCard extends Component {
     try {
       const newTracks = await gameManager.loadTracks();
 
+      this.setState({ loading: false });
+
       if (newTracks.length) {
         maestro.dispatchEvent('GAME_ANIMATING_NEXT_TRACK');
-      } else {
-        this.setState({ loading: false });
       }
     } catch (error) {
       interfaceHelper.showError({ message: error.message });

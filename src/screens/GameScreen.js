@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, View, ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import { GameImageBackground, GameTrackCardStack, GameActions } from '../components';
 import maestro from '../maestro';
@@ -8,7 +8,7 @@ const { appUpdatesHelper } = maestro.helpers;
 
 const windowHeight = Dimensions.get('window').height;
 
-export default class GameScreen extends Component {
+export default class GameScreen extends PureComponent {
   state = {
     tracks: null,
     keyboardVerticalOffset: 0,
