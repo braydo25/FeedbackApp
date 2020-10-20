@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     paddingBottom: 48,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 32,
   },
   formField: {

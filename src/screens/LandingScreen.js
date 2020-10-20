@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   formContainer: {
     justifyContent: 'center',
     paddingBottom: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
   keyIcon: {
     height: 20,

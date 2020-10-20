@@ -6,6 +6,7 @@ import GameHeader from './GameHeader';
 import GameImageBackground from './GameImageBackground';
 import GameTrackCard from './GameTrackCard';
 import GameTrackCardDescription from './GameTrackCardDescription';
+import GameTrackCardNoFeedback from './GameTrackCardNoFeedback';
 import GameTrackCardStack from './GameTrackCardStack';
 import GameTrackCardTip from './GameTrackCardTip';
 import Header from './Header';
@@ -33,6 +34,7 @@ export {
   GameImageBackground,
   GameTrackCard,
   GameTrackCardDescription,
+  GameTrackCardNoFeedback,
   GameTrackCardStack,
   GameTrackCardTip,
   Header,

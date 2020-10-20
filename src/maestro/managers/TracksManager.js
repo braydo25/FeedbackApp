@@ -103,6 +103,19 @@ export default class TracksManager extends Manager {
     return response.body;
   }
 
+  async createTrackCommentLike({ trackId, trackCommentId }) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.post({
+      path: `/tracks/${trackId}/comments/${trackCommentId}/likes`,
+    });
+
+    if (response.code !== 200) {
+      throw new Error(response.body);
+    }
+
+    return response.body;
+  }
+
   async createTrackPlay({ trackId, duration }) {
     const { apiHelper } = this.maestro.helpers;
     const response = await apiHelper.post({
@@ -157,6 +170,17 @@ export default class TracksManager extends Manager {
     }
 
     userManager.updateLocalUser({ exp: user.exp - levelsHelper.commentExp });
+  }
+
+  async deleteTrackCommentLike({ trackId, trackCommentId, trackCommentLikeId }) {
+    const { apiHelper } = this.maestro.helpers;
+    const response = await apiHelper.delete({
+      path: `/tracks/${trackId}/comments/${trackCommentId}/likes/${trackCommentLikeId}`,
+    });
+
+    if (response.code !== 204) {
+      throw new Error(response.body);
+    }
   }
 
   async getGenres() {

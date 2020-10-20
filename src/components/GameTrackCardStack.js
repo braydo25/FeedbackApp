@@ -9,15 +9,14 @@ const stackTranslateYValue = -16;
 
 const getTip = () => tips[Math.floor(Math.random() * tips.length)];
 const tips = [
-  "If your feedback is marked as useful by a track’s artist, you'll get a major EXP boost!",
+  "If your feedback is marked as useful by a track’s artist, you'll get an EXP boost! Giving useful feedback will help you level up faster and get your music heard more.",
   'The higher level you are, the more SoundHouse will prioritize showing your tracks to others to listen to and give feedback on. Level up by giving feedback to others!',
   "Working on a track idea but don't quite have it finished? Add your work in progress tracks to SoundHouse to get ideas from others!",
-  "Earn EXP to level up by listening to and giving feedback on others' tracks.",
-  'When you add a new track to SoundHouse, use the description of your track as a way to communicate with others who listen to it and give feedback on it.',
-  'Connect with the SoundHouse team! Follow us on social media! @soundhouse.app',
-  'Help us improve Soundhouse! Check your email for an invite to the official Soundhouse discord server.',
-  'SoundHouse was built as a way for any musician or producer to be heard and get feedback on their music.',
+  "Earn EXP to level up by giving feedback on others' tracks! If your feedback is liked by others, you'll get an EXP boost!",
+  'When you add a new track to SoundHouse, use the description of your track as a way to communicate with others who listen to it.',
+  'Connect with the SoundHouse team! Follow us on social media! @joinsoundhouse',
   'Wear headphones for a better overall experience when listening to tracks on Soundhouse.',
+  "You can tap any user's profile picture or name to view their profile.",
 ];
 
 const { gameManager, playbackManager } = maestro.managers;

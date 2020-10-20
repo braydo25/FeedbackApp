@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Card from './Card';
 import Track from './Track';
 import TrackComment from './TrackComment';
@@ -42,13 +41,6 @@ export default class TrackCard extends Component {
             <TouchableOpacity onPress={this._onViewFeedbackPress} style={styles.viewMoreButton}>
               <Text style={styles.viewMoreText}>View All Feedback ({track.totalComments})</Text>
             </TouchableOpacity>
-
-            <LinearGradient
-              start={{ x: -0.4, y: -0.4 }}
-              end={{ x: 2, y: 2 }}
-              colors={[ '#FFFAFF', '#DED4DE' ]}
-              style={styles.commentsBackgroundGradient}
-            />
           </View>
         )}
       </Card>
@@ -57,19 +49,16 @@ export default class TrackCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  commentsBackgroundGradient: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: -1,
-  },
   commentsContainer: {
     alignItems: 'center',
+    backgroundColor: '#FBFBFC',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    borderTopColor: '#D8CCD6',
+    borderTopColor: '#DBDBE1',
     borderTopWidth: 1,
     overflow: 'hidden',
     paddingBottom: 16,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingTop: 12,
   },
   recentCommentsText: {
@@ -78,14 +67,13 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-Medium',
     fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     marginBottom: 8,
-    marginLeft: 8,
   },
   track: {
     marginVertical: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
   trackComment: {
-    marginBottom: 8,
+    marginBottom: 12,
   },
   viewMoreButton: {
     marginTop: 8,

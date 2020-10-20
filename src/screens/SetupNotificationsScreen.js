@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
   infoText: {
     color: '#FFFFFF',

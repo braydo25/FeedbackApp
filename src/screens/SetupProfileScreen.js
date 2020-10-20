@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   formCard: {
     alignItems: 'center',
     marginBottom: 32,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingVertical: 24,
   },
   formContainer: {
     paddingBottom: 48,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 32,
   },
   topContainer: {

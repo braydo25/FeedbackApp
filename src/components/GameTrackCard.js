@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Card from './Card';
 import GameTrackCardDescription from './GameTrackCardDescription';
+import GameTrackCardNoFeedback from './GameTrackCardNoFeedback';
 import GameTrackCardTip from './GameTrackCardTip';
 import Track from './Track';
 import TrackComment from './TrackComment';
@@ -39,13 +40,19 @@ export default class GameTrackCard extends Component {
     );
   }
 
-  _renderFooterComponent = () => {
+  _renderHeaderComponent = () => {
     const { track, tip } = this.props;
 
     return (track.description) ? (
       <GameTrackCardDescription track={this.props.track} />
     ) : (
       <GameTrackCardTip tip={tip} />
+    );
+  }
+
+  _renderEmptyComponent = () => {
+    return (
+      <GameTrackCardNoFeedback />
     );
   }
 
@@ -56,12 +63,12 @@ export default class GameTrackCard extends Component {
       <Card style={styles.container}>
         <View style={styles.commentsContainer}>
           <FlatList
-            inverted
             data={track.trackComments}
             renderItem={this._renderItem}
-            keyExtractor={(item, index) => `${index}`}
+            keyExtractor={(item, index) => item.id ? `${item.id}` : item.nonce}
             keyboardShouldPersistTaps={'always'}
-            ListFooterComponent={this._renderFooterComponent}
+            ListHeaderComponent={this._renderHeaderComponent}
+            ListEmptyComponent={this._renderEmptyComponent}
             contentContainerStyle={[
               styles.commentsListContentContainer,
               (track.trackComments?.length === 0) ? styles.commentsListContentContainerEmpty : null,
@@ -88,7 +95,7 @@ export default class GameTrackCard extends Component {
 
 const styles = StyleSheet.create({
   comment: {
-    marginBottom: 12,
+    marginTop: 12,
   },
   commentsBackgroundGradient: {
     ...StyleSheet.absoluteFillObject,
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   commentsListContentContainerEmpty: {
-    paddingVertical: 0,
+    paddingVertical: 8,
   },
   container: {
     flex: 1,

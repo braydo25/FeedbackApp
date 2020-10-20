@@ -15,7 +15,7 @@ export default class GameTrackCardDescription extends Component {
         </View>
 
         <View>
-          <Text style={styles.descriptionText}>{track.description}</Text>
+          <Text numberOfLines={3} ellipsizeMode={'tail'} style={styles.descriptionText}>{track.description}</Text>
         </View>
       </View>
     );
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   container: {
     borderBottomColor: '#E8E8E8',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     justifyContent: 'center',
     marginBottom: 16,
     paddingHorizontal: 8,

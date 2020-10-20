@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     minHeight: '100%',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: interfaceHelper.deviceValue({ default: 96, xs: 72 }),
   },
   descriptionField: {

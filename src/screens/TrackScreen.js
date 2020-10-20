@@ -20,7 +20,11 @@ export default class TrackScreen extends Component {
 
   _renderItem = ({ item, index }) => {
     return (
-      <TrackComment trackComment={item} style={styles.trackComment} />
+      <TrackComment
+        contentBackground
+        trackComment={item}
+        style={styles.trackComment}
+      />
     );
   }
 
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   commentsListContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 80,
   },
   container: {
@@ -88,12 +92,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   trackComment: {
-    marginBottom: 8,
+    marginBottom: 12,
   },
   trackContainer: {
     backgroundColor: '#FFFFFF',
     paddingBottom: 32,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingTop: 16,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },

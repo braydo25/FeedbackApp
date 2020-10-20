@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native';
-import Image from './Image';
 import AvatarButton from './AvatarButton';
+import Image from './Image';
+import TrackCommentLikeButton from './TrackCommentLikeButton';
 import maestro from '../maestro';
 
 const { userManager } = maestro.managers;
-const { timeHelper, interfaceHelper } = maestro.helpers;
+const { timeHelper, navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackComment extends Component {
-  state = {
-    liked: false,
+  _openProfile = () => {
+    const { user } = this.props.trackComment;
+
+    navigationHelper.push('ProfileNavigator', {
+      screen: 'Profile',
+      params: { userId: user.id },
+    });
   }
 
   _onDeletePress = () => {
@@ -27,16 +33,9 @@ export default class TrackComment extends Component {
     ]);
   }
 
-  _onLikePress = () => {
-    this.setState({ liked: !this.state.liked });
-  }
-
   render () {
-    const { trackComment, style } = this.props;
-    const { liked } = this.state;
+    const { trackComment, contentBackground, style } = this.props;
     const { id, user, text, time } = trackComment;
-    const heartEmptyImage = require('../assets/images/heart-empty.png');
-    const heartFullImage = require('../assets/images/heart-full.png');
 
     return (
       <View style={[ styles.container, style ]}>
@@ -45,36 +44,38 @@ export default class TrackComment extends Component {
           style={styles.avatarButton}
         />
 
-        <View style={styles.textContainer}>
-          <Text style={styles.userText}><Text style={styles.nameText}>{user.name}</Text> at {timeHelper.secondsToTime(time)}</Text>
-          <Text style={styles.commentText}>{text}</Text>
-        </View>
+        <View style={[
+          styles.contentContainer,
+          (contentBackground) ? styles.contentContainerBackground : null,
+        ]}>
+          <View style={styles.textContainer}>
+            <TouchableOpacity onPress={this._openProfile}>
+              <Text style={styles.userText}><Text style={styles.nameText}>{user.name}</Text> at {timeHelper.secondsToTime(time)}</Text>
+            </TouchableOpacity>
 
-        {!!id && user.id === userManager.store.user.id && (
-          <TouchableOpacity onPress={this._onDeletePress} style={styles.deleteButton}>
-            <Image
-              source={require('../assets/images/delete.png')}
-              resizeMode={'contain'}
-              style={styles.deleteIcon}
-            />
-          </TouchableOpacity>
-        )}
-
-        {user.id !== userManager.store.user.id && (
-          <TouchableOpacity onPress={this._onLikePress} style={styles.likeButton}>
-            <Image
-              source={liked ? heartFullImage : heartEmptyImage}
-              resizeMode={'contain'}
-              style={styles.likeIcon}
-            />
-          </TouchableOpacity>
-        )}
-
-        {!id && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator />
+            <Text style={styles.commentText}>{text}</Text>
           </View>
-        )}
+
+          {!!id && user.id === userManager.store.user.id && (
+            <TouchableOpacity onPress={this._onDeletePress} style={styles.deleteButton}>
+              <Image
+                source={require('../assets/images/delete.png')}
+                resizeMode={'contain'}
+                style={styles.deleteIcon}
+              />
+            </TouchableOpacity>
+          )}
+
+          {user.id !== userManager.store.user.id && (
+            <TrackCommentLikeButton trackComment={trackComment} />
+          )}
+
+          {!id && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator />
+            </View>
+          )}
+        </View>
       </View>
     );
   }
@@ -90,13 +91,23 @@ const styles = StyleSheet.create({
   commentText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
     lineHeight: 18,
     marginBottom: 1,
     marginRight: 35,
   },
   container: {
     flexDirection: 'row',
+  },
+  contentContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  contentContainerBackground: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   deleteButton: {
     alignItems: 'center',
@@ -110,18 +121,6 @@ const styles = StyleSheet.create({
     height: '45%',
     opacity: 0.8,
     width: '45%',
-  },
-  likeButton: {
-    alignItems: 'center',
-    backgroundColor: '#F6F6F6',
-    borderRadius: 12,
-    height: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
-    justifyContent: 'center',
-    width: interfaceHelper.deviceValue({ default: 35, xs: 30 }),
-  },
-  likeIcon: {
-    height: '55%',
-    width: '55%',
   },
   loadingContainer: {
     alignItems: 'center',
@@ -141,6 +140,6 @@ const styles = StyleSheet.create({
   userText: {
     color: '#B2B2B2',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11 }),
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
   },
 });

@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
 });

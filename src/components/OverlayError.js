@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: interfaceHelper.deviceValue({ default: 18, xs: 16 }),
     marginTop: interfaceHelper.deviceValue({ default: 0, xs: 2 }),
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
 });

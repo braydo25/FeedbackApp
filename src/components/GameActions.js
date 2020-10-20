@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'SFProDisplay-Regular',
     fontSize: interfaceHelper.deviceValue({ default: 15, xs: 14 }),
-    marginHorizontal: 16,
+    marginHorizontal: 12,
     maxHeight: 100,
     minHeight: 40,
     paddingBottom: 10,

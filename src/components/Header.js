@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // TODO: lets do an expo blurview.
     flexDirection: 'row',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingVertical: 3,
   },
   headerCenter: {

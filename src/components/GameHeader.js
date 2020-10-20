@@ -4,7 +4,7 @@ import AvatarButton from './AvatarButton';
 import Image from './Image';
 import maestro from '../maestro';
 
-const { playbackManager, userManager } = maestro.managers;
+const { userManager } = maestro.managers;
 const { navigationHelper, interfaceHelper, levelsHelper } = maestro.helpers;
 
 export default class GameHeader extends PureComponent {
@@ -42,16 +42,7 @@ export default class GameHeader extends PureComponent {
   }
 
   _openNotifications = () => {
-    playbackManager.pause();
     navigationHelper.navigate('NotificationsNavigator');
-  }
-
-  _openProfile = () => {
-    playbackManager.pause();
-    navigationHelper.navigate('ProfileNavigator', {
-      screen: 'Profile',
-      params: { userId: userManager.store.user.id },
-    });
   }
 
   render() {
@@ -65,7 +56,6 @@ export default class GameHeader extends PureComponent {
           <View>
             <AvatarButton
               user={user}
-              onPress={() => playbackManager.pause()}
               style={styles.avatarButton}
             />
 
@@ -142,7 +132,7 @@ const styles = StyleSheet.create({
   levelContainer: {
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 16,
+    marginHorizontal: 12,
   },
   levelExpText: {
     color: 'rgba(255, 255, 255, 0.7)',
