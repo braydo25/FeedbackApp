@@ -36,7 +36,7 @@ export default class NotificationsScreen extends PureComponent {
     try {
       return notificationsManager.loadNotifications();
     } catch (error) {
-      interfaceHelper.showError({ message: 'Failed to load notifications. Retrying..' });
+      interfaceHelper.showError({ message: `Retrying.. | Error: ${error.message}` });
       setTimeout(this._loadNotifications, 2500);
     }
   }

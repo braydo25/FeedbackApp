@@ -45,7 +45,7 @@ export default class GameScreen extends PureComponent {
         playbackManager.play(currentTrack);
       }
     } catch (error) {
-      interfaceHelper.showError({ message: 'Failed to load tracks. Retrying...' });
+      interfaceHelper.showError({ message: `Retrying... | Error: ${error.message}` });
 
       setTimeout(this._loadTracks, 2500);
     }
