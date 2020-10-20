@@ -8,7 +8,7 @@ export default class ApiHelper extends Helper {
     return 'apiHelper';
   }
 
-  _host = (__DEV__) ? 'http://localhost:8000' : 'https://api.soundhouseapp.com';
+  _host = (__DEV__) ? 'https://api.soundhouseapp.com' : 'https://api.soundhouseapp.com';
 
   get(options) {
     return this._request({ ...options, method: 'GET' });
