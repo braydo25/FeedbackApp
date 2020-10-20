@@ -93,9 +93,11 @@ export default class GameActions extends Component {
         </AnimatedTouchableOpacity>
 
         <TextInput
-          autoFocus
           multiline
+          autoFocus
+          blurOnSubmit
           autoCorrect={false}
+          returnKeyType={'done'}
           placeholder={'What do you think?'}
           placeholderTextColor={'#ACACAC'}
           onChangeText={text => this.setState({ commentText: text })}

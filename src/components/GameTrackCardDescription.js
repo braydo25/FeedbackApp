@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   artistText: {
     color: '#7D4CCF',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
+    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
   },
   container: {
     borderBottomColor: '#E8E8E8',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
     lineHeight: 20,
     marginTop: 8,
   },

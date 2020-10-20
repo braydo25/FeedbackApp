@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     color: '#7D4CCF',
     flex: 1,
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
     lineHeight: 20,
     marginLeft: 12,
   },

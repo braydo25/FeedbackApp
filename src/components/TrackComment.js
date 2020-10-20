@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   commentText: {
     color: '#000000',
     fontFamily: 'SFProDisplay-Regular',
-    fontSize: interfaceHelper.deviceValue({ default: 14, xs: 13 }),
+    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
     lineHeight: 18,
     marginBottom: 1,
     marginRight: 35,
@@ -140,6 +140,6 @@ const styles = StyleSheet.create({
   userText: {
     color: '#B2B2B2',
     fontFamily: 'SFProDisplay-SemiBold',
-    fontSize: interfaceHelper.deviceValue({ default: 13, xs: 12 }),
+    fontSize: interfaceHelper.deviceValue({ default: 12, xs: 11 }),
   },
 });

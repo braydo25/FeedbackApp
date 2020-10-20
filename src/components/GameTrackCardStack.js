@@ -5,7 +5,7 @@ import GameTrackCard from './GameTrackCard';
 import maestro from '../maestro';
 
 const stackScaleValue = 0.95;
-const stackTranslateYValue = -16;
+const stackTranslateYValue = -18;
 
 const getTip = () => tips[Math.floor(Math.random() * tips.length)];
 const tips = [
@@ -48,7 +48,7 @@ export default class GameTrackCardStack extends Component {
           return false;
         }
 
-        return Math.abs(gestureState.dx) > 10;
+        return Math.abs(gestureState.dx) > 20;
       },
       onPanResponderMove: Animated.event([
         null,
