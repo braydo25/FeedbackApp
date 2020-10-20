@@ -4,7 +4,7 @@ import { Image, Notification } from '../components';
 import maestro from '../maestro';
 
 const { notificationsManager, userManager } = maestro.managers;
-const { appStoreReviewHelper } = maestro.helpers;
+const { appStoreReviewHelper, interfaceHelper } = maestro.helpers;
 
 export default class NotificationsScreen extends PureComponent {
   state = {
@@ -19,7 +19,7 @@ export default class NotificationsScreen extends PureComponent {
 
     const notifications = await this._loadNotifications();
 
-    if (notifications.length >= 3) {
+    if (notifications?.length >= 3) {
       appStoreReviewHelper.requestRating();
     }
   }
@@ -33,7 +33,12 @@ export default class NotificationsScreen extends PureComponent {
   }
 
   _loadNotifications = async () => {
-    return notificationsManager.loadNotifications();
+    try {
+      return notificationsManager.loadNotifications();
+    } catch (error) {
+      interfaceHelper.showError({ message: 'Failed to load notifications. Retrying..' });
+      setTimeout(this._loadNotifications, 2500);
+    }
   }
 
   _renderItem = ({ item, index }) => {
