@@ -4,7 +4,7 @@ import { GameImageBackground, GameTrackCardStack, GameActions } from '../compone
 import maestro from '../maestro';
 
 const { gameManager, playbackManager } = maestro.managers;
-const { appUpdatesHelper } = maestro.helpers;
+const { appUpdatesHelper, interfaceHelper } = maestro.helpers;
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -36,12 +36,16 @@ export default class GameScreen extends PureComponent {
   }
 
   _loadTracks = async () => {
-    await gameManager.loadTracks();
+    try {
+      await gameManager.loadTracks();
 
-    const currentTrack = gameManager.getCurrentTrack();
+      const currentTrack = gameManager.getCurrentTrack();
 
-    if (currentTrack) {
-      playbackManager.play(currentTrack);
+      if (currentTrack) {
+        playbackManager.play(currentTrack);
+      }
+    } catch (error) {
+      interfaceHelper.showError({ message: error.message });
     }
   }
 
