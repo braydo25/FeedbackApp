@@ -12,7 +12,7 @@ export default class ReferralCard extends Component {
     Share.share({
       message: "Hey - Here's a link to Soundhouse. " +
                'Check it out to get feedback on your music and discover ' +
-               `underground artists. https://www.getsoundhouse.com/${userManager.store.user.id}`,
+               `underground artists. https://www.getsoundhouse.com/?id=${userManager.store.user.id}`,
     });
   }
 
@@ -27,7 +27,7 @@ export default class ReferralCard extends Component {
           returnKeyType={'done'}
           label={'Love Soundhouse? Share It To Level Up'}
           info={'Earn EXP from new users that join through your link.'}
-          value={`getsoundhouse.com/${userManager.store.user.id}`}
+          value={`getsoundhouse.com/?id=${userManager.store.user.id}`}
           containerStyle={styles.textField}
         />
 

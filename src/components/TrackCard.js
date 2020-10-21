@@ -8,7 +8,7 @@ import maestro from '../maestro';
 const { navigationHelper, interfaceHelper } = maestro.helpers;
 
 export default class TrackCard extends Component {
-  _onViewFeedbackPress = () => {
+  _viewTrack = () => {
     navigationHelper.navigate('Track', {
       trackId: this.props.track.id,
     });
@@ -20,7 +20,9 @@ export default class TrackCard extends Component {
 
     return (
       <Card style={style}>
-        <Track showMetadata track={track} style={styles.track} />
+        <TouchableOpacity onPress={this._viewTrack}>
+          <Track showMetadata track={track} style={styles.track} />
+        </TouchableOpacity>
 
         {trackComments?.length > 0 && (
           <View style={styles.commentsContainer}>
@@ -38,7 +40,7 @@ export default class TrackCard extends Component {
               />
             )}
 
-            <TouchableOpacity onPress={this._onViewFeedbackPress} style={styles.viewMoreButton}>
+            <TouchableOpacity onPress={this._viewTrack} style={styles.viewMoreButton}>
               <Text style={styles.viewMoreText}>View All Feedback ({track.totalComments})</Text>
             </TouchableOpacity>
           </View>
