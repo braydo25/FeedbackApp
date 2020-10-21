@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
-import { Image, Notification } from '../components';
+import { Image, Notification, ReferralCard } from '../components';
 import maestro from '../maestro';
 
 const { notificationsManager, userManager } = maestro.managers;
@@ -41,6 +41,12 @@ export default class NotificationsScreen extends PureComponent {
     }
   }
 
+  _renderHeader = () => {
+    return (
+      <ReferralCard style={styles.referralCard} />
+    );
+  }
+
   _renderItem = ({ item, index }) => {
     return (
       <Notification notification={item} />
@@ -63,6 +69,7 @@ export default class NotificationsScreen extends PureComponent {
           <FlatList
             data={notifications}
             renderItem={this._renderItem}
+            ListHeaderComponent={this._renderHeader}
             keyExtractor={(item, index) => `${item.id}`}
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
@@ -101,5 +108,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+  },
+  referralCard: {
+    marginBottom: 32,
   },
 });

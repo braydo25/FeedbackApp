@@ -16,6 +16,7 @@ import MultiSelectField from './MultiSelectField';
 import Notification from './Notification';
 import OverlaysContainer from './OverlaysContainer';
 import ProfileCard from './ProfileCard';
+import ReferralCard from './ReferralCard';
 import SelectField from './SelectField';
 import TextField from './TextField';
 import TrackCard from './TrackCard';
@@ -44,6 +45,7 @@ export {
   Notification,
   OverlaysContainer,
   ProfileCard,
+  ReferralCard,
   SelectField,
   TextField,
   TrackCard,

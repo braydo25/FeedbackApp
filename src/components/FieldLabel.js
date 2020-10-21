@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay-SemiBold',
     fontSize: interfaceHelper.deviceValue({ default: 16, xs: 14 }),
     letterSpacing: 0.1,
+    marginBottom: 2,
   },
 });
