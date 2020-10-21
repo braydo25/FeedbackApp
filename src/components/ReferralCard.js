@@ -25,7 +25,7 @@ export default class ReferralCard extends Component {
           editable={false}
           onChangeText={text => this.setState({ name: text })}
           returnKeyType={'done'}
-          label={'Level Up By Growing Soundhouse'}
+          label={'Love Soundhouse? Share It To Level Up'}
           info={'Earn EXP from new users that join through your link.'}
           value={`getsoundhouse.com/${userManager.store.user.id}`}
           containerStyle={styles.textField}
